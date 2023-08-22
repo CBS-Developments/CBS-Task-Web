@@ -9,6 +9,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  TextEditingController phoneNumberController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +47,13 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 30,
+                  height: 20,
+                ),
+                Image.asset('images/mobile.png',
+                width: 200,),
+
+                SizedBox(
+                  height: 10,
                 ),
                 Text('Log In',style: TextStyle(
                   fontSize: 42,
@@ -53,11 +62,64 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ),
 
+                SizedBox(
+                  height: 5,
+                ),
+
                 Text('Log in and start managing your tasks!',style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 14,
                   color: Colors.black,
                 ),
                 ),
+
+                SizedBox(
+                  height: 10,
+                ),
+
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  width: 280,
+                  height: 60,
+                  color: Colors.white,
+                  child: TextField(
+                    controller: phoneNumberController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      alignLabelWithHint: true,
+                      border: const OutlineInputBorder(),
+                      labelText: 'Mobile Number',
+                      hintText: '7X-XXX-XXXX',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.smartphone_sharp,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                    onSubmitted: (value) {
+                      // login(context);
+                    },
+                  ),
+                ),
+
+                SizedBox(
+                  height: 10,
+                ),
+
+                Container(
+                  height: 40,
+                  width: 200,
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: ElevatedButton(
+                    child: const Text('Log In'),
+                    onPressed: () {
+                      // login(context);
+                    },
+                  ),
+                ),
+
+
 
               ],
             ),
