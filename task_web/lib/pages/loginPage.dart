@@ -143,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: '7X-XXX-XXXX',
                       suffixIcon: IconButton(
                         icon: Icon(
-                          Icons.smartphone_sharp,
+                          Icons.smartphone_rounded,
                           color: Theme.of(context).primaryColorDark,
                         ),
                         onPressed: () {},
