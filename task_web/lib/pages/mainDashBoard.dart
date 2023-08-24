@@ -52,7 +52,7 @@ class _MainDashBoardState extends State<MainDashBoard> {
           ),
         ),
         actions: [
-
+          
           Column(
             children: [
               Text('',style: TextStyle(
@@ -60,18 +60,27 @@ class _MainDashBoardState extends State<MainDashBoard> {
               ),),
               Text(
                 "$firstName $lastName",
-                style: const TextStyle(color: Colors.black, fontSize: 20.0),
+                style: const TextStyle(color: Colors.black, fontSize: 18.0),
               ),
             ],
           ),
+
+          SizedBox(width: 10,),
+
+          IconButton(
+              onPressed: ()
+              {},
+              icon: Icon(
+                Icons.notifications_none_rounded,
+                color: Colors.black,
+              )),
+
 
           IconButton(
               onPressed: ()
               {
                 showPopupMenu(context);
               },
-
-
               icon: Icon(
                 Icons.arrow_drop_down,
                 color: Colors.black,
