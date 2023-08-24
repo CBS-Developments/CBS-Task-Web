@@ -28,7 +28,7 @@ void showPopupMenu(BuildContext context) {
           onPressed: () {
             Navigator.pop(context, 1);
           },
-          child: Text('Log Out'),
+          child: const Text('Log Out'),
         ),
       ),
       PopupMenuItem(
@@ -37,7 +37,7 @@ void showPopupMenu(BuildContext context) {
           onPressed: () {
             Navigator.pop(context, 2);
           },
-          child: Text('Option 2'),
+          child: const Text('Option 2'),
         ),
       ),
       PopupMenuItem(
@@ -46,7 +46,7 @@ void showPopupMenu(BuildContext context) {
           onPressed: () {
             Navigator.pop(context, 3);
           },
-          child: Text('Option 3'),
+          child: const Text('Option 3'),
         ),
       ),
     ],

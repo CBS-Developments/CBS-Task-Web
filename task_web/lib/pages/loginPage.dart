@@ -108,10 +108,10 @@ class _LoginPageState extends State<LoginPage> {
             ),
             child: Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Image.asset('images/mobile.png', width: 200),
-                SizedBox(height: 10),
-                Text(
+                const SizedBox(height: 10),
+                const Text(
                   'Log In',
                   style: TextStyle(
                     fontSize: 42,
@@ -119,15 +119,15 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 5),
-                Text(
+                const SizedBox(height: 5),
+                const Text(
                   'Log in and start managing your tasks!',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.all(5),
                   width: 280,
@@ -154,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Container(
                   height: 40,
                   width: 200,

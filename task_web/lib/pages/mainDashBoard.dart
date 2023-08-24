@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../components.dart';
 import '../methods/sideDropMenu.dart';
-import 'loginPage.dart';
 
 class MainDashBoard extends StatefulWidget {
   const MainDashBoard({super.key});
@@ -44,7 +42,7 @@ class _MainDashBoardState extends State<MainDashBoard> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           'CBS Task System',
           style: TextStyle(
             color: Colors.black,
@@ -52,10 +50,10 @@ class _MainDashBoardState extends State<MainDashBoard> {
           ),
         ),
         actions: [
-          
+
           Column(
             children: [
-              Text('',style: TextStyle(
+              const Text('',style: TextStyle(
                 color: Colors.black,
               ),),
               Text(
@@ -65,12 +63,12 @@ class _MainDashBoardState extends State<MainDashBoard> {
             ],
           ),
 
-          SizedBox(width: 10,),
+          const SizedBox(width: 10,),
 
           IconButton(
               onPressed: ()
               {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.notifications_none_rounded,
                 color: Colors.black,
               )),
@@ -81,7 +79,7 @@ class _MainDashBoardState extends State<MainDashBoard> {
               {
                 showPopupMenu(context);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_drop_down,
                 color: Colors.black,
               )),
