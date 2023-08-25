@@ -18,13 +18,10 @@ class _LeftDrawerState extends State<LeftDrawer> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Divider(
+            const Divider(
               thickness: 2,
               indent: 20,
               endIndent: 20,
-            ),
-            SizedBox(
-              height: 10,
             ),
 
             GestureDetector(
@@ -47,8 +44,8 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
             TextButton(
                 onPressed:(){},
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 50),
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 50),
                   child: Text('Taxation',style: TextStyle(
                     color: Colors.deepPurple,
                     fontSize: 12,
@@ -59,8 +56,8 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
             TextButton(
               onPressed:(){},
-              child: Padding(
-                padding: const EdgeInsets.only(left: 50),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 50),
                 child: Text('Talent Management',style: TextStyle(
                     color: Colors.lightBlueAccent,
                     fontSize: 12,
@@ -72,8 +69,8 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
             TextButton(
               onPressed:(){},
-              child: Padding(
-                padding: const EdgeInsets.only(left: 50),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 50),
                 child: Text('Finance & Accounting',style: TextStyle(
                     color: Colors.lightBlueAccent,
                     fontSize: 12,
@@ -84,8 +81,8 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
             TextButton(
               onPressed:(){},
-              child: Padding(
-                padding: const EdgeInsets.only(left: 50),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 50),
                 child: Text('Audit & Assurance',style: TextStyle(
                     color: Colors.lightBlueAccent,
                     fontSize: 12,
@@ -96,8 +93,8 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
             TextButton(
               onPressed:(){},
-              child: Padding(
-                padding: const EdgeInsets.only(left: 50),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 50),
                 child: Text('Company Secretarial',style: TextStyle(
                     color: Colors.lightBlueAccent,
                     fontSize: 12,
@@ -108,8 +105,8 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
             TextButton(
               onPressed:(){},
-              child: Padding(
-                padding: const EdgeInsets.only(left: 50),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 50),
                 child: Text('Development',style: TextStyle(
                     color: Colors.lightBlueAccent,
                     fontSize: 12,
