@@ -15,135 +15,137 @@ class _LeftDrawerState extends State<LeftDrawer> {
         width: 240,
         height: getPageHeight(context),
         color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Divider(
-              thickness: 2,
-              indent: 20,
-              endIndent: 20,
-            ),
-
-            GestureDetector(
-              onTap: (){},
-              child: SizedBox(
-                height: 45,
-                width: 240,
-                child: Image.asset('images/dash.png'),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Divider(
+                thickness: 2,
+                indent: 20,
+                endIndent: 20,
               ),
-            ),
 
-            GestureDetector(
-              onTap: (){},
-              child: SizedBox(
-                height: 45,
-                width: 240,
-                child: Image.asset('images/task.png'),
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/dash.png'),
+                ),
               ),
-            ),
 
-            TextButton(
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/task.png'),
+                ),
+              ),
+
+              TextButton(
+                  onPressed:(){},
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 50),
+                    child: Text('Taxation',style: TextStyle(
+                      color: Colors.deepPurple,
+                      fontSize: 12,
+                    fontWeight: FontWeight.bold),
+                    ),
+                  ),
+              ),
+
+              TextButton(
                 onPressed:(){},
                 child: const Padding(
                   padding: EdgeInsets.only(left: 50),
-                  child: Text('Taxation',style: TextStyle(
-                    color: Colors.deepPurple,
-                    fontSize: 12,
-                  fontWeight: FontWeight.bold),
+                  child: Text('Talent Management',style: TextStyle(
+                      color: Colors.lightBlueAccent,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
                   ),
                 ),
-            ),
+              ),
 
-            TextButton(
-              onPressed:(){},
-              child: const Padding(
-                padding: EdgeInsets.only(left: 50),
-                child: Text('Talent Management',style: TextStyle(
-                    color: Colors.lightBlueAccent,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold),
+
+              TextButton(
+                onPressed:(){},
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 50),
+                  child: Text('Finance & Accounting',style: TextStyle(
+                      color: Colors.lightBlueAccent,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
 
-
-            TextButton(
-              onPressed:(){},
-              child: const Padding(
-                padding: EdgeInsets.only(left: 50),
-                child: Text('Finance & Accounting',style: TextStyle(
-                    color: Colors.lightBlueAccent,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold),
+              TextButton(
+                onPressed:(){},
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 50),
+                  child: Text('Audit & Assurance',style: TextStyle(
+                      color: Colors.lightBlueAccent,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
 
-            TextButton(
-              onPressed:(){},
-              child: const Padding(
-                padding: EdgeInsets.only(left: 50),
-                child: Text('Audit & Assurance',style: TextStyle(
-                    color: Colors.lightBlueAccent,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold),
+              TextButton(
+                onPressed:(){},
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 50),
+                  child: Text('Company Secretarial',style: TextStyle(
+                      color: Colors.lightBlueAccent,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
 
-            TextButton(
-              onPressed:(){},
-              child: const Padding(
-                padding: EdgeInsets.only(left: 50),
-                child: Text('Company Secretarial',style: TextStyle(
-                    color: Colors.lightBlueAccent,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold),
+              TextButton(
+                onPressed:(){},
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 50),
+                  child: Text('Development',style: TextStyle(
+                      color: Colors.lightBlueAccent,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
 
-            TextButton(
-              onPressed:(){},
-              child: const Padding(
-                padding: EdgeInsets.only(left: 50),
-                child: Text('Development',style: TextStyle(
-                    color: Colors.lightBlueAccent,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold),
+
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/calen.png'),
                 ),
               ),
-            ),
 
-
-            GestureDetector(
-              onTap: (){},
-              child: SizedBox(
-                height: 45,
-                width: 240,
-                child: Image.asset('images/calen.png'),
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/prof.png'),
+                ),
               ),
-            ),
 
-            GestureDetector(
-              onTap: (){},
-              child: SizedBox(
-                height: 45,
-                width: 240,
-                child: Image.asset('images/prof.png'),
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/spec.png'),
+                ),
               ),
-            ),
 
-            GestureDetector(
-              onTap: (){},
-              child: SizedBox(
-                height: 45,
-                width: 240,
-                child: Image.asset('images/spec.png'),
-              ),
-            ),
-
-          ],
+            ],
+          ),
         ));
   }
 }
