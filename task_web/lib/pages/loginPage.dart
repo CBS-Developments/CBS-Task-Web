@@ -7,7 +7,7 @@ import 'package:task_web/sizes/pageSizes.dart';
 import 'package:http/http.dart' as http;
 
 import '../components.dart';
-import 'mainDashBoard.dart';
+import 'taskPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

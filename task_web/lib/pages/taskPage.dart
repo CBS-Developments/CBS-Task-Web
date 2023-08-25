@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_web/methods/drawer.dart';
 
 import '../methods/sideDropMenu.dart';
 
@@ -40,7 +41,7 @@ class _MainDashBoardState extends State<MainDashBoard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: const Text(
           'CBS Task System',
@@ -86,6 +87,13 @@ class _MainDashBoardState extends State<MainDashBoard> {
 
         ],
       ),
+
+      body: Row(
+        children: [
+          LeftDrawer(),
+        ],
+      ),
+
     );
   }
 }
