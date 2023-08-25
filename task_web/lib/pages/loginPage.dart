@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
           if (!mounted) return true;
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MainDashBoard()),
+            MaterialPageRoute(builder: (context) => const TaskPage()),
           );
         } else {
           snackBar(context, "Permission denied", Colors.yellow);

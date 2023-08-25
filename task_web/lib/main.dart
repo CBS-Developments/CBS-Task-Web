@@ -38,7 +38,7 @@ class LandingPage extends StatelessWidget {
 
   Widget _decideMainPage() {
     if (prefs.getString('login_state') != null) {
-      return const MainDashBoard();
+      return const TaskPage();
     } else {
       return const LoginPage();
     }

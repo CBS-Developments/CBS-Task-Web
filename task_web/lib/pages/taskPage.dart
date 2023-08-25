@@ -4,14 +4,14 @@ import 'package:task_web/methods/drawer.dart';
 
 import '../methods/sideDropMenu.dart';
 
-class MainDashBoard extends StatefulWidget {
-  const MainDashBoard({super.key});
+class TaskPage extends StatefulWidget {
+  const TaskPage({super.key});
 
   @override
-  State<MainDashBoard> createState() => _MainDashBoardState();
+  State<TaskPage> createState() => _TaskPageState();
 }
 
-class _MainDashBoardState extends State<MainDashBoard> {
+class _TaskPageState extends State<TaskPage> {
 
   String userName = "";
   String firstName = "";
@@ -40,8 +40,10 @@ class _MainDashBoardState extends State<MainDashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-        // automaticallyImplyLeading: false,
+        elevation: 0,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: const Text(
           'CBS Task System',
@@ -88,7 +90,8 @@ class _MainDashBoardState extends State<MainDashBoard> {
         ],
       ),
 
-      body: Row(
+      body:
+      Row(
         children: [
           LeftDrawer(),
         ],

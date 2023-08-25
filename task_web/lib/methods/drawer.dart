@@ -9,17 +9,144 @@ class LeftDrawer extends StatefulWidget {
 }
 
 class _LeftDrawerState extends State<LeftDrawer> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 240,
-      height: getPageHeight(context),
-      color: Colors.white,
-      child: Column(
+        width: 240,
+        height: getPageHeight(context),
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Divider(
+              thickness: 2,
+              indent: 20,
+              endIndent: 20,
+            ),
+            SizedBox(
+              height: 10,
+            ),
 
-      )
-    );
+            GestureDetector(
+              onTap: (){},
+              child: SizedBox(
+                height: 45,
+                width: 240,
+                child: Image.asset('images/dash.png'),
+              ),
+            ),
 
+            GestureDetector(
+              onTap: (){},
+              child: SizedBox(
+                height: 45,
+                width: 240,
+                child: Image.asset('images/task.png'),
+              ),
+            ),
+
+            TextButton(
+                onPressed:(){},
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 50),
+                  child: Text('Taxation',style: TextStyle(
+                    color: Colors.deepPurple,
+                    fontSize: 12,
+                  fontWeight: FontWeight.bold),
+                  ),
+                ),
+            ),
+
+            TextButton(
+              onPressed:(){},
+              child: Padding(
+                padding: const EdgeInsets.only(left: 50),
+                child: Text('Talent Management',style: TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+
+
+            TextButton(
+              onPressed:(){},
+              child: Padding(
+                padding: const EdgeInsets.only(left: 50),
+                child: Text('Finance & Accounting',style: TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+
+            TextButton(
+              onPressed:(){},
+              child: Padding(
+                padding: const EdgeInsets.only(left: 50),
+                child: Text('Audit & Assurance',style: TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+
+            TextButton(
+              onPressed:(){},
+              child: Padding(
+                padding: const EdgeInsets.only(left: 50),
+                child: Text('Company Secretarial',style: TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+
+            TextButton(
+              onPressed:(){},
+              child: Padding(
+                padding: const EdgeInsets.only(left: 50),
+                child: Text('Development',style: TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+
+
+            GestureDetector(
+              onTap: (){},
+              child: SizedBox(
+                height: 45,
+                width: 240,
+                child: Image.asset('images/calen.png'),
+              ),
+            ),
+
+            GestureDetector(
+              onTap: (){},
+              child: SizedBox(
+                height: 45,
+                width: 240,
+                child: Image.asset('images/prof.png'),
+              ),
+            ),
+
+            GestureDetector(
+              onTap: (){},
+              child: SizedBox(
+                height: 45,
+                width: 240,
+                child: Image.asset('images/spec.png'),
+              ),
+            ),
+
+          ],
+        ));
   }
 }
