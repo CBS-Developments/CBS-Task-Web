@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_web/methods/colors.dart';
+import 'package:task_web/methods/statusPopUpMenu.dart';
 
-import '../components.dart';
+
 import '../sizes/pageSizes.dart';
 
 class UpMainRow extends StatefulWidget {
@@ -12,12 +14,14 @@ class UpMainRow extends StatefulWidget {
 }
 
 class _UpMainRowState extends State<UpMainRow> {
-
+  
   TextEditingController taskListController = TextEditingController();
 
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
+    StatusDropdownState dropdownState = Provider.of<StatusDropdownState>(context);
     return Container(
       width: getPageWidth(context)-240,
       height: 50,
@@ -68,7 +72,9 @@ class _UpMainRowState extends State<UpMainRow> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextButton(
-                  onPressed: () {  },
+                  onPressed: () {
+                    statusPopupMenu(context);
+                  },
                   child: Text('Status :',style: TextStyle(
                     color: AppColor.filteT,
                     fontSize: 15,
@@ -90,11 +96,18 @@ class _UpMainRowState extends State<UpMainRow> {
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Text('In-Progress',
-                        style: TextStyle(
-                          color: AppColor.filterDrop,
-                          fontSize: 14,
-                        ),),
+                      child: Consumer<StatusDropdownState>(
+                        builder: (context, statusdropdownState, _) {
+                          return Text(
+                            statusdropdownState.value ?? '',
+                            style: TextStyle(
+                              color: AppColor.filterDrop,
+                              fontSize: 14,
+                            ),
+                          );
+                        },
+                      ),
+
                     )
 
 

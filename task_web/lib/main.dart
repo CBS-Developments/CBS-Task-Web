@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_web/pages/loginPage.dart';
 import 'package:task_web/pages/taskPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'methods/statusPopUpMenu.dart'; // Import the DropdownState class
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +19,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LandingPage(prefs: prefs);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ChangeNotifierProvider<StatusDropdownState>.value(
+        value: StatusDropdownState(), // Provide an instance of DropdownState
+        child: LandingPage(prefs: prefs),
+      ),
+    );
   }
 }
 
