@@ -6,6 +6,7 @@ import 'package:task_web/methods/taskPopUpMenu.dart';
 
 
 import '../sizes/pageSizes.dart';
+import 'assignedPopUpMenu.dart';
 
 class UpMainRow extends StatefulWidget {
   const UpMainRow({super.key});
@@ -24,7 +25,9 @@ class _UpMainRowState extends State<UpMainRow> {
     // ignore: unused_local_variable
     StatusDropdownState dropdownState = Provider.of<StatusDropdownState>(context);
     // ignore: unused_local_variable
-    TaskDropdownState taskDropdownState = Provider.of<TaskDropdownState>(context); // Get the TaskDropdownState
+    TaskDropdownState taskDropdownState = Provider.of<TaskDropdownState>(context);
+    // ignore: unused_local_variable
+    AssignedDropdownState assignedDropdownState = Provider.of<AssignedDropdownState>(context);
     return Container(
       width: getPageWidth(context)-240,
       height: 50,
@@ -93,7 +96,6 @@ class _UpMainRowState extends State<UpMainRow> {
                       height: 18,
                       margin: EdgeInsets.only(left: 3),
                       child: Image.asset('images/messageEdit.png',
-
                       ),
                     ),
 
@@ -110,11 +112,7 @@ class _UpMainRowState extends State<UpMainRow> {
                           );
                         },
                       ),
-
                     )
-
-
-
                   ],
                 )
 
@@ -182,13 +180,14 @@ class _UpMainRowState extends State<UpMainRow> {
           Container(
             width: 120,
             height: 50,
-            // color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextButton(
-                  onPressed: () {  },
-                  child: Text('Assigned :',style: TextStyle(
+                  onPressed: () {
+                    assignedPopupMenu(context);
+                  },
+                  child: Text('Assigned :', style: TextStyle(
                     color: AppColor.filteT,
                     fontSize: 15,
                     decoration: TextDecoration.underline,
@@ -202,27 +201,28 @@ class _UpMainRowState extends State<UpMainRow> {
                       margin: EdgeInsets.only(left: 3),
                       width: 18,
                       height: 18,
-                      child: Image.asset('images/profileUser.png',
-                      ),
+                      child: Image.asset('images/profileUser.png'),
                     ),
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Text('-All-',
-                        style: TextStyle(
-                          color: AppColor.filterDrop,
-                          fontSize: 14,
-                        ),),
+                      child: Consumer<AssignedDropdownState>(
+                        builder: (context, assignedDropdownState, _) {
+                          return Text(
+                            assignedDropdownState.value ?? '',
+                            style: TextStyle(
+                              color: AppColor.filterDrop,
+                              fontSize: 14,
+                            ),
+                          );
+                        },
+                      ),
                     )
-
                   ],
                 )
-
-
               ],
             ),
           ),
-
           SizedBox(width: 5,),
 
           Container(

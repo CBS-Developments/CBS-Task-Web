@@ -4,6 +4,7 @@ import 'package:task_web/pages/loginPage.dart';
 import 'package:task_web/pages/taskPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'methods/assignedPopUpMenu.dart';
 import 'methods/statusPopUpMenu.dart'; // Import the DropdownState class
 import 'methods/taskPopUpMenu.dart'; // Import the TaskDropdownState class
 
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<TaskDropdownState>.value(
             value: TaskDropdownState(), // Provide an instance of TaskDropdownState
+          ),
+          ChangeNotifierProvider<AssignedDropdownState>.value(
+            value: AssignedDropdownState(), // Provide an instance of AssignedDropdownState
           ),
         ],
         child: LandingPage(prefs: prefs),
