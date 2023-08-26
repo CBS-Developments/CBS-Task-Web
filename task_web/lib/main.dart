@@ -5,6 +5,7 @@ import 'package:task_web/pages/taskPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'methods/statusPopUpMenu.dart'; // Import the DropdownState class
+import 'methods/taskPopUpMenu.dart'; // Import the TaskDropdownState class
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,8 +25,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ChangeNotifierProvider<StatusDropdownState>.value(
-        value: StatusDropdownState(), // Provide an instance of DropdownState
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<StatusDropdownState>.value(
+            value: StatusDropdownState(), // Provide an instance of StatusDropdownState
+          ),
+          ChangeNotifierProvider<TaskDropdownState>.value(
+            value: TaskDropdownState(), // Provide an instance of TaskDropdownState
+          ),
+        ],
         child: LandingPage(prefs: prefs),
       ),
     );

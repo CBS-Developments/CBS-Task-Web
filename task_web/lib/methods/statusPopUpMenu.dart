@@ -18,14 +18,15 @@ void statusPopupMenu(BuildContext context) {
 
   final RenderBox button = context.findRenderObject() as RenderBox;
 
-  final position = RelativeRect.fromRect(
-    Rect.fromPoints(
-      button.localToGlobal(
-          Offset(button.size.width, 0), ancestor: overlay), // Align to the right
-      button.localToGlobal(
-          button.size.bottomRight(Offset.zero), ancestor: overlay),
-    ),
-    Offset.zero & overlay.size,
+  // Calculate the desired offset from top and left
+  final double topOffset = 100; // Adjust this value as needed
+  final double leftOffset = 700; // Adjust this value as needed
+
+  final position = RelativeRect.fromLTRB(
+    leftOffset,
+    topOffset,
+    leftOffset + button.size.width,
+    topOffset + button.size.height,
   );
 
   final Statusitems = ['-All-', 'Pending', 'In Progress', 'Completed'];
