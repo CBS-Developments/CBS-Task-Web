@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/drawer.dart';
-import 'package:task_web/sizes/pageSizes.dart';
+import 'package:task_web/methods/taskTable.dart';
+import 'package:task_web/methods/upMainRow.dart';
+
 
 import '../methods/sideDropMenu.dart';
 
@@ -94,18 +96,13 @@ class _TaskPageState extends State<TaskPage> {
       body:
       Row(
         children: [
-          LeftDrawer(),
+          const LeftDrawer(),
 
           Column(
-            children: [
-              Container(
-                width: getPageWidth(context)-240,
-                height: 50,
-                color: Colors.blue,
-                child: Row(
-
-                ),
-              )
+            children: const [
+              UpMainRow(),
+              SizedBox(height: 20,),
+              TaskTable(),
             ],
           )
         ],
