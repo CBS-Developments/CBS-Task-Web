@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:task_web/methods/colors.dart';
 import 'package:task_web/methods/statusPopUpMenu.dart';
 import 'package:task_web/methods/taskPopUpMenu.dart';
+import 'package:task_web/methods/companyPopUpMenu.dart';
 
 
 import '../sizes/pageSizes.dart';
@@ -28,6 +29,7 @@ class _UpMainRowState extends State<UpMainRow> {
     TaskDropdownState taskDropdownState = Provider.of<TaskDropdownState>(context);
     // ignore: unused_local_variable
     AssignedDropdownState assignedDropdownState = Provider.of<AssignedDropdownState>(context);
+    AssignedDropdownState companyDropdownState = Provider.of<AssignedDropdownState>(context);
     return Container(
       width: getPageWidth(context)-240,
       height: 50,
@@ -233,7 +235,7 @@ class _UpMainRowState extends State<UpMainRow> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextButton(
-                  onPressed: () {  },
+                  onPressed: () { companyPopupMenu(context); },
                   child: Text('Company :',style: TextStyle(
                     color: AppColor.filteT,
                     fontSize: 15,
@@ -254,11 +256,17 @@ class _UpMainRowState extends State<UpMainRow> {
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Text('-All-',
-                        style: TextStyle(
-                          color: AppColor.filterDrop,
-                          fontSize: 14,
-                        ),),
+                      child: Consumer<CompanyDropdownState>(
+                        builder: (context, companyDropdownState, _) {
+                          return Text(
+                            companyDropdownState.value ?? '',
+                            style: TextStyle(
+                              color: AppColor.filterDrop,
+                              fontSize: 14,
+                            ),
+                          );
+                        },
+                      ),
                     )
 
                   ],

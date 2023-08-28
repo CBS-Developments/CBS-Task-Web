@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_web/methods/companyPopUpMenu.dart';
 import 'package:task_web/pages/loginPage.dart';
 import 'package:task_web/pages/taskPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<AssignedDropdownState>.value(
             value: AssignedDropdownState(), // Provide an instance of AssignedDropdownState
+          ),
+          ChangeNotifierProvider<CompanyDropdownState>.value(
+            value: CompanyDropdownState(), // Provide an instance of AssignedDropdownState
           ),
         ],
         child: LandingPage(prefs: prefs),

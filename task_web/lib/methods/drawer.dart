@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_web/methods/colors.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 
 class LeftDrawer extends StatefulWidget {
@@ -57,10 +58,10 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
               TextButton(
                 onPressed:(){},
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.only(left: 50),
                   child: Text('Talent Management',style: TextStyle(
-                      color: Colors.lightBlueAccent,
+                      color: AppColor.drawerLight,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   ),
@@ -70,10 +71,10 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
               TextButton(
                 onPressed:(){},
-                child: const Padding(
+                child:  Padding(
                   padding: EdgeInsets.only(left: 50),
                   child: Text('Finance & Accounting',style: TextStyle(
-                      color: Colors.lightBlueAccent,
+                      color: AppColor.drawerLight,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   ),
@@ -82,10 +83,10 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
               TextButton(
                 onPressed:(){},
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 50),
+                child:  Padding(
+                  padding: const EdgeInsets.only(left: 50),
                   child: Text('Audit & Assurance',style: TextStyle(
-                      color: Colors.lightBlueAccent,
+                      color: AppColor.drawerLight,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   ),
@@ -94,10 +95,10 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
               TextButton(
                 onPressed:(){},
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 50),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 50),
                   child: Text('Company Secretarial',style: TextStyle(
-                      color: Colors.lightBlueAccent,
+                      color: AppColor.drawerLight,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   ),
@@ -106,10 +107,10 @@ class _LeftDrawerState extends State<LeftDrawer> {
 
               TextButton(
                 onPressed:(){},
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 50),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 50),
                   child: Text('Development',style: TextStyle(
-                      color: Colors.lightBlueAccent,
+                      color: AppColor.drawerLight,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   ),

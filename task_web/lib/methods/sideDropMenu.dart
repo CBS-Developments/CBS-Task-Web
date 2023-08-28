@@ -37,7 +37,7 @@ void showPopupMenu(BuildContext context) {
           onPressed: () {
             Navigator.pop(context, 2);
           },
-          child: const Text('Option 2'),
+          child: const Text('Password Reset'),
         ),
       ),
       PopupMenuItem(
@@ -46,7 +46,7 @@ void showPopupMenu(BuildContext context) {
           onPressed: () {
             Navigator.pop(context, 3);
           },
-          child: const Text('Option 3'),
+          child: const Text('Profile'),
         ),
       ),
     ],
