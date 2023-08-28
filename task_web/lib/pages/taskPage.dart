@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/drawer.dart';
+import 'package:task_web/methods/taskTable.dart';
 import 'package:task_web/methods/upMainRow.dart';
 
 
@@ -99,7 +100,9 @@ class _TaskPageState extends State<TaskPage> {
 
           Column(
             children: const [
-              UpMainRow()
+              UpMainRow(),
+              SizedBox(height: 20,),
+              TaskTable(),
             ],
           )
         ],
