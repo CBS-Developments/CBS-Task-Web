@@ -6,5 +6,6 @@ class AppColor {
   static Color drawerLight = const Color(0xFF8CABFF);
   static Color drawerDark = const Color(0xFF512B81);
   static Color back = const Color(0xFF512B81);
+  static Color loginF = const Color(0xFF1F2A8C);
 
 }

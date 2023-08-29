@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_web/methods/colors.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 import 'package:http/http.dart' as http;
 
@@ -86,8 +87,8 @@ class _LoginPageState extends State<LoginPage> {
         height: getPageHeight(context),
         child: Center(
           child: Container(
-            width: 400,
-            height: 450,
+            width: 500,
+            height: 500,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.grey.shade300,
@@ -95,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                 BoxShadow(
                   color: Colors.grey.shade500,
                   offset: const Offset(4, 4),
-                  blurRadius: 15,
+                  blurRadius: 5,
                   spreadRadius: 1,
                 ),
                 const BoxShadow(
@@ -109,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                Image.asset('images/mobile.png', width: 200),
+                //Image.asset('images/mobile.png', width: 200),
                 const SizedBox(height: 10),
                 const Text(
                   'Log In',
@@ -119,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 15),
                 const Text(
                   'Log in and start managing your tasks!',
                   style: TextStyle(
@@ -127,10 +128,10 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 50),
                 Container(
                   padding: const EdgeInsets.all(5),
-                  width: 280,
+                  width: 330,
                   height: 60,
                   color: Colors.white,
                   child: TextField(
@@ -144,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                       suffixIcon: IconButton(
                         icon: Icon(
                           Icons.smartphone_rounded,
-                          color: Theme.of(context).primaryColorDark,
+                          color: AppColor.loginF,
                         ),
                         onPressed: () {},
                       ),
@@ -154,16 +155,53 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Container(
-                  height: 40,
+                  padding: const EdgeInsets.all(5),
+                  width: 330,
+                  height: 60,
+                  color: Colors.white,
+                  child: TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      alignLabelWithHint: true,
+                      border: const OutlineInputBorder(),
+                      labelText: 'Password',
+                      hintText: '********',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.password_rounded,
+                          color: AppColor.loginF,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                    onSubmitted: (value) {
+                      login(context);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 100),
+                Container(
+                  height: 50,
                   width: 200,
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: ElevatedButton(
-                    child: const Text('Log In'),
                     onPressed: () {
                       login(context);
                     },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: AppColor.loginF,
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5), // Rounded corners
+                      ),
+                    ),
+                    child: const
+                    Text('Log In',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),),
                   ),
                 ),
               ],
