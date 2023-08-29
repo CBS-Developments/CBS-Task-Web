@@ -104,6 +104,19 @@ class _TaskPageState extends State<TaskPage> {
               SizedBox(height: 20,),
               TaskTable(
               ),
+
+              SizedBox(height: 18),
+
+              ElevatedButton.icon(
+                onPressed: () {      },
+                icon: Icon(Icons.add_circle_outline_rounded, color: Colors.red,),
+                label: Text("Add Task"),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.white, // Text color
+                ),
+              ),
+
             ],
           )
         ],
