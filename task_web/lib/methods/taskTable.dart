@@ -3,6 +3,7 @@ import 'package:intl/intl.dart'; // Import this package for date formatting
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../pages/openTaskBox.dart';
 import '../sizes/pageSizes.dart';
 
 class TaskTable extends StatefulWidget {
@@ -14,6 +15,17 @@ class _TaskTableState extends State<TaskTable> {
   List<MainTask> mainTaskList = [];
   List<MainTask> searchResultAsMainTaskList = [];
   TextEditingController taskListController = TextEditingController();
+
+
+  void _showTaskDetailsDialog(BuildContext context, MainTask task) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return TaskDetailsDialog(task);
+      },
+    );
+  }
+
 
   @override
   void initState() {
@@ -47,7 +59,9 @@ class _TaskTableState extends State<TaskTable> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(onPressed: () {  },
+                  TextButton(onPressed: () {
+                    _showTaskDetailsDialog(context, task); // Show the popup
+                  },
                   child: Text(task.taskTitle,style: TextStyle(
                     fontSize: 14,
                     color: Colors.black,
@@ -82,7 +96,9 @@ class _TaskTableState extends State<TaskTable> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(onPressed: () {  },
+                  TextButton(onPressed: () {
+                    _showTaskDetailsDialog(context, task); // Show the popup
+                  },
                       child: Text(task.taskTitle,style: TextStyle(
                         fontSize: 14,
                         color: Colors.black,
