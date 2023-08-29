@@ -27,58 +27,91 @@ class _TaskTableState extends State<TaskTable> {
       width: getPageWidth(context) - 260,
       height: 450,
       color: Colors.white,
-      child: DataTable(
-        columns: [
-          DataColumn(label: Text('Task Title')),
-          DataColumn(label: Text('Company')),
-          DataColumn(label: Text('Start-Date')),
-          DataColumn(label: Text('Due-Date')),
-          DataColumn(label: Text('Assignee')),
-          DataColumn(label: Text('Priority')),
-          DataColumn(label: Text('Status')),
-          // Add more DataColumn as needed
-        ],
-        rows: (searchResultAsMainTaskList.isNotEmpty ||
-            taskListController.text.isNotEmpty)
-            ? searchResultAsMainTaskList.map((task) {
-          return DataRow(cells: [
-            DataCell(Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(task.taskTitle),
-                Text(task.taskId)
-              ],
-            )),
-            DataCell(Text(task.company)),
-            DataCell(Text(task.taskCreateDate)), // Display Start-Date
-            DataCell(Text(task.dueDate)),
-            DataCell(Text(task.assignTo)),
-            DataCell(Text(task.taskTypeName)),
-            DataCell(Text(task.taskStatusName)),
+      child: SingleChildScrollView(
+        child: DataTable(
+          columns: [
+            DataColumn(label: Text('Task Title')),
+            DataColumn(label: Text('Company')),
+            DataColumn(label: Text('Start-Date')),
+            DataColumn(label: Text('Due-Date')),
+            DataColumn(label: Text('Assignee')),
+            DataColumn(label: Text('Priority')),
+            DataColumn(label: Text('Status')),
+            // Add more DataColumn as needed
+          ],
+          rows: (searchResultAsMainTaskList.isNotEmpty ||
+              taskListController.text.isNotEmpty)
+              ? searchResultAsMainTaskList.map((task) {
+            return DataRow(cells: [
+              DataCell(Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(onPressed: () {  },
+                  child: Text(task.taskTitle,style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                  )),
 
-            // Add more DataCell with other properties
-          ]);
-        }).toList()
-            : mainTaskList.map((task) {
-          return DataRow(cells: [
-            DataCell(Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(task.taskTitle),
-                Text(task.taskId)
-              ],
-            )),
-            DataCell(Text(task.company)),
-            DataCell(Text(task.taskCreateDate)), // Display Start-Date
-            DataCell(Text(task.dueDate)),
-            DataCell(Text(task.assignTo)),
-            DataCell(Text(task.taskTypeName)),
-            DataCell(Text(task.taskStatusName)),
-            // Add more DataCell with other properties
-          ]);
-        }).toList(),
+
+                  Row(
+                    children: [
+                      SizedBox(width: 10,),
+                      Text(task.taskId,style: TextStyle(
+                        fontSize: 9,
+                        color: Colors.grey,
+                      ),),
+                    ],
+                  )
+                ],
+              )),
+              DataCell(Text(task.company)),
+              DataCell(Text(task.taskCreateDate)), // Display Start-Date
+              DataCell(Text(task.dueDate)),
+              DataCell(Text(task.assignTo)),
+              DataCell(Text(task.taskTypeName)),
+              DataCell(Text(task.taskStatusName)),
+
+              // Add more DataCell with other properties
+            ]);
+          }).toList()
+              : mainTaskList.map((task) {
+            return DataRow(cells: [
+              DataCell(Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(onPressed: () {  },
+                      child: Text(task.taskTitle,style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                      )),
+
+
+                  Row(
+                    children: [
+                      SizedBox(width: 9,),
+                      Text(task.taskId,style: TextStyle(
+                        fontSize: 10,
+                        color: Colors.grey,
+                      ),),
+                    ],
+                  )
+                ],
+              )),
+
+              DataCell(Text(task.company)),
+              DataCell(Text(task.taskCreateDate)), // Display Start-Date
+              DataCell(Text(task.dueDate)),
+              DataCell(Text(task.assignTo)),
+              DataCell(Text(task.taskTypeName)),
+              DataCell(Text(task.taskStatusName)),
+              // Add more DataCell with other properties
+            ]);
+          }).toList(),
+        ),
       ),
     );
   }
