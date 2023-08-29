@@ -132,7 +132,7 @@ class _LeftDrawerState extends State<LeftDrawer> {
                 child: SizedBox(
                   height: 45,
                   width: 240,
-                  child: Image.asset('images/prof.png'),
+                  child: Image.asset('images/spec.png'),
                 ),
               ),
 
@@ -141,7 +141,7 @@ class _LeftDrawerState extends State<LeftDrawer> {
                 child: SizedBox(
                   height: 45,
                   width: 240,
-                  child: Image.asset('images/spec.png'),
+                  child: Image.asset('images/chat.png'),
                 ),
               ),
 
