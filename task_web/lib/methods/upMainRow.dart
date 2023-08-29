@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_web/methods/colors.dart';
+import 'package:task_web/methods/labelPopUpMenu.dart';
 import 'package:task_web/methods/statusPopUpMenu.dart';
 import 'package:task_web/methods/taskPopUpMenu.dart';
 import 'package:task_web/methods/companyPopUpMenu.dart';
@@ -287,7 +288,7 @@ class _UpMainRowState extends State<UpMainRow> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextButton(
-                  onPressed: () {  },
+                  onPressed: () { labelPopupMenu(context); },
                   child: Text('Labels :',style: TextStyle(
                     color: AppColor.filteT,
                     fontSize: 15,
@@ -308,11 +309,17 @@ class _UpMainRowState extends State<UpMainRow> {
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Text('Medium',
-                        style: TextStyle(
-                          color: AppColor.filterDrop,
-                          fontSize: 14,
-                        ),),
+                      child: Consumer<LabelDropdownState>(
+                        builder: (context, labelDropdownState, _) {
+                          return Text(
+                            labelDropdownState.value ?? '',
+                            style: TextStyle(
+                              color: AppColor.filterDrop,
+                              fontSize: 14,
+                            ),
+                          );
+                        },
+                      ),
                     )
 
                   ],
