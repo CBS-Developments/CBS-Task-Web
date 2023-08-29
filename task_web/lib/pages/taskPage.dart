@@ -103,53 +103,7 @@ class _TaskPageState extends State<TaskPage> {
               UpMainRow(),
               SizedBox(height: 20,),
               TaskTable(
-                generateRows: [
-
-                  DataRow(cells: [
-                    DataCell(Text(
-                      'Dinethri Regular Task - April 2023',
-                      style: TextStyle(fontSize: 13),
-                    )),
-                    DataCell(Text(
-                      'Dec 4, 2019 21:42',
-                      style: TextStyle(fontSize: 13),
-                    )),
-                    DataCell(Text(
-                      'Dec 7, 2019 23:26',
-                      style: TextStyle(fontSize: 13),
-                    )),
-                    DataCell(Text(
-                      'Task System Figma UI',
-                      style: TextStyle(fontSize: 13),
-                    )),
-                    DataCell(Text(
-                      'Completed',
-                      style: TextStyle(fontSize:13),
-                    )),
-                    DataCell(Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Edit',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13),
-                            )),
-                        TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Remove',
-                              style: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontSize: 13),
-                            )),
-                      ],
-                    )),
-                  ]),
-
-
-              ],),
+              ),
             ],
           )
         ],

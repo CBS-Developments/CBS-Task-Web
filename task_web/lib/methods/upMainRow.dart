@@ -70,7 +70,7 @@ class _UpMainRowState extends State<UpMainRow> {
             ),
           ),
 
-          SizedBox(width: 160,),
+          SizedBox(width: 100,),
 
 
           Container(
@@ -229,7 +229,7 @@ class _UpMainRowState extends State<UpMainRow> {
           SizedBox(width: 5,),
 
           Container(
-            width: 120,
+            width: 180,
             height: 50,
             // color: Colors.white,
             child: Column(
@@ -245,32 +245,35 @@ class _UpMainRowState extends State<UpMainRow> {
                   ),),
                 ),
 
-                Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 3),
-                      width: 18,
-                      height: 18,
-                      child: Image.asset('images/bank.png',
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 3),
+                        width: 18,
+                        height: 18,
+                        child: Image.asset('images/bank.png',
+                        ),
                       ),
-                    ),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Consumer<CompanyDropdownState>(
-                        builder: (context, companyDropdownState, _) {
-                          return Text(
-                            companyDropdownState.value ?? '',
-                            style: TextStyle(
-                              color: AppColor.filterDrop,
-                              fontSize: 14,
-                            ),
-                          );
-                        },
-                      ),
-                    )
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Consumer<CompanyDropdownState>(
+                          builder: (context, companyDropdownState, _) {
+                            return Text(
+                              companyDropdownState.value ?? '',
+                              style: TextStyle(
+                                color: AppColor.filterDrop,
+                                fontSize: 14,
+                              ),
+                            );
+                          },
+                        ),
+                      )
 
-                  ],
+                    ],
+                  ),
                 )
 
 
