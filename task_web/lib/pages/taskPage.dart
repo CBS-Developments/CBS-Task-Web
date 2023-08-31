@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/drawer.dart';
 import 'package:task_web/methods/taskTable.dart';
 import 'package:task_web/methods/upMainRow.dart';
+import 'package:task_web/pages/createTaskBox.dart';
 
 
 import '../methods/sideDropMenu.dart';
@@ -108,7 +109,13 @@ class _TaskPageState extends State<TaskPage> {
               SizedBox(height: 18),
 
               ElevatedButton.icon(
-                onPressed: () {      },
+                onPressed: () { showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CreateTaskDialog(); // Use the dialog widget here
+                  },
+                );
+                  },
                 icon: Icon(Icons.add_circle_outline_rounded, color: Colors.red,),
                 label: Text("Add Task"),
                 style: ElevatedButton.styleFrom(
