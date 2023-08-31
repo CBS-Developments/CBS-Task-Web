@@ -307,14 +307,14 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
               children: [
                 Container(
                   width: 700,
-                  height: 220,
+                  height: 280,
                   color: Colors.grey.shade100,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: 120,
-                        height: 160,
+                        height: 300,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -338,7 +338,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(left: 18, bottom: 10),
+                                  const EdgeInsets.only(left: 18, bottom: 18,top: 15 ),
                               child: Text(
                                 'Source From', // Updated text here
                                 style: TextStyle(
@@ -347,7 +347,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(left: 18, bottom: 10),
+                                  const EdgeInsets.only(left: 18, bottom: 18, top: 18),
                               child: Text(
                                 'Assign To',
                                 style: TextStyle(
@@ -356,18 +356,18 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(left: 18, bottom: 10),
+                                  const EdgeInsets.only(left: 18, bottom: 18, top: 18),
                               child: Text(
-                                'Priority',
+                                'Company',
                                 style: TextStyle(
                                     fontSize: 16, color: AppColor.drawerLight),
                               ),
                             ),
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 18, bottom: 10),
+                              const EdgeInsets.only(left: 18, bottom: 18, top: 18),
                               child: Text(
-                                'Company',
+                                'Priority',
                                 style: TextStyle(
                                     fontSize: 16, color: AppColor.drawerLight),
                               ),
@@ -379,7 +379,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                         thickness: 2,
                       ),
                       SizedBox(
-                        height: 160,
+                        height: 300,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -424,7 +424,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(left: 18, bottom: 5),
+                                  const EdgeInsets.only(left: 18, bottom: 10),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton(
                                   value: dropdownvalue1,
@@ -451,7 +451,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(left: 18, bottom: 8),
+                                  const EdgeInsets.only(left: 18, bottom: 10),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton(
                                   value: dropdownvalue2,
@@ -481,7 +481,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                             ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(left: 18, bottom: 5),
+                                  const EdgeInsets.only(left: 18, bottom: 10),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton(
                                   value:
@@ -507,6 +507,35 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                 ),
                               ),
                             ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(left: 18, bottom: 10),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  value:
+                                  dropdownvalue3, // Changed to dropdownvalue3
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                  ),
+                                  items: items3.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(
+                                        items,
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownvalue3 = newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+
                           ],
                         ),
                       ),
