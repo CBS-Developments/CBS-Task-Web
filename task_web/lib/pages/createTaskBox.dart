@@ -29,7 +29,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
       title: _isEditingTitle
           ? TextField(
         controller: _titleController,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: "Task Title",
         ),
       )
@@ -39,7 +39,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
             _isEditingTitle = true;
           });
         },
-        child: Text("Task Title"),
+        child: const Text("Task Title"),
       ),
       content: Container(
         width: 800,
@@ -53,16 +53,16 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextField(
                   controller: _descriptionController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Add Description",
                     border: InputBorder.none,
                   ),
                 ),
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Column(
               children: [
                 Container(
@@ -80,7 +80,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                           children: [
                             Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.calendar_month_rounded,
                                   size: 16,
                                 ),
@@ -136,7 +136,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                           ],
                         ),
                       ),
-                      VerticalDivider(
+                      const VerticalDivider(
                         thickness: 2,
                       ),
                       SizedBox(
@@ -161,12 +161,12 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                               },
                               child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.calendar_month_rounded,
                                     size: 16,
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         left: 4,
                                         bottom: 8,
                                         top: 8,
@@ -177,7 +177,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                           .toString()
                                           .split(' ')[0]
                                           : 'Select Due Date',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.black,
                                       ),
@@ -203,7 +203,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
             // Close the dialog
             Navigator.of(context).pop();
           },
-          child: Text("Cancel"),
+          child: const Text("Cancel"),
         ),
         if (_isEditingTitle)
           TextButton(
@@ -215,7 +215,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
               // Close the dialog
               Navigator.of(context).pop();
             },
-            child: Text("Add"),
+            child: const Text("Add"),
           ),
       ],
     );
