@@ -102,26 +102,28 @@ class _SubTaskTableState extends State<SubTaskTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 500,
+      width: 700,
       height: 200,
       color: Colors.grey.shade200,
-      child: DataTable(
-        columns: [
-          DataColumn(label: Text('Subtask Title')),
-          DataColumn(label: Text('Due Date')),
-          DataColumn(label: Text('Assign To')),
-          // Add more DataColumn widgets as needed
-        ],
-        rows: subTaskList.map((subtask) {
-          return DataRow(
-            cells: [
-              DataCell(Text(subtask.taskTitle)),
-              DataCell(Text(subtask.dueDate)),
-              DataCell(Text(subtask.assignTo)),
-              // Add more DataCell widgets as needed
-            ],
-          );
-        }).toList(),
+      child: SingleChildScrollView(
+        child: DataTable(
+          columns: [
+            DataColumn(label: Text('Subtask Title')),
+            DataColumn(label: Text('Due Date')),
+            DataColumn(label: Text('Assign To')),
+            // Add more DataColumn widgets as needed
+          ],
+          rows: subTaskList.map((subtask) {
+            return DataRow(
+              cells: [
+                DataCell(Text(subtask.taskTitle)),
+                DataCell(Text(subtask.dueDate)),
+                DataCell(Text(subtask.assignTo)),
+                // Add more DataCell widgets as needed
+              ],
+            );
+          }).toList(),
+        ),
       ),
     );
   }

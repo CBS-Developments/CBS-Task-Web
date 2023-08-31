@@ -12,13 +12,13 @@ class TaskDetailsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Container(
-          width: 820, // Set the width of the dialog
+          width: 920, // Set the width of the dialog
           height: 500, // Set the height of the dialog
           child: SingleChildScrollView(
               child: Row(
             children: [
               Container(
-                width: 500,
+                width: 700,
                 height: 500,
                 // color: Colors.greenAccent,
                 child: Column(
@@ -263,18 +263,16 @@ class TaskDetailsDialog extends StatelessWidget {
                 ),
               ),
 
-              VerticalDivider(
-                color: Colors.grey,
-                thickness: 2,
-              ),
+              VerticalDivider(),
+
               Container(
-                width: 300,
+                width: 200,
                 height: 500,
                 // color: Colors.lightBlueAccent,
                 child: Column(
                   children: [
                     Container(
-                      width: 400,
+                      width: 200,
                       height: 40,
                       color: Colors.grey.shade300,
                       child: Row(
@@ -298,13 +296,13 @@ class TaskDetailsDialog extends StatelessWidget {
                     ),
 
                     Container(
-                      width: 400,
+                      width: 200,
                       height: 200,
                       color: Colors.white,
                     ),
 
                     Container(
-                      width: 400,
+                      width: 200,
                       height: 35,
                       color: Colors.grey.shade300,
                       child: Align(alignment: Alignment.centerLeft,
@@ -319,13 +317,13 @@ class TaskDetailsDialog extends StatelessWidget {
                     ),
 
                     Container(
-                      width: 400,
+                      width: 200,
                       height: 175,
                       color: Colors.white,
                     ),
 
                     Container(
-                      width: 400,
+                      width: 200,
                       height: 40,
                       child: TextField(
                         textAlignVertical: TextAlignVertical.bottom,
