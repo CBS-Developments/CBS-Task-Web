@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 import '../pages/openTaskBox.dart';
@@ -58,7 +59,23 @@ class _TaskTableState extends State<TaskTable> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(onPressed: () {
+                  TextButton(onPressed: () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setString('main_task_id', task.taskId);
+                    prefs.setString('task_title', task.taskTitle);
+                    prefs.setString('task_type', task.taskType);
+                    prefs.setString('task_type_name', task.taskTypeName);
+                    prefs.setString('task_create_by', task.taskCreateBy);
+                    prefs.setString('task_create_date', task.taskCreateDate);
+                    prefs.setString(
+                        'task_created_timestamp', task.taskCreatedTimestamp);
+                    prefs.setString('task_status', task.taskStatus);
+                    prefs.setString('task_status_name', task.taskStatusName);
+                    prefs.setString('due_date', task.dueDate);
+                    prefs.setString('assign_to', task.assignTo);
+                    prefs.setString('source_from', task.sourceFrom);
+                    prefs.setString('company', task.company);
+                    if (!mounted) return;
                     _showTaskDetailsDialog(context, task); // Show the popup
                   },
                   child: Text(task.taskTitle,style: TextStyle(
@@ -95,7 +112,23 @@ class _TaskTableState extends State<TaskTable> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(onPressed: () {
+                  TextButton(onPressed: () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setString('main_task_id', task.taskId);
+                    prefs.setString('task_title', task.taskTitle);
+                    prefs.setString('task_type', task.taskType);
+                    prefs.setString('task_type_name', task.taskTypeName);
+                    prefs.setString('task_create_by', task.taskCreateBy);
+                    prefs.setString('task_create_date', task.taskCreateDate);
+                    prefs.setString(
+                        'task_created_timestamp', task.taskCreatedTimestamp);
+                    prefs.setString('task_status', task.taskStatus);
+                    prefs.setString('task_status_name', task.taskStatusName);
+                    prefs.setString('due_date', task.dueDate);
+                    prefs.setString('assign_to', task.assignTo);
+                    prefs.setString('source_from', task.sourceFrom);
+                    prefs.setString('company', task.company);
+                    if (!mounted) return;
                     _showTaskDetailsDialog(context, task); // Show the popup
                   },
                       child: Text(task.taskTitle,style: TextStyle(
