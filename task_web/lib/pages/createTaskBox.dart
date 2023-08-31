@@ -513,11 +513,11 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton(
                                   value:
-                                  dropdownvalue3, // Changed to dropdownvalue3
+                                  dropdownvalue, // Changed to dropdownvalue
                                   icon: const Icon(
                                     Icons.keyboard_arrow_down,
                                   ),
-                                  items: items3.map((String items) {
+                                  items: items.map((String items) {
                                     return DropdownMenuItem(
                                       value: items,
                                       child: Text(
@@ -529,7 +529,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                   }).toList(),
                                   onChanged: (String? newValue) {
                                     setState(() {
-                                      dropdownvalue3 = newValue!;
+                                      dropdownvalue = newValue!;
                                     });
                                   },
                                 ),
@@ -548,26 +548,38 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        MaterialButton(
+          color: Colors.deepPurple,
           onPressed: () {
-            // Close the dialog
-            Navigator.of(context).pop();
+            print("CLEAR button pressed"); // Add this line
+            titleController.text = "";
+            descriptionController.text = "";
+            subTitleController.text = "";
+            assignToController.text = "";
+            documentNumberController.text = "";
+            createTaskDueDateController.text = "";
+            assignTo.clear();
           },
-          child: const Text("Cancel"),
+          child: const Text('CLEAR',
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white)),
         ),
-        if (_isEditingTitle)
-          TextButton(
-            onPressed: () {
-              // Perform the task addition logic here
-              String taskTitle = titleController.text;
-              String taskDescription = descriptionController.text;
-              // Use the taskTitle and taskDescription for your logic
-              // Close the dialog
-              Navigator.of(context).pop();
-            },
-            child: const Text("Add"),
-          ),
+        MaterialButton(
+          color: Colors.deepPurple,
+          onPressed: () {
+            print("SUBMIT button pressed"); // Add this line
+            mainTask(context);
+          },
+          child: const Text('SUBMIT',
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white)),
+        ),
       ],
+
     );
   }
 }
