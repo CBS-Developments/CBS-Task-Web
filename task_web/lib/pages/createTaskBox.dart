@@ -152,6 +152,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
     }
     return true;
   }
+
   Future<bool> createTask(BuildContext context, var mainTaskId) async {
     if (titleController.text.trim().isEmpty) {
       setState(() {
@@ -264,19 +265,19 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
     return AlertDialog(
       title: _isEditingTitle
           ? TextField(
-        controller: titleController,
-        decoration: const InputDecoration(
-          hintText: "Task Title",
-        ),
-      )
+              controller: titleController,
+              decoration: const InputDecoration(
+                hintText: "Task Title",
+              ),
+            )
           : GestureDetector(
-        onTap: () {
-          setState(() {
-            _isEditingTitle = true;
-          });
-        },
-        child: const Text("Task Title"),
-      ),
+              onTap: () {
+                setState(() {
+                  _isEditingTitle = true;
+                });
+              },
+              child: const Text("Task Title"),
+            ),
       content: Container(
         width: 800,
         height: 400,
@@ -306,7 +307,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
               children: [
                 Container(
                   width: 700,
-                  height: 200,
+                  height: 220,
                   color: Colors.grey.shade100,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -323,10 +324,9 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                   Icons.calendar_month_rounded,
                                   size: 16,
                                 ),
-
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 6, bottom: 8, top: 8, right: 4),
+                                      left: 6, bottom: 10, top: 10, right: 4),
                                   child: Text(
                                     'Due Date',
                                     style: TextStyle(
@@ -338,16 +338,16 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                             ),
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 18, bottom: 8),
+                                  const EdgeInsets.only(left: 18, bottom: 10),
                               child: Text(
-                                'Company',
+                                'Source From', // Updated text here
                                 style: TextStyle(
                                     fontSize: 16, color: AppColor.drawerLight),
                               ),
                             ),
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 18, bottom: 8),
+                                  const EdgeInsets.only(left: 18, bottom: 10),
                               child: Text(
                                 'Assign To',
                                 style: TextStyle(
@@ -356,7 +356,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                             ),
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 18, bottom: 8),
+                                  const EdgeInsets.only(left: 18, bottom: 10),
                               child: Text(
                                 'Priority',
                                 style: TextStyle(
@@ -365,9 +365,9 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                             ),
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 18, bottom: 8),
+                              const EdgeInsets.only(left: 18, bottom: 10),
                               child: Text(
-                                'Status',
+                                'Company',
                                 style: TextStyle(
                                     fontSize: 16, color: AppColor.drawerLight),
                               ),
@@ -405,12 +405,13 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                     size: 16,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 4, bottom: 8, top: 8, right: 4),
+                                    padding: const EdgeInsets.only(
+                                        left: 6, bottom: 10, top: 10, right: 4),
                                     child: Text(
                                       _selectedDueDate != null
                                           ? _selectedDueDate!
-                                          .toString()
-                                          .split(' ')[0]
+                                              .toString()
+                                              .split(' ')[0]
                                           : 'Select Due Date',
                                       style: const TextStyle(
                                         fontSize: 14,
@@ -419,6 +420,91 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                     ),
                                   ),
                                 ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 18, bottom: 5),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  value: dropdownvalue1,
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                  ),
+                                  items: items1.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(
+                                        items,
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownvalue1 = newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 18, bottom: 8),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  value: dropdownvalue2,
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                  ),
+                                  items: items2.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(
+                                        items,
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownvalue2 = newValue!;
+                                      assignTo.add(dropdownvalue2);
+                                      assignToController.text =
+                                          assignTo.toString();
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 18, bottom: 5),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  value:
+                                      dropdownvalue3, // Changed to dropdownvalue3
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                  ),
+                                  items: items3.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(
+                                        items,
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownvalue3 = newValue!;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                           ],
@@ -455,5 +541,9 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
       ],
     );
   }
+}
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }
 
