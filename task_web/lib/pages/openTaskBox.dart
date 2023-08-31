@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_web/methods/colors.dart';
+import 'package:task_web/methods/subTaskTable.dart';
 import '../methods/taskTable.dart';
 
 class TaskDetailsDialog extends StatelessWidget {
@@ -11,15 +12,15 @@ class TaskDetailsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Container(
-          width: 800, // Set the width of the dialog
-          height: 400, // Set the height of the dialog
+          width: 820, // Set the width of the dialog
+          height: 500, // Set the height of the dialog
           child: SingleChildScrollView(
               child: Row(
             children: [
               Container(
                 width: 500,
-                height: 400,
-                color: Colors.greenAccent,
+                height: 500,
+                // color: Colors.greenAccent,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -51,15 +52,16 @@ class TaskDetailsDialog extends StatelessWidget {
                       height: 10,
                     ),
                     Container(
-                      width: 450,
-                      height: 300,
-                      color: Colors.grey.shade700,
+                      width: 480,
+                      height: 160,
+                      color: Colors.grey.shade100,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: 150,
-                            height: 300,
-                            child: Column(
+                            width: 120,
+                            height: 160,
+                            child:  Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
@@ -67,7 +69,7 @@ class TaskDetailsDialog extends StatelessWidget {
                                   children: [
                                     Icon(Icons.calendar_month_rounded,size: 15,),
                                     Padding(
-                                      padding: const EdgeInsets.all(4.0),
+                                      padding: const EdgeInsets.only(left: 4, bottom: 8, top: 8,right: 4 ),
                                       child: Text(
                                         'Start',
                                         style: TextStyle(
@@ -79,7 +81,7 @@ class TaskDetailsDialog extends StatelessWidget {
                                     Icon(Icons.arrow_forward,color: AppColor.drawerLight,size: 15,),
 
                                     Padding(
-                                      padding: const EdgeInsets.all(4.0),
+                                      padding: const EdgeInsets.only(left: 4, bottom: 8, top: 8,right: 4 ),
                                       child: Text(
                                         'Due',
                                         style: TextStyle(
@@ -92,7 +94,7 @@ class TaskDetailsDialog extends StatelessWidget {
                                 ),
 
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 4),
+                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
                                   child: Text(
                                     'Company',
                                     style: TextStyle(
@@ -102,7 +104,7 @@ class TaskDetailsDialog extends StatelessWidget {
                                 ),
 
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 4),
+                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
                                   child: Text(
                                     'Assign To',
                                     style: TextStyle(
@@ -112,7 +114,7 @@ class TaskDetailsDialog extends StatelessWidget {
                                 ),
 
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 4),
+                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
                                   child: Text(
                                     'Priority',
                                     style: TextStyle(
@@ -122,7 +124,7 @@ class TaskDetailsDialog extends StatelessWidget {
                                 ),
 
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 4),
+                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
                                   child: Text(
                                     'Status',
                                     style: TextStyle(
@@ -132,7 +134,7 @@ class TaskDetailsDialog extends StatelessWidget {
                                 ),
 
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 4),
+                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
                                   child: Text(
                                     'Created By',
                                     style: TextStyle(
@@ -146,28 +148,199 @@ class TaskDetailsDialog extends StatelessWidget {
                           ),
                           VerticalDivider(
                             thickness: 2,
-                          )
+                          ),
+
+                          SizedBox(
+                            height: 160,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                                Row(
+                                  children: [
+                                    Icon(Icons.calendar_month_rounded,size: 15,),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 4, bottom: 8, top: 8,right: 4 ),
+                                      child: Text(
+                                        '${task.taskCreateDate}',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,),
+                                      ),
+                                    ),
+
+                                    Icon(Icons.arrow_forward,color: Colors.black,size: 15,),
+
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 4, bottom: 8, top: 8,right: 4 ),
+                                      child: Text(
+                                        '${task.dueDate}',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  child: Text(
+                                    '${task.company}',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,),
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  child: Text(
+                                    '${task.assignTo}',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,),
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  child: Text(
+                                    '${task.taskTypeName}',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,),
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  child: Text(
+                                    '${task.taskStatusName}',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,),
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  child: Text(
+                                    '${task.taskCreateBy}',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          ),
+
                         ],
                       ),
-                    )
+                    ),
+
+
+                    TextButton(
+                        onPressed: (){},
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Mark As Complete',style:
+                          TextStyle(fontSize: 14,color: Colors.redAccent),),
+                        ) ),
+
+                    SizedBox(height: 5,),
+
+                    Text('Subtasks',style: TextStyle(fontSize: 18),),
+
+                    SizedBox(height: 5,),
+
+                    SubTaskTable()
+
                   ],
                 ),
               ),
+
+              VerticalDivider(
+                color: Colors.grey,
+                thickness: 2,
+              ),
               Container(
                 width: 300,
-                height: 400,
+                height: 500,
                 color: Colors.lightBlueAccent,
+                child: Column(
+                  children: [
+                    Container(
+                      width: 400,
+                      height: 40,
+                      color: Colors.grey.shade300,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text('Special Notice',style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 16,
+                            ),),
+                          ),
+
+                          IconButton(
+                              onPressed: (){
+                                Navigator.of(context).pop();
+                              },
+                              icon: Icon(Icons.cancel_outlined,size: 20,))
+                        ],
+                      ),
+                    ),
+
+                    Container(
+                      width: 400,
+                      height: 200,
+                      color: Colors.white,
+                    ),
+
+                    Container(
+                      width: 400,
+                      height: 35,
+                      color: Colors.grey.shade300,
+                      child: Align(alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text('Comment',style: TextStyle(
+                            color: Colors.grey.shade700,
+                            fontSize: 16,
+                          ),),
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      width: 400,
+                      height: 200,
+                      color: Colors.white,
+                    ),
+
+                    Container(
+                      width: 50,
+                      height: 200,
+                      color: Colors.white,
+                      child: TextField(
+                        
+                      ),
+                    ),
+
+
+
+                  ],
+                ),
               )
             ],
           ))),
-      actions: <Widget>[
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text('Close'),
-        ),
-      ],
+
     );
   }
 }
