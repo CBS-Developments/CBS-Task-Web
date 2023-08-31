@@ -12,7 +12,7 @@ class _SubTaskTableState extends State<SubTaskTable> {
   Widget build(BuildContext context) {
     return Container(
       width: 500,
-      height: 100,
+      height: 200,
       color: Colors.grey.shade200,
     );
   }

@@ -270,7 +270,7 @@ class TaskDetailsDialog extends StatelessWidget {
               Container(
                 width: 300,
                 height: 500,
-                color: Colors.lightBlueAccent,
+                // color: Colors.lightBlueAccent,
                 child: Column(
                   children: [
                     Container(
@@ -320,16 +320,22 @@ class TaskDetailsDialog extends StatelessWidget {
 
                     Container(
                       width: 400,
-                      height: 200,
+                      height: 175,
                       color: Colors.white,
                     ),
 
                     Container(
-                      width: 50,
-                      height: 200,
-                      color: Colors.white,
+                      width: 400,
+                      height: 40,
                       child: TextField(
-                        
+                        textAlignVertical: TextAlignVertical.bottom,
+                        decoration: InputDecoration(
+                          fillColor: Colors.grey.shade300,
+                          hintText: 'Write a Comment...',
+                          helperStyle: TextStyle(color: Colors.grey.shade700,fontSize: 14),
+                          filled: true
+                        ),
+
                       ),
                     ),
 
