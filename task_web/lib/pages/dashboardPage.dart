@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../methods/appBar.dart';
+
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 
@@ -10,6 +12,11 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: MyAppBar(),
+      ),
+    );
   }
 }
