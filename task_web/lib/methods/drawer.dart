@@ -144,7 +144,6 @@ class _LeftDrawerState extends State<LeftDrawer> {
                   child: Image.asset('images/chat.png'),
                 ),
               ),
-
             ],
           ),
         ));
