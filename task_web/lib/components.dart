@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -382,38 +383,49 @@ var items3 = [
 ];
 String dropdownvalue3 = 'Company';
 
+List<String> items4 = ['-All-', 'Top Urgent', 'Medium', 'Regular', 'Low'];
+String dropdownvalue4 = '-All-';
 
-//
-// DateTime selectedDate;
-// selectDate(
-//     BuildContext context, TextEditingController textEditingController) async {
-//   DateTime newSelectedDate = await showDatePicker(
-//       context: context,
-//       initialDate: selectedDate ?? DateTime.now(),
-//       firstDate: DateTime(2000),
-//       lastDate: DateTime(2040),
-//       builder: (BuildContext context, Widget child) {
-//         return Theme(
-//           data: ThemeData.dark().copyWith(
-//             colorScheme: const ColorScheme.dark(
-//               primary: Colors.black,
-//               onPrimary: Colors.white,
-//               surface: Colors.blueGrey,
-//               onSurface: Colors.white,
-//             ),
-//             dialogBackgroundColor: Colors.blue[500],
-//           ),
-//           child: child,
-//         );
-//       });
+DateTime selectedDate = DateTime.now(); // Initialize selectedDate with a default value
 
-//   if (newSelectedDate != null) {
-//     selectedDate = newSelectedDate;
-//     textEditingController
-//       ..text = DateFormat.yMMMd().format(selectedDate)
-//       ..selection = TextSelection.fromPosition(TextPosition(
-//           offset: textEditingController.text.length,
-//           affinity: TextAffinity.upstream));
-//   }
-// }
+Future<void> selectDate(
+    BuildContext context, TextEditingController textEditingController) async {
+  DateTime? newSelectedDate = await showDatePicker(
+    context: context,
+    initialDate: selectedDate,
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2040),
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData.dark().copyWith(
+          colorScheme: ColorScheme.dark(
+            primary: Colors.black,
+            onPrimary: Colors.white,
+            surface: Colors.blueGrey,
+            onSurface: Colors.white,
+          ),
+          dialogBackgroundColor: Colors.blue[500]!,
+        ),
+        child: child!,
+      );
+    },
+  );
+
+  if (newSelectedDate != null) {
+    setState(() {
+      selectedDate = newSelectedDate;
+      textEditingController
+        ..text = DateFormat.yMMMd().format(selectedDate)
+        ..selection = TextSelection.fromPosition(
+          TextPosition(
+            offset: textEditingController.text.length,
+            affinity: TextAffinity.upstream,
+          ),
+        );
+    });
+  }
+}
+
+void setState(Null Function() param0) {
+}
 
