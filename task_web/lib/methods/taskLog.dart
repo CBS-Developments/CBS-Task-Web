@@ -286,6 +286,7 @@ class _TaskLogState extends State<TaskLog> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
+      margin: EdgeInsets.symmetric(horizontal: 15),
       height: 200,
       width: 600,
       child: SingleChildScrollView(
