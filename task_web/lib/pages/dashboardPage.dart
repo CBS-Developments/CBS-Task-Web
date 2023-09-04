@@ -180,7 +180,22 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
 
-                TaskLog()
+                SizedBox(height: 25,),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+                    Container(
+                      width: 450,
+                    height: 200,
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    color: Colors.white,),
+
+
+                    TaskLog(),
+                  ],
+                )
 
               ],
             ),
