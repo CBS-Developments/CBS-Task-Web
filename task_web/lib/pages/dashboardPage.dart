@@ -4,6 +4,7 @@ import 'package:task_web/drawers/drawerDash.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 
 import '../methods/appBar.dart';
+import '../methods/chartBox.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -58,7 +59,7 @@ class _DashboardState extends State<Dashboard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Text(
                     "Welcome $firstName $lastName!",
                     style: const TextStyle(color: Colors.black, fontSize: 30.0),
@@ -109,7 +110,11 @@ class _DashboardState extends State<Dashboard> {
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                     child: Text('User Creation',style:
-                                    TextStyle(fontSize: 16),),
+                                    TextStyle(
+                                        fontSize: 16,
+                                      color: Colors.black
+                                    ),
+                                    ),
                                   )
                                 ],
                               )
@@ -127,7 +132,7 @@ class _DashboardState extends State<Dashboard> {
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                     child: Text('Company Creation',style:
-                                    TextStyle(fontSize: 16),),
+                                    TextStyle(fontSize: 16,color: Colors.black),),
                                   )
                                 ],
                               )
@@ -138,8 +143,41 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     )
                   ],
-                )
+                ),
 
+                SizedBox(height: 10,),
+
+                SizedBox(
+                  width: getPageWidth(context)-240,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ChartBox(
+                        centerText: '60.0%',
+                        percent: 0.6,
+                        footerText: 'Completed this Week',
+                      ),
+
+                      ChartBox(
+                        centerText: '25.0%',
+                        percent: 0.25,
+                        footerText: 'In-Progress this Week',
+                      ),
+
+                      ChartBox(
+                        centerText: '15.0%',
+                        percent: 0.15,
+                        footerText: 'To-Do this Week',
+                      ),
+
+                      ChartBox(
+                        centerText: '10.0%',
+                        percent: 0.10,
+                        footerText: 'OverDue this Week',
+                      ),
+                    ],
+                  ),
+                )
 
               ],
             ),
