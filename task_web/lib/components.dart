@@ -383,8 +383,8 @@ var items3 = [
 ];
 String dropdownvalue3 = 'Company';
 
-List<String> items4 = ['-All-', 'Top Urgent', 'Medium', 'Regular', 'Low'];
-String dropdownvalue4 = '-All-';
+var items4 = ['-All-', 'Top Urgent', 'Medium', 'Regular', 'Low'];
+String dropdownvalue4 = 'Low';
 
 DateTime selectedDate = DateTime.now(); // Initialize selectedDate with a default value
 
