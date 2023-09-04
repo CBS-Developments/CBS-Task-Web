@@ -243,13 +243,26 @@ class TaskDetailsDialog extends StatelessWidget {
                     ),
 
 
-                    TextButton(
-                        onPressed: (){},
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Mark As Complete',style:
-                          TextStyle(fontSize: 14,color: Colors.redAccent),),
-                        ) ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                            onPressed: (){},
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('Mark As Complete',style:
+                              TextStyle(fontSize: 14,color: Colors.redAccent),),
+                            ) ),
+
+                        TextButton(
+                            onPressed: (){},
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('Create Sub Task',style:
+                              TextStyle(fontSize: 14,color: Colors.green),),
+                            ) ),
+                      ],
+                    ),
 
                     SizedBox(height: 5,),
 
