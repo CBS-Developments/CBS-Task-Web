@@ -384,8 +384,10 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                               );
 
                               if (selectedDate != null) {
+                                print('Selected Date: $selectedDate'); // Add this line for debugging
                                 setState(() {
                                   _selectedDueDate = selectedDate;
+                                  createTaskDueDateController.text = _selectedDueDate.toString();
                                 });
                               }
                             },
@@ -404,8 +406,8 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                   child: Text(
                                     _selectedDueDate != null
                                         ? _selectedDueDate!
-                                            .toString()
-                                            .split(' ')[0]
+                                        .toString()
+                                        .split(' ')[0]
                                         : 'Select Due Date',
                                     style: const TextStyle(
                                       fontSize: 14,
@@ -416,30 +418,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                               ],
                             ),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(left: 18, bottom: 10),
-                          //   child: TextField(
-                          //       focusNode: AlwaysDisabledFocusNode(),
-                          //       controller: createTaskDueDateController,
-                          //       onTap: () {
-                          //         selectDate(
-                          //             context, createTaskDueDateController);
-                          //       },
-                          //       decoration: InputDecoration(
-                          //           border: const OutlineInputBorder(),
-                          //           hintText: 'Due Date',
-                          //           suffixIcon: IconButton(
-                          //             onPressed: () {
-                          //               selectDate(context,
-                          //                   createTaskDueDateController);
-                          //             },
-                          //             icon: const Icon(
-                          //               Icons.date_range,
-                          //               color: Colors.blue,
-                          //               size: 11,
-                          //             ),
-                          //           ))),
-                          // ),
+
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 18, bottom: 10),
