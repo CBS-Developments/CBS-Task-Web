@@ -20,6 +20,8 @@ class _DashboardState extends State<Dashboard> {
   String phone = "";
   String userRole = "";
 
+  String get taskCount => '20';
+
   @override
   void initState() {
     super.initState();
@@ -62,6 +64,81 @@ class _DashboardState extends State<Dashboard> {
                     style: const TextStyle(color: Colors.black, fontSize: 30.0),
                   ),
                 ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      height: 60,
+                      width: 120,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Text('Total Tasks',style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold
+                            ),),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                            child: Text(taskCount,style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold
+                            ),),
+                          )
+                        ],
+                      ),
+                    ),
+                    
+                    Container(
+                      width: 360,
+                      height: 40,
+                      color: Colors.white,
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          TextButton(
+                              onPressed: (){}, 
+                              child: Row(
+                                children: [
+                                  Icon(Icons.add_circle_outline,color: Colors.red,),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Text('User Creation',style:
+                                    TextStyle(fontSize: 16),),
+                                  )
+                                ],
+                              )
+                          ),
+
+                          VerticalDivider(
+                            thickness: 2,
+                          ),
+
+                          TextButton(
+                              onPressed: (){},
+                              child: Row(
+                                children: [
+                                  Icon(Icons.add_circle_outline,color: Colors.red,),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Text('Company Creation',style:
+                                    TextStyle(fontSize: 16),),
+                                  )
+                                ],
+                              )
+                          ),
+
+
+                        ],
+                      ),
+                    )
+                  ],
+                )
 
 
               ],
