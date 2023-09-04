@@ -41,7 +41,6 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
   late String userName;
   late String firstName;
   late String lastName;
-  late String mainTaskId;
   List<String> assignTo = [];
 
   TextEditingController titleController = TextEditingController();
@@ -575,48 +574,51 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                       ),
                     ),
                     SizedBox(height: 20,),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: MaterialButton(
-                                color: Colors.black,
-                                onPressed: () {
-                                  //  titleController.text = "";
-                                  descriptionController.text = "";
-                                  subTitleController.text = "";
-                                  assignToController.text = "";
-                                  documentNumberController.text = "";
-                                  createTaskDueDateController.text = "";
-                                  assignTo.clear();
-                                },
-                                child: Text('CLEAR',
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white)),
-                              ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: MaterialButton(
+                              color: Colors.deepPurple,
+                              onPressed: () {
+                                titleController.text = "";
+                                descriptionController.text = "";
+                                subTitleController.text = "";
+                                assignToController.text = "";
+                                documentNumberController.text = "";
+                                createTaskDueDateController.text = "";
+                                assignTo.clear();
+                              },
+                              child: Text('CLEAR',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white)),
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: MaterialButton(
-                                color: Colors.black,
-                                onPressed: () {
-                                  createTask( context,  mainTaskId);
-                                },
-                                child: Text('SUBMIT',
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white)),
-                              ),
+                        ),
+                        SizedBox(width: 50,),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: MaterialButton(
+                              color: Colors.deepPurple,
+                              onPressed: () {
+                                mainTask(context);
+                              },
+                              child: Text('SUBMIT',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white)),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
                     // SizedBox(
                     //   height: 10,
                     // ),
