@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:task_web/pages/dashboardPage.dart';
+import 'package:task_web/pages/taskPage.dart';
 
 import '../methods/colors.dart';
 import '../sizes/pageSizes.dart';
@@ -28,20 +30,30 @@ class _LeftDrawerDashState extends State<LeftDrawerDash> {
               ),
 
               GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dashboard()),
+                  );
+                },
                 child: SizedBox(
                   height: 45,
                   width: 240,
-                  child: Image.asset('images/dash.png'),
+                  child: Image.asset('images/dash02.png'),
                 ),
               ),
 
               GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TaskPage()),
+                  );
+                },
                 child: SizedBox(
                   height: 45,
                   width: 240,
-                  child: Image.asset('images/task.png'),
+                  child: Image.asset('images/task02.png'),
                 ),
               ),
 

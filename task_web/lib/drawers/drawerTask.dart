@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:task_web/methods/colors.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 
+import '../pages/dashboardPage.dart';
+import '../pages/taskPage.dart';
+
 class LeftDrawer extends StatefulWidget {
   const LeftDrawer({super.key});
 
@@ -27,7 +30,12 @@ class _LeftDrawerState extends State<LeftDrawer> {
               ),
 
               GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dashboard()),
+                  );
+                },
                 child: SizedBox(
                   height: 45,
                   width: 240,
@@ -36,7 +44,12 @@ class _LeftDrawerState extends State<LeftDrawer> {
               ),
 
               GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TaskPage()),
+                  );
+                },
                 child: SizedBox(
                   height: 45,
                   width: 240,
