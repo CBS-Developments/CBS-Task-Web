@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
     };
 
     http.Response res = await http.post(
-      url,
+      Uri.parse(url),
       body: data,
       headers: {
         "Accept": "application/json",

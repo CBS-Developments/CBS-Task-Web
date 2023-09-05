@@ -13,6 +13,8 @@ import 'methods/taskPopUpMenu.dart'; // Import the TaskDropdownState class
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
+
+
   runApp(MyApp(prefs: prefs));
 }
 
@@ -46,14 +48,14 @@ class MyApp extends StatelessWidget {
             value: LabelDropdownState(), // Provide an instance of AssignedDropdownState
           ),
         ],
-        child: LandingPage(prefs: prefs),
+        child: LandingPage(prefs: prefs), // Pass the plugin instance to LandingPage
       ),
     );
   }
 }
 
 class LandingPage extends StatelessWidget {
-  final SharedPreferences prefs;
+  final SharedPreferences prefs;// Add this line
 
   const LandingPage({Key? key, required this.prefs}) : super(key: key);
 

@@ -78,7 +78,7 @@ class _SubTaskTableState extends State<SubTaskTable> {
 
     const url = "http://dev.connect.cbs.lk/subTaskListByMainTaskId.php";
     http.Response res = await http.post(
-      url,
+      Uri.parse(url),
       body: data,
       headers: {
         "Accept": "application/json",

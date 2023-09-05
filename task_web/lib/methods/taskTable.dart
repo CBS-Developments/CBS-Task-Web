@@ -188,7 +188,7 @@ class _TaskTableState extends State<TaskTable> {
 
     const url = "http://dev.connect.cbs.lk/mainTaskList.php";
     http.Response res = await http.post(
-      url,
+      Uri.parse(url),
       body: data,
       headers: {
         "Accept": "application/json",

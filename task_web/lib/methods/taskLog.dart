@@ -33,7 +33,7 @@ class _TaskLogState extends State<TaskLog> {
 
     const url = "http://dev.connect.cbs.lk/taskLogListByMonth.php";
     final http.Response res = await http.post(
-      url,
+      Uri.parse(url),
       body: data,
       headers: {
         "Accept": "application/json",
