@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_web/methods/colors.dart';
 import 'dart:convert';
 
 import '../pages/openTaskBox.dart';
@@ -39,47 +40,47 @@ class _TaskTableState extends State<TaskTable> {
       color: Colors.white,
       child: SingleChildScrollView(
         child: DataTable(
-          columns: const [
+          columns:  [
             DataColumn(
               label: Text(
                 'Task Title',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,),
               ),
             ),
             DataColumn(
               label: Text(
                 'Company',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,),
               ),
             ),
             DataColumn(
               label: Text(
                 'Start-Date',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,),
               ),
             ),
             DataColumn(
               label: Text(
                 'Due-Date',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,),
               ),
             ),
             DataColumn(
               label: Text(
                 'Assignee',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,),
               ),
             ),
             DataColumn(
               label: Text(
                 'Priority',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,),
               ),
             ),
             DataColumn(
               label: Text(
                 'Status',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,),
               ),
             ),
             // Add more DataColumn as needed
