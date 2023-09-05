@@ -75,7 +75,7 @@ class _LeftDrawerState extends State<LeftDrawer> {
                 child: Padding(
                   padding: EdgeInsets.only(left: 50),
                   child: Text('Talent Management',style: TextStyle(
-                      color: AppColor.drawerLight,
+                      color: AppColor.table,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   ),
@@ -88,7 +88,7 @@ class _LeftDrawerState extends State<LeftDrawer> {
                 child:  Padding(
                   padding: EdgeInsets.only(left: 50),
                   child: Text('Finance & Accounting',style: TextStyle(
-                      color: AppColor.drawerLight,
+                      color: AppColor.table,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   ),
@@ -100,7 +100,7 @@ class _LeftDrawerState extends State<LeftDrawer> {
                 child:  Padding(
                   padding: const EdgeInsets.only(left: 50),
                   child: Text('Audit & Assurance',style: TextStyle(
-                      color: AppColor.drawerLight,
+                      color: AppColor.table,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   ),
@@ -112,7 +112,7 @@ class _LeftDrawerState extends State<LeftDrawer> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 50),
                   child: Text('Company Secretarial',style: TextStyle(
-                      color: AppColor.drawerLight,
+                      color: AppColor.table,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   ),
@@ -124,7 +124,7 @@ class _LeftDrawerState extends State<LeftDrawer> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 50),
                   child: Text('Development',style: TextStyle(
-                      color: AppColor.drawerLight,
+                      color: AppColor.table,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   ),

@@ -9,6 +9,6 @@ class AppColor {
   static Color loginF = const Color(0xFF1F2A8C);
   static  Color complete = const Color(0xFF0400D1);
   static  Color pending = const Color(0xFF809FB8);
-  static  Color table = const Color(0xFF4A6AC0);
+  static  Color table = const Color(0xFF7B96E1);
 
 }
