@@ -185,17 +185,48 @@ class _DashboardState extends State<Dashboard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     Container(
                       width: 450,
-                    height: 200,
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    color: Colors.white,),
-
-
+                      height: 250,
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                        color: Colors.white,
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            color: Colors.white, // Background color for the "Notification" text
+                            child: Row(
+                              children: [
+                                Icon(Icons.notifications_active, color: Colors.red),
+                                SizedBox(width: 8),
+                                Text(
+                                  "Notification",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     TaskLog(),
                   ],
                 )
+
 
               ],
             ),

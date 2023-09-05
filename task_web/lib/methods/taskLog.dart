@@ -285,43 +285,77 @@ class _TaskLogState extends State<TaskLog> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
       margin: EdgeInsets.symmetric(horizontal: 15),
-      height: 200,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+        color: Colors.white,
+      ),
+      height: 250,
       width: 600,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            FutureBuilder<List<taskLog>>(
-              future: getTaskLogList(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text("Error: ${snapshot.error}");
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text("No data available");
-                } else {
-                  return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: rowDataAsTaskLog(
-                          context,
-                          snapshot.data![index],
-                          (index + 1),
-                        ),
-                      );
-                    },
-                  );
-                }
-              },
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(5),
+            color: Colors.white, // Background color for the "Log" text
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Log",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  FutureBuilder<List<taskLog>>(
+                    future: getTaskLogList(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text("Error: ${snapshot.error}");
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return Text("No data available");
+                      } else {
+                        return ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: rowDataAsTaskLog(
+                                context,
+                                snapshot.data![index],
+                                (index + 1),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
+
+
+
 }
