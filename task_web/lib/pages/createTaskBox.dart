@@ -258,12 +258,23 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
     return SingleChildScrollView(
       child: AlertDialog(
         title: _isEditingTitle
-            ? TextField(
+            ? Row(
+          children: [
+            Expanded(
+              child: TextField(
                 controller: titleController,
                 decoration: const InputDecoration(
                   hintText: "Task Title",
                 ),
-              )
+              ),
+            ),
+            IconButton(
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(Icons.cancel_outlined,size: 20,))
+          ],
+        )
             : GestureDetector(
                 onTap: () {
                   setState(() {
@@ -278,400 +289,355 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (_isEditingTitle)
-                // Container(
-                //   decoration: BoxDecoration(
-                //     color: Colors.grey[400],
-                //     border: Border.all(color: Colors.grey),
-                //     borderRadius: BorderRadius.circular(5.0),
-                //   ),
-                //   padding: const EdgeInsets.symmetric(horizontal: 10),
-                //   // child: TextField(
-                //   //   controller: descriptionController,
-                //   //   textInputAction: TextInputAction.done,
-                //   //   keyboardType: TextInputType.multiline,
-                //   //   maxLines: null,
-                //   //   decoration: const InputDecoration(
-                //   //     hintText: "Add Description",
-                //   //     border: InputBorder.none,
-                //   //   ),
-                //   // ),
-                // ),
-                // const SizedBox(height: 20),
-                Column(
+              Container(
+                width: 700,
+                height: 280,
+                color: Colors.grey.shade100,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 700,
-                      height: 280,
-                      color: Colors.grey.shade100,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                    SizedBox(
+                      width: 120,
+                      height: 300,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: 120,
-                            height: 300,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.calendar_month_rounded,
-                                      size: 16,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 6,
-                                          bottom: 10,
-                                          top: 10,
-                                          right: 4),
-                                      child: Text(
-                                        'Due Date',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: AppColor.drawerLight),
-                                      ),
-                                    ),
-                                  ],
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.calendar_month_rounded,
+                                size: 16,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 6,
+                                    bottom: 10,
+                                    top: 10,
+                                    right: 4),
+                                child: Text(
+                                  'Due Date',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: AppColor.drawerLight),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18, bottom: 18, top: 15),
-                                  child: Text(
-                                    'Source From', // Updated text here
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColor.drawerLight),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18, bottom: 18, top: 18),
-                                  child: Text(
-                                    'Assign To',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColor.drawerLight),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18, bottom: 18, top: 18),
-                                  child: Text(
-                                    'Company',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColor.drawerLight),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18, bottom: 18, top: 18),
-                                  child: Text(
-                                    'Priority',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColor.drawerLight),
-                                  ),
-                                ),
-                              ],
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18, bottom: 18, top: 15),
+                            child: Text(
+                              'Source From', // Updated text here
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppColor.drawerLight),
                             ),
                           ),
-                          const VerticalDivider(
-                            thickness: 2,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18, bottom: 18, top: 18),
+                            child: Text(
+                              'Assign To',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppColor.drawerLight),
+                            ),
                           ),
-                          SizedBox(
-                            height: 300,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: () async {
-                                    final selectedDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2100),
-                                    );
-
-                                    if (selectedDate != null) {
-                                      setState(() {
-                                        _selectedDueDate = selectedDate;
-                                      });
-                                    }
-                                  },
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.calendar_month_rounded,
-                                        size: 16,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 6,
-                                            bottom: 10,
-                                            top: 10,
-                                            right: 4),
-                                        child: Text(
-                                          _selectedDueDate != null
-                                              ? _selectedDueDate!
-                                                  .toString()
-                                                  .split(' ')[0]
-                                              : 'Select Due Date',
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Padding(
-                                //   padding: const EdgeInsets.only(left: 18, bottom: 10),
-                                //   child: TextField(
-                                //       focusNode: AlwaysDisabledFocusNode(),
-                                //       controller: createTaskDueDateController,
-                                //       onTap: () {
-                                //         selectDate(
-                                //             context, createTaskDueDateController);
-                                //       },
-                                //       decoration: InputDecoration(
-                                //           border: const OutlineInputBorder(),
-                                //           hintText: 'Due Date',
-                                //           suffixIcon: IconButton(
-                                //             onPressed: () {
-                                //               selectDate(context,
-                                //                   createTaskDueDateController);
-                                //             },
-                                //             icon: const Icon(
-                                //               Icons.date_range,
-                                //               color: Colors.blue,
-                                //               size: 11,
-                                //             ),
-                                //           ))),
-                                // ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18, bottom: 10),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: dropdownvalue1,
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down,
-                                      ),
-                                      items: items1.map((String items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: Text(
-                                            items,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownvalue1 = newValue!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18, bottom: 10),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: dropdownvalue2,
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down,
-                                      ),
-                                      items: items2.map((String items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: Text(
-                                            items,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownvalue2 = newValue!;
-                                          assignTo.add(dropdownvalue2);
-                                          assignToController.text =
-                                              assignTo.toString();
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18, bottom: 10),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value:
-                                          dropdownvalue3, // Changed to dropdownvalue3
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down,
-                                      ),
-                                      items: items3.map((String items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: Text(
-                                            items,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownvalue3 = newValue!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18, bottom: 10),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: dropdownvalue4,
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down,
-                                      ),
-                                      items: items4.map((String item) {
-                                        return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownvalue4 = newValue!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                )
-                              ],
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18, bottom: 18, top: 18),
+                            child: Text(
+                              'Company',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppColor.drawerLight),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18, bottom: 18, top: 18),
+                            child: Text(
+                              'Priority',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppColor.drawerLight),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20,),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: EdgeInsets.all(20),
-                            child: MaterialButton(
-                              color: Colors.deepPurple,
-                              onPressed: () {
-                                titleController.text = "";
-                                descriptionController.text = "";
-                                subTitleController.text = "";
-                                assignToController.text = "";
-                                documentNumberController.text = "";
-                                createTaskDueDateController.text = "";
-                                assignTo.clear();
-                              },
-                              child: Text('CLEAR',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white)),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 50,),
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: EdgeInsets.all(20),
-                            child: MaterialButton(
-                              color: Colors.deepPurple,
-                              onPressed: () {
-                                mainTask(context);
-                              },
-                              child: Text('SUBMIT',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white)),
-                            ),
-                          ),
-                        ),
-                      ],
+                    const VerticalDivider(
+                      thickness: 2,
                     ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    // Container(
-                    //   height: 50,
-                    //   width: 700,
-                    //   child: Padding(
-                    //     padding: EdgeInsets.all(2),
-                    //     child: Align(
-                    //       alignment: Alignment.bottomLeft,
-                    //       child: TextField(
-                    //         textInputAction: TextInputAction.next,
-                    //         keyboardType: TextInputType.multiline,
-                    //         maxLines: null,
-                    //         controller: subTitleController,
-                    //         decoration: const InputDecoration(
-                    //           labelText: 'Sub Task Title',
-                    //           hintText: 'Sub Task Title',
-                    //         ),
-                    //           style: TextStyle(
-                    //               fontSize: 15)
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    // Container(
-                    //   height: 50,
-                    //   width: 700,
-                    //   child: Padding(
-                    //     padding: EdgeInsets.all(2),
-                    //     child: Align(
-                    //       alignment: Alignment.bottomLeft,
-                    //       child: TextField(
-                    //         textInputAction: TextInputAction.done,
-                    //         keyboardType: TextInputType.multiline,
-                    //         maxLines: null,
-                    //         controller: descriptionController,
-                    //         decoration: const InputDecoration(
-                    //           border: OutlineInputBorder(),
-                    //           labelText: 'Description',
-                    //           hintText: 'Description',
-                    //         ),
-                    //         style: TextStyle(
-                    //             fontSize: 15),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    SizedBox(
+                      height: 300,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              final selectedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2100),
+                              );
+
+                              if (selectedDate != null) {
+                                print('Selected Date: $selectedDate'); // Add this line for debugging
+                                setState(() {
+                                  _selectedDueDate = selectedDate;
+                                  createTaskDueDateController.text = _selectedDueDate.toString();
+                                });
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.calendar_month_rounded,
+                                  size: 16,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 6,
+                                      bottom: 10,
+                                      top: 10,
+                                      right: 4),
+                                  child: Text(
+                                    _selectedDueDate != null
+                                        ? _selectedDueDate!
+                                        .toString()
+                                        .split(' ')[0]
+                                        : 'Select Due Date',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18, bottom: 10),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                value: dropdownvalue1,
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                ),
+                                items: items1.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(
+                                      items,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue1 = newValue!;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18, bottom: 10),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                value: dropdownvalue2,
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                ),
+                                items: items2.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(
+                                      items,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue2 = newValue!;
+                                    assignTo.add(dropdownvalue2);
+                                    assignToController.text =
+                                        assignTo.toString();
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18, bottom: 10),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                value:
+                                    dropdownvalue3, // Changed to dropdownvalue3
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                ),
+                                items: items3.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(
+                                      items,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue3 = newValue!;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18, bottom: 10),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                value: dropdownvalue4,
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                ),
+                                items: items4.map((String item) {
+                                  return DropdownMenuItem(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue4 = newValue!;
+                                  });
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
+              ),
+              SizedBox(height: 20,),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: MaterialButton(
+                        color: Colors.deepPurple,
+                        onPressed: () {
+                          titleController.text = "";
+                          descriptionController.text = "";
+                          subTitleController.text = "";
+                          assignToController.text = "";
+                          documentNumberController.text = "";
+                          createTaskDueDateController.text = "";
+                          assignTo.clear();
+                        },
+                        child: const Text('CLEAR',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white)),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 50,),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: MaterialButton(
+                        color: Colors.deepPurple,
+                        onPressed: () {
+                          mainTask(context);
+                        },
+                        child: Text('SUBMIT',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // Container(
+              //   height: 50,
+              //   width: 700,
+              //   child: Padding(
+              //     padding: EdgeInsets.all(2),
+              //     child: Align(
+              //       alignment: Alignment.bottomLeft,
+              //       child: TextField(
+              //         textInputAction: TextInputAction.next,
+              //         keyboardType: TextInputType.multiline,
+              //         maxLines: null,
+              //         controller: subTitleController,
+              //         decoration: const InputDecoration(
+              //           labelText: 'Sub Task Title',
+              //           hintText: 'Sub Task Title',
+              //         ),
+              //           style: TextStyle(
+              //               fontSize: 15)
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // Container(
+              //   height: 50,
+              //   width: 700,
+              //   child: Padding(
+              //     padding: EdgeInsets.all(2),
+              //     child: Align(
+              //       alignment: Alignment.bottomLeft,
+              //       child: TextField(
+              //         textInputAction: TextInputAction.done,
+              //         keyboardType: TextInputType.multiline,
+              //         maxLines: null,
+              //         controller: descriptionController,
+              //         decoration: const InputDecoration(
+              //           border: OutlineInputBorder(),
+              //           labelText: 'Description',
+              //           hintText: 'Description',
+              //         ),
+              //         style: TextStyle(
+              //             fontSize: 15),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
