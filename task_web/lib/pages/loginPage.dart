@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/colors.dart';
+import 'package:task_web/pages/dashboardPage.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 import 'package:http/http.dart' as http;
 
@@ -64,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
           if (!mounted) return true;
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const TaskPage()),
+            MaterialPageRoute(builder: (context) => const Dashboard()),
           );
         } else {
           snackBar(context, "Permission denied", Colors.yellow);
