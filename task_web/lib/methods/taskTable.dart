@@ -260,6 +260,16 @@ class _TaskTableState extends State<TaskTable> {
         for (Map<String, dynamic> details in responseJson) {
           mainTaskList.add(MainTask.fromJson(details));
         }
+        mainTaskList.sort((a, b) =>
+            b.taskCreatedTimestamp.compareTo(a.taskCreatedTimestamp));
+
+        // Count tasks with taskStatus = 0
+        int pendingTaskCount = mainTaskList.where((task) => task.taskStatus == "0").length;
+        int inProgressTaskCount = mainTaskList.where((task) => task.taskStatus == "1").length;
+        int allTaskCount = mainTaskList.length;
+        print("Pending Task: $pendingTaskCount");
+        print("All Task: $allTaskCount");
+        print("In Progress Task: $inProgressTaskCount");
       });
     } else {
       throw Exception('Failed to load jobs from API');
