@@ -34,6 +34,11 @@ class _DashboardState extends State<Dashboard> {
   double inProgressPercent = 0.0;
   double inProgressPercentText = 0.00;
 
+  int pendingTaskCount = 0;
+  double pendingTaskPercent = 0.0;
+  double pendingTaskPercentText = 0.00;
+
+
 
   @override
   void initState() {
@@ -171,11 +176,6 @@ class _DashboardState extends State<Dashboard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ChartBox(
-                        centerText: '60.0%',
-                        percent: 0.6,
-                        footerText: 'Completed this Week',
-                      ),
 
                       ChartBox(
                         centerText: '$inProgressPercentText%',
@@ -184,16 +184,12 @@ class _DashboardState extends State<Dashboard> {
                       ),
 
                       ChartBox(
-                        centerText: '15.0%',
-                        percent: 0.15,
-                        footerText: 'To-Do this Week',
+                        centerText: '$pendingTaskPercentText%',
+                        percent: pendingTaskPercent,
+                        footerText: 'Pending Task: $pendingTaskCount',
                       ),
 
-                      ChartBox(
-                        centerText: '10.0%',
-                        percent: 0.10,
-                        footerText: 'OverDue this Week',
-                      ),
+
                     ],
                   ),
                 ),
@@ -258,6 +254,8 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
+
+
   Future<void> getTaskList() async {
     mainTaskList.clear();
     var data = {};
@@ -282,7 +280,7 @@ class _DashboardState extends State<Dashboard> {
             b.taskCreatedTimestamp.compareTo(a.taskCreatedTimestamp));
 
         // Count tasks with taskStatus = 0
-        int pendingTaskCount = mainTaskList
+        pendingTaskCount = mainTaskList
             .where((task) => task.taskStatus == "0")
             .length;
         inProgressTaskCount = mainTaskList
@@ -310,10 +308,29 @@ class _DashboardState extends State<Dashboard> {
           print("In Progress Percent Text: $inProgressPercentText");
         }
 
+        // Calculate the percentage of to-do tasks
+        if (allTaskCount > 0) {
+          pendingTaskPercent = (pendingTaskCount / allTaskCount);
+          pendingTaskPercent = double.parse(pendingTaskPercent.toStringAsFixed(2));
+          print("To-Do Percent: $pendingTaskPercent");
+        }
+
+        if (allTaskCount > 0) {
+          pendingTaskPercentText = ((pendingTaskCount / allTaskCount)*100);
+          pendingTaskPercentText = double.parse(pendingTaskPercentText.toStringAsFixed(2));
+          print("To-Do Percent Text: $pendingTaskPercentText");
+        }
+
       });
     } else {
       throw Exception('Failed to load jobs from API');
     }
+
+
   }
 
+
+
+
 }
+
