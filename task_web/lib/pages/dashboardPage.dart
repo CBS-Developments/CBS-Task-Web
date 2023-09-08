@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/drawers/drawerDash.dart';
 import 'package:task_web/methods/taskLog.dart';
 import 'package:task_web/sizes/pageSizes.dart';
+import 'package:http/http.dart' as http;
 
 import '../methods/appBar.dart';
 import '../methods/chartBox.dart';
+import '../methods/taskTable.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -15,6 +19,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  List<MainTask> mainTaskList = [];
 
   String userName = "";
   String firstName = "";
@@ -24,11 +29,24 @@ class _DashboardState extends State<Dashboard> {
 
   String get taskCount => '20';
 
+  int allTaskCount = 0;
+  int inProgressTaskCount = 0;
+  double inProgressPercent = 0.0;
+  double inProgressPercentText = 0.00;
+
+  int pendingTaskCount = 0;
+  double pendingTaskPercent = 0.0;
+  double pendingTaskPercentText = 0.00;
+
+
+
   @override
   void initState() {
     super.initState();
     loadData();
+    getTaskList();
   }
+
 
   void loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -38,7 +56,6 @@ class _DashboardState extends State<Dashboard> {
       lastName = prefs.getString('last_name') ?? "";
       phone = prefs.getString('phone') ?? "";
       userRole = prefs.getString('user_role') ?? "";
-
     });
   }
 
@@ -55,7 +72,7 @@ class _DashboardState extends State<Dashboard> {
         children: [
           LeftDrawerDash(),
 
-          SizedBox(width: getPageWidth(context)-240,
+          SizedBox(width: getPageWidth(context) - 240,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -79,15 +96,16 @@ class _DashboardState extends State<Dashboard> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(6.0),
-                            child: Text('Total Tasks',style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
+                            child: Text('Total Tasks', style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold
                             ),),
                           ),
 
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                            child: Text(taskCount,style: TextStyle(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6.0),
+                            child: Text('$allTaskCount', style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold
                             ),),
@@ -95,7 +113,7 @@ class _DashboardState extends State<Dashboard> {
                         ],
                       ),
                     ),
-                    
+
                     Container(
                       width: 360,
                       height: 40,
@@ -104,16 +122,18 @@ class _DashboardState extends State<Dashboard> {
                       child: Row(
                         children: [
                           TextButton(
-                              onPressed: (){}, 
+                              onPressed: () {},
                               child: Row(
                                 children: [
-                                  Icon(Icons.add_circle_outline,color: Colors.red,),
+                                  Icon(Icons.add_circle_outline,
+                                    color: Colors.red,),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text('User Creation',style:
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: Text('User Creation', style:
                                     TextStyle(
                                         fontSize: 16,
-                                      color: Colors.black
+                                        color: Colors.black
                                     ),
                                     ),
                                   )
@@ -126,14 +146,17 @@ class _DashboardState extends State<Dashboard> {
                           ),
 
                           TextButton(
-                              onPressed: (){},
+                              onPressed: () {},
                               child: Row(
                                 children: [
-                                  Icon(Icons.add_circle_outline,color: Colors.red,),
+                                  Icon(Icons.add_circle_outline,
+                                    color: Colors.red,),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text('Company Creation',style:
-                                    TextStyle(fontSize: 16,color: Colors.black),),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: Text('Company Creation', style:
+                                    TextStyle(
+                                        fontSize: 16, color: Colors.black),),
                                   )
                                 ],
                               )
@@ -149,33 +172,24 @@ class _DashboardState extends State<Dashboard> {
                 SizedBox(height: 10,),
 
                 SizedBox(
-                  width: getPageWidth(context)-240,
+                  width: getPageWidth(context) - 240,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+
                       ChartBox(
-                        centerText: '60.0%',
-                        percent: 0.6,
-                        footerText: 'Completed this Week',
+                        centerText: '$inProgressPercentText%',
+                        percent: inProgressPercent,
+                        footerText: 'In-Progress Task: $inProgressTaskCount',
                       ),
 
                       ChartBox(
-                        centerText: '25.0%',
-                        percent: 0.25,
-                        footerText: 'In-Progress this Week',
+                        centerText: '$pendingTaskPercentText%',
+                        percent: pendingTaskPercent,
+                        footerText: 'Pending Task: $pendingTaskCount',
                       ),
 
-                      ChartBox(
-                        centerText: '15.0%',
-                        percent: 0.15,
-                        footerText: 'To-Do this Week',
-                      ),
 
-                      ChartBox(
-                        centerText: '10.0%',
-                        percent: 0.10,
-                        footerText: 'OverDue this Week',
-                      ),
                     ],
                   ),
                 ),
@@ -204,10 +218,12 @@ class _DashboardState extends State<Dashboard> {
                         children: [
                           Container(
                             padding: EdgeInsets.all(8),
-                            color: Colors.white, // Background color for the "Notification" text
+                            color: Colors.white,
+                            // Background color for the "Notification" text
                             child: Row(
                               children: [
-                                Icon(Icons.notifications_active, color: Colors.red),
+                                Icon(Icons.notifications_active,
+                                    color: Colors.red),
                                 SizedBox(width: 8),
                                 Text(
                                   "Notification",
@@ -237,4 +253,84 @@ class _DashboardState extends State<Dashboard> {
 
     );
   }
+
+
+
+  Future<void> getTaskList() async {
+    mainTaskList.clear();
+    var data = {};
+
+    const url = "http://dev.connect.cbs.lk/mainTaskList.php";
+    http.Response res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    );
+
+    if (res.statusCode == 200) {
+      final responseJson = json.decode(res.body) as List<dynamic>;
+      setState(() {
+        for (Map<String, dynamic> details in responseJson) {
+          mainTaskList.add(MainTask.fromJson(details));
+        }
+        mainTaskList.sort((a, b) =>
+            b.taskCreatedTimestamp.compareTo(a.taskCreatedTimestamp));
+
+        // Count tasks with taskStatus = 0
+        pendingTaskCount = mainTaskList
+            .where((task) => task.taskStatus == "0")
+            .length;
+        inProgressTaskCount = mainTaskList
+            .where((task) => task.taskStatus == "1")
+            .length;
+        int completedTaskCount = mainTaskList
+            .where((task) => task.taskStatus == "2")
+            .length;
+        allTaskCount = mainTaskList.length;
+        print("Pending Task: $pendingTaskCount");
+        print("All Task: $allTaskCount");
+        print("In Progress Task: $inProgressTaskCount");
+        print("In Completed Task: $completedTaskCount");
+
+        // Calculate the percentage of in-progress tasks
+        if (allTaskCount > 0) {
+          inProgressPercent = (inProgressTaskCount / allTaskCount);
+          inProgressPercent = double.parse(inProgressPercent.toStringAsFixed(2));
+          print("In Progress Percent: $inProgressPercent");
+        }
+
+        if (allTaskCount > 0) {
+          inProgressPercentText = ((inProgressTaskCount / allTaskCount)*100);
+          inProgressPercentText = double.parse(inProgressPercentText.toStringAsFixed(2));
+          print("In Progress Percent Text: $inProgressPercentText");
+        }
+
+        // Calculate the percentage of to-do tasks
+        if (allTaskCount > 0) {
+          pendingTaskPercent = (pendingTaskCount / allTaskCount);
+          pendingTaskPercent = double.parse(pendingTaskPercent.toStringAsFixed(2));
+          print("To-Do Percent: $pendingTaskPercent");
+        }
+
+        if (allTaskCount > 0) {
+          pendingTaskPercentText = ((pendingTaskCount / allTaskCount)*100);
+          pendingTaskPercentText = double.parse(pendingTaskPercentText.toStringAsFixed(2));
+          print("To-Do Percent Text: $pendingTaskPercentText");
+        }
+
+      });
+    } else {
+      throw Exception('Failed to load jobs from API');
+    }
+
+
+  }
+
+
+
+
 }
+
