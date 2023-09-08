@@ -160,6 +160,7 @@ class Task {
   String assignTo;
   String company;
   String documentNumber;
+  String priority;
 
   Task(
       {required this.taskId,
@@ -198,7 +199,8 @@ class Task {
         required this.sourceFrom,
         required this.assignTo,
         required this.company,
-        required this.documentNumber});
+        required this.documentNumber,
+        required this.priority,});
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
@@ -238,7 +240,8 @@ class Task {
         sourceFrom: json['source_from'],
         assignTo: json['assign_to'],
         company: json['company'],
-        documentNumber: json['document_number']);
+        documentNumber: json['document_number'],
+        priority: json['priority'],);
   }
 }
 
@@ -383,8 +386,8 @@ var items3 = [
 ];
 String dropdownvalue3 = 'Company';
 
-var items4 = ['-All-', 'Top Urgent', 'Medium', 'Regular', 'Low'];
-String dropdownvalue4 = 'Low';
+var items4 = ['Priority','-All-', 'Top Urgent', 'Medium', 'Regular', 'Low'];
+String dropdownvalue4 = 'Priority';
 
 DateTime selectedDate = DateTime.now(); // Initialize selectedDate with a default value
 
@@ -412,6 +415,7 @@ Future<void> selectDate(
   );
 
   if (newSelectedDate != null) {
+    print("Selected Date: $newSelectedDate"); // Check if the selected date is correct
     setState(() {
       selectedDate = newSelectedDate;
       textEditingController
@@ -422,8 +426,10 @@ Future<void> selectDate(
             affinity: TextAffinity.upstream,
           ),
         );
+      print("Text in TextField: ${textEditingController.text}"); // Check the text being set in the TextField
     });
   }
+
 }
 
 void setState(Null Function() param0) {
