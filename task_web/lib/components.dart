@@ -200,7 +200,8 @@ class Task {
         required this.assignTo,
         required this.company,
         required this.documentNumber,
-        required this.priority,});
+        required this.priority,
+      });
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
@@ -241,7 +242,7 @@ class Task {
         assignTo: json['assign_to'],
         company: json['company'],
         documentNumber: json['document_number'],
-        priority: json['priority'],);
+        priority: json['priority']);
   }
 }
 
@@ -426,7 +427,6 @@ Future<void> selectDate(
             affinity: TextAffinity.upstream,
           ),
         );
-      print("Text in TextField: ${textEditingController.text}"); // Check the text being set in the TextField
     });
   }
 
