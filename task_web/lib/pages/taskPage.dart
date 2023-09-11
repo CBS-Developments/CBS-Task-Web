@@ -70,7 +70,7 @@ class _TaskPageState extends State<TaskPage> {
                 onPressed: () { showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return CreateTaskDialog(); // Use the dialog widget here
+                    return CreateTaskDialog(userName, firstName, lastName); // Use the dialog widget here
                   },
                 );
                   },
