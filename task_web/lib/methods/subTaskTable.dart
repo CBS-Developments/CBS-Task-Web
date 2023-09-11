@@ -3,6 +3,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../pages/openSubTaskBox.dart';
+
+
 class SubTaskTable extends StatefulWidget {
   final List<Task> subtasks; // Add this parameter
 
@@ -13,6 +16,18 @@ class SubTaskTable extends StatefulWidget {
 }
 
 class _SubTaskTableState extends State<SubTaskTable> {
+
+
+
+  void _showSubTaskDetailsDialog(BuildContext context, Task task) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SubTaskDetailsDialog(task);
+      },
+    );
+  }
+
   String mainTaskId = ''; // Define the necessary variables
   String mainTaskTitle = '';
   String taskType = '';
@@ -116,7 +131,12 @@ class _SubTaskTableState extends State<SubTaskTable> {
           rows: subTaskList.map((subtask) {
             return DataRow(
               cells: [
-                DataCell(Text(subtask.taskTitle)),
+                DataCell(
+                    TextButton(
+                        child: Text(subtask.taskTitle),
+                      onPressed: () => _showSubTaskDetailsDialog(context, subtask),
+                    )
+                ),
                 DataCell(Text(subtask.dueDate)),
                 DataCell(Text(subtask.assignTo)),
                 // Add more DataCell widgets as needed
