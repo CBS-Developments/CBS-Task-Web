@@ -35,12 +35,14 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
   bool subTaskTitleValidation = false;
   bool descriptionValidation = false;
   int taskType = 1;
-  String taskTypeString = "Top Urgent";
+  String taskTypeString = "Low";
   // ignore: unused_field
   menuitem _mitem = menuitem.item1;
-  late String userName = '';
-  late String firstName = '';
-  late String lastName = '';
+  String userName = "";
+  String firstName = "";
+  String lastName = "";
+  String phone = "";
+  String userRole = "";
   List<String> assignTo = [];
 
   TextEditingController titleController = TextEditingController();
@@ -53,17 +55,22 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
   @override
   void initState() {
     super.initState();
-    retrieverData();
+    loadData();
   }
 
-  void retrieverData() async {
-    final prefs = await SharedPreferences.getInstance();
+
+  void loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      userName = (prefs.getString('user_name') ?? '');
-      firstName = (prefs.getString('first_name') ?? '').toUpperCase();
-      lastName = (prefs.getString('last_name') ?? '').toUpperCase();
+      userName = prefs.getString('user_name') ?? "";
+      firstName = prefs.getString('first_name') ?? "";
+      lastName = prefs.getString('last_name') ?? "";
+      phone = prefs.getString('phone') ?? "";
+      userRole = prefs.getString('user_role') ?? "";
     });
   }
+
+
   Future<bool> mainTask(BuildContext context) async {
     if (titleController.text.trim().isEmpty) {
       setState(() {
@@ -76,6 +83,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
         titleValidation = false;
       });
     }
+
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     int taskTimeStamp = timestamp;
@@ -237,7 +245,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
     if (res.statusCode.toString() == "200") {
       if (jsonDecode(res.body) == "true") {
         if (!mounted) return true;
-        snackBar(context, "Done", Colors.green);
+        createTask(context, taskId);
         return true;
       } else {
         if (!mounted) return false;
@@ -249,6 +257,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
     }
     return true;
   }
+
 
   @override
   Widget build(BuildContext context) {
