@@ -12,10 +12,12 @@ class TaskDetailsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Container(
-          width: 1020, // Set the width of the dialog
+          width: 1120, // Set the width of the dialog
           height: 500, // Set the height of the dialog
           child: SingleChildScrollView(
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 width: 700,
@@ -295,13 +297,13 @@ class TaskDetailsDialog extends StatelessWidget {
               VerticalDivider(),
 
               Container(
-                width: 200,
+                width: 360,
                 height: 500,
                 // color: Colors.lightBlueAccent,
                 child: Column(
                   children: [
                     Container(
-                      width: 200,
+                      width: 330,
                       height: 40,
                       color: Colors.grey.shade300,
                       child: Row(
@@ -315,23 +317,18 @@ class TaskDetailsDialog extends StatelessWidget {
                             ),),
                           ),
 
-                          IconButton(
-                              onPressed: (){
-                                Navigator.of(context).pop();
-                              },
-                              icon: Icon(Icons.cancel_outlined,size: 20,))
                         ],
                       ),
                     ),
 
                     Container(
-                      width: 200,
-                      height: 200,
+                      width:300,
+                      height: 150,
                       color: Colors.white,
                     ),
 
                     Container(
-                      width: 200,
+                      width: 330,
                       height: 35,
                       color: Colors.grey.shade300,
                       child: Align(alignment: Alignment.centerLeft,
@@ -346,13 +343,13 @@ class TaskDetailsDialog extends StatelessWidget {
                     ),
 
                     Container(
-                      width: 200,
-                      height: 175,
+                      width: 330,
+                      height: 225,
                       color: Colors.white,
                     ),
 
                     Container(
-                      width: 200,
+                      width: 330,
                       height: 40,
                       child: TextField(
                         textAlignVertical: TextAlignVertical.bottom,
@@ -370,7 +367,13 @@ class TaskDetailsDialog extends StatelessWidget {
 
                   ],
                 ),
-              )
+              ),
+
+              IconButton(
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.cancel_outlined,size: 20,))
             ],
           ))),
 
