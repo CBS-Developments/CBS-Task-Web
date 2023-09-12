@@ -13,7 +13,7 @@ class SubTaskDetailsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Container(
-          width: 920, // Set the width of the dialog
+          width: 1076, // Set the width of the dialog
           height: 500, // Set the height of the dialog
           child: Row(
             children: [
@@ -41,12 +41,27 @@ class SubTaskDetailsDialog extends StatelessWidget {
                               fontSize: 18,
                             ),
                           ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.remove_red_eye_outlined,
-                                color: Colors.black,
-                              ))
+                          Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {},
+                                  tooltip: 'Edit Task',
+                                  icon: Icon(
+                                    Icons.edit_note_rounded,
+                                    color: Colors.black,
+                                    size: 22,
+                                  )),
+
+                              IconButton(
+                                  onPressed: () {},
+                                  tooltip: 'Delete Task',
+                                  icon: Icon(
+                                    Icons.delete_rounded,
+                                    color: Colors.redAccent,
+                                    size: 19,
+                                  )),
+                            ],
+                          )
                         ],
                       ),
                       Text(
@@ -288,13 +303,13 @@ class SubTaskDetailsDialog extends StatelessWidget {
               VerticalDivider(),
 
               Container(
-                width: 200,
+                width: 360,
                 height: 500,
                 // color: Colors.lightBlueAccent,
                 child: Column(
                   children: [
                     Container(
-                      width: 200,
+                      width: 330,
                       height: 40,
                       color: Colors.grey.shade300,
                       child: Row(
@@ -308,23 +323,18 @@ class SubTaskDetailsDialog extends StatelessWidget {
                             ),),
                           ),
 
-                          IconButton(
-                              onPressed: (){
-                                Navigator.of(context).pop();
-                              },
-                              icon: Icon(Icons.cancel_outlined,size: 20,))
                         ],
                       ),
                     ),
 
                     Container(
-                      width: 200,
-                      height: 200,
+                      width:300,
+                      height: 150,
                       color: Colors.white,
                     ),
 
                     Container(
-                      width: 200,
+                      width: 330,
                       height: 35,
                       color: Colors.grey.shade300,
                       child: Align(alignment: Alignment.centerLeft,
@@ -339,13 +349,13 @@ class SubTaskDetailsDialog extends StatelessWidget {
                     ),
 
                     Container(
-                      width: 200,
-                      height: 175,
+                      width: 330,
+                      height: 225,
                       color: Colors.white,
                     ),
 
                     Container(
-                      width: 200,
+                      width: 330,
                       height: 40,
                       child: TextField(
                         textAlignVertical: TextAlignVertical.bottom,
@@ -363,7 +373,7 @@ class SubTaskDetailsDialog extends StatelessWidget {
 
                   ],
                 ),
-              )
+              ),
             ],
           )),
 
