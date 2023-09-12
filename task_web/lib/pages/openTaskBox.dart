@@ -33,12 +33,28 @@ class TaskDetailsDialog extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.remove_red_eye_outlined,
-                              color: Colors.black,
-                            ))
+                        Row(
+                          children: [
+
+                            IconButton(
+                                onPressed: () {},
+                                tooltip: 'Edit Task',
+                                icon: Icon(
+                                  Icons.edit_note_rounded,
+                                  color: Colors.black,
+                                  size: 22,
+                                )),
+
+                            IconButton(
+                                onPressed: () {},
+                                tooltip: 'Delete Task',
+                                icon: Icon(
+                                  Icons.delete_rounded,
+                                  color: Colors.redAccent,
+                                  size: 19,
+                                )),
+                          ],
+                        )
                       ],
                     ),
                     Text(
