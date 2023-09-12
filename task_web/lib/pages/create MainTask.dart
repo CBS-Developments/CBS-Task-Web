@@ -24,13 +24,17 @@ enum menuitem {
 }
 
 class CreateTaskDialog extends StatefulWidget {
-  const CreateTaskDialog({Key? key}) : super(key: key);
+  String username;
+  String firstName;
+  String lastName;
+   CreateTaskDialog( this.username, this.firstName, this.lastName, {Key? key,}) : super(key: key);
 
   @override
   State<CreateTaskDialog> createState() => _CreateTaskDialogState();
 }
 
 class _CreateTaskDialogState extends State<CreateTaskDialog> {
+
   bool titleValidation = false;
   bool subTaskTitleValidation = false;
   bool descriptionValidation = false;
@@ -38,11 +42,10 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
   String taskTypeString = "Low";
   // ignore: unused_field
   menuitem _mitem = menuitem.item1;
-  String userName = "";
+  String userName1 = "" ;
   String firstName = "";
   String lastName = "";
-  String phone = "";
-  String userRole = "";
+
   List<String> assignTo = [];
 
   TextEditingController titleController = TextEditingController();
@@ -52,22 +55,26 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
   TextEditingController documentNumberController = TextEditingController();
   TextEditingController assignToController = TextEditingController();
 
+
+
   @override
   void initState() {
     super.initState();
-    loadData();
+    retrieverData();
   }
 
 
-  void loadData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userName = prefs.getString('user_name') ?? "";
-      firstName = prefs.getString('first_name') ?? "";
-      lastName = prefs.getString('last_name') ?? "";
-      phone = prefs.getString('phone') ?? "";
-      userRole = prefs.getString('user_role') ?? "";
-    });
+  void retrieverData() async {
+   // SharedPreferences prefs = await SharedPreferences.getInstance();
+     setState(() {
+   //  //  userName = (prefs.getString('user_name') ?? '');
+   //    firstName = (prefs.getString('first_name') ?? '').toUpperCase();
+   //    lastName = (prefs.getString('last_name') ?? '').toUpperCase();
+    widget.username;
+     });
+  //  print(userName);
+
+
   }
 
 
@@ -91,7 +98,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
     var dt = DateTime.fromMillisecondsSinceEpoch(taskTimeStamp);
     var stringDate = DateFormat('MM/dd/yyyy').format(dt);
     var stringMonth = DateFormat('MM/yyyy').format(dt);
-    var taskId = "$userName#MT$taskTimeStamp";
+    var taskId = "${widget.username}#MT$taskTimeStamp";
     var url = "http://dev.connect.cbs.lk/mainTask.php";
     var data = {
       "task_id": taskId,
@@ -99,7 +106,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
       "task_type": "$taskType",
       "task_type_name": taskTypeString,
       "due_date": createTaskDueDateController.text,
-      "task_create_by_id": userName,
+      "task_create_by_id": widget.username,
       "task_create_by": "$firstName $lastName",
       "task_create_date": stringDate,
       "task_create_month": stringMonth,
@@ -158,6 +165,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
     }
     return true;
   }
+
   Future<bool> createTask(BuildContext context, var mainTaskId) async {
     if (titleController.text.trim().isEmpty) {
       setState(() {
@@ -189,7 +197,8 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
     var dt = DateTime.fromMillisecondsSinceEpoch(taskTimeStamp);
     var stringDate = DateFormat('MM/dd/yyyy').format(dt);
     var stringMonth = DateFormat('MM/yyyy').format(dt);
-    var taskId = "$userName#ST$taskTimeStamp";
+   // var taskId = "$userName#ST$taskTimeStamp";
+    var taskId =  "${widget.username}#ST$taskTimeStamp";
     var url = "http://dev.connect.cbs.lk/createTask.php";
 
     var data = {
@@ -200,7 +209,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
       "task_type_name": taskTypeString,
       "due_date": createTaskDueDateController.text,
       "task_description": descriptionController.text,
-      "task_create_by_id": userName,
+      "task_create_by_id": widget.username,
       "task_create_by": "$firstName $lastName",
       "task_create_date": stringDate,
       "task_create_month": stringMonth,
@@ -548,6 +557,8 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                         documentNumberController.text = "";
                         createTaskDueDateController.text = "";
                         assignTo.clear();
+
+                        print(widget.username);
                       },
                       child: Text(
                         'CLEAR',
