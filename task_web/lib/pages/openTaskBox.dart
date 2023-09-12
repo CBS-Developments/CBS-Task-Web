@@ -12,7 +12,7 @@ class TaskDetailsDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Container(
-          width: 920, // Set the width of the dialog
+          width: 1020, // Set the width of the dialog
           height: 500, // Set the height of the dialog
           child: SingleChildScrollView(
               child: Row(
