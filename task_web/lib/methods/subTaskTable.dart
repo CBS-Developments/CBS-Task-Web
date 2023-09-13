@@ -108,6 +108,9 @@ class _SubTaskTableState extends State<SubTaskTable> {
         for (Map<String, dynamic> details in responseJson.cast<Map<String, dynamic>>()) {
           subTaskList.add(Task.fromJson(details));
         }
+
+        subTaskList.sort((a, b) =>
+            b.dueDate.compareTo(a.dueDate));
       });
     } else {
       throw Exception('Failed to load subtasks from API');
