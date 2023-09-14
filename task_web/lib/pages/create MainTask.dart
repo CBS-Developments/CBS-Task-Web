@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,42 +10,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../components.dart';
 import '../methods/colors.dart';
 
-enum menuitem {
-  item1,
-  item2,
-  item3,
-  item4,
-  item5,
-  item6,
-  item7,
-  item8,
-  item9,
-  item10,
-  item11
-}
-
 class CreateTaskDialog extends StatefulWidget {
-  String username;
-  String firstName;
-  String lastName;
-   CreateTaskDialog( this.username, this.firstName, this.lastName, {Key? key,}) : super(key: key);
+  final String username;
+  final String firstName;
+  final String lastName;
+
+  CreateTaskDialog(this.username, this.firstName, this.lastName, {Key? key})
+      : super(key: key);
 
   @override
   State<CreateTaskDialog> createState() => _CreateTaskDialogState();
 }
 
 class _CreateTaskDialogState extends State<CreateTaskDialog> {
-
   bool titleValidation = false;
   bool subTaskTitleValidation = false;
   bool descriptionValidation = false;
+
   int taskType = 1;
-  String taskTypeString = "Low";
-  // ignore: unused_field
-  menuitem _mitem = menuitem.item1;
-  String userName1 = "" ;
-  String firstName = "";
-  String lastName = "";
+  String taskTypeString = "Top Urgent";
 
   List<String> assignTo = [];
 
@@ -55,28 +39,15 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
   TextEditingController documentNumberController = TextEditingController();
   TextEditingController assignToController = TextEditingController();
 
-
-
   @override
   void initState() {
     super.initState();
-    retrieverData();
+    loadData();
   }
 
-
-  void retrieverData() async {
-   // SharedPreferences prefs = await SharedPreferences.getInstance();
-     setState(() {
-   //  //  userName = (prefs.getString('user_name') ?? '');
-   //    firstName = (prefs.getString('first_name') ?? '').toUpperCase();
-   //    lastName = (prefs.getString('last_name') ?? '').toUpperCase();
-    widget.username;
-     });
-  //  print(userName);
-
-
+  void loadData() async {
+    setState(() {});
   }
-
 
   Future<bool> mainTask(BuildContext context) async {
     if (titleController.text.trim().isEmpty) {
@@ -90,7 +61,6 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
         titleValidation = false;
       });
     }
-
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     int taskTimeStamp = timestamp;
@@ -107,7 +77,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
       "task_type_name": taskTypeString,
       "due_date": createTaskDueDateController.text,
       "task_create_by_id": widget.username,
-      "task_create_by": "$firstName $lastName",
+      "task_create_by": "${widget.firstName} ${widget.lastName}",
       "task_create_date": stringDate,
       "task_create_month": stringMonth,
       "task_created_timestamp": '$timeSt',
@@ -167,18 +137,6 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
   }
 
   Future<bool> createTask(BuildContext context, var mainTaskId) async {
-    if (titleController.text.trim().isEmpty) {
-      setState(() {
-        titleValidation = true;
-        snackBar(context, "Task title can't be empty", Colors.redAccent);
-      });
-      return false;
-    } else {
-      setState(() {
-        titleValidation = false;
-      });
-    }
-
     if (subTitleController.text.trim().isEmpty) {
       setState(() {
         subTaskTitleValidation = true;
@@ -197,8 +155,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
     var dt = DateTime.fromMillisecondsSinceEpoch(taskTimeStamp);
     var stringDate = DateFormat('MM/dd/yyyy').format(dt);
     var stringMonth = DateFormat('MM/yyyy').format(dt);
-   // var taskId = "$userName#ST$taskTimeStamp";
-    var taskId =  "${widget.username}#ST$taskTimeStamp";
+    var taskId = "${widget.username}#ST$taskTimeStamp";
     var url = "http://dev.connect.cbs.lk/createTask.php";
 
     var data = {
@@ -210,7 +167,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
       "due_date": createTaskDueDateController.text,
       "task_description": descriptionController.text,
       "task_create_by_id": widget.username,
-      "task_create_by": "$firstName $lastName",
+      "task_create_by": "${widget.firstName} ${widget.lastName}",
       "task_create_date": stringDate,
       "task_create_month": stringMonth,
       "task_created_timestamp": '$timeSt',
@@ -238,7 +195,8 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
       "task_delete_by_timestamp": "0",
       "source_from": dropdownvalue1,
       "assign_to": assignToController.text,
-      "company": dropdownvalue3
+      "company": dropdownvalue3,
+      "priority": dropdownvalue4,
     };
 
     http.Response res = await http.post(
@@ -272,8 +230,8 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Container(
-        width: 700, // Set the width of the dialog
-        height: 500,
+        width: 850, // Set the width of the dialog
+        height: 600,
         color: Colors.white70,
         child: Column(
           children: [
@@ -290,7 +248,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                       labelText: 'Task Title',
                       hintText: 'Task Title',
                     ),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
                     ),
@@ -300,19 +258,55 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.cancel_outlined,
                     size: 20,
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            Row(
+              children: [
+                Expanded(child: TextField(
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  controller: subTitleController,
+                  decoration: const InputDecoration(
+                    labelText: 'Sub Task Title',
+                    hintText: 'Sub Task Title',
+                  ),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 14),
+                ),),
+                SizedBox(width: 35,),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child:
+                TextField(
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  controller: descriptionController,
+                  decoration: const InputDecoration(
+                    labelText: 'Description',
+                    hintText: 'Description',
+                  ),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 14),
+                ),),
+                SizedBox(width: 35,)
+              ],
+            ),
+            const SizedBox(
               height: 20,
             ),
             Container(
-              width: 600,
-              height: 280,
+              width: 650,
+              height: 320,
               color: Colors.grey.shade100,
               child: Row(
                 children: [
@@ -322,6 +316,21 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 18,
+                            bottom: 7,
+                            top: 8,
+                          ),
+                          child: Text(
+                            'Beneficiary',
+                            style: TextStyle(
+                              fontSize: 14, // Updated font size to 14
+                              color: AppColor.drawerLight,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 8), // Updated height to 8
                         Row(
                           children: [
                             const Icon(
@@ -331,63 +340,85 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                             Padding(
                               padding: const EdgeInsets.only(
                                 left: 6,
-                                bottom: 10,
+                                bottom: 7,
                                 top: 10,
-                                right: 4,
                               ),
                               child: Text(
                                 'Due Date',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14, // Updated font size to 14
                                   color: AppColor.drawerLight,
                                 ),
                               ),
                             ),
                           ],
                         ),
+                        SizedBox(height: 8), // Updated height to 8
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 18, bottom: 18, top: 18),
-                          child: Text(
-                            'Source From', // Updated text here
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: AppColor.drawerLight),
+                            left: 18,
+                            bottom: 5,
+                            top: 22,
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 18, bottom: 18, top: 18),
                           child: Text(
                             'Assign To',
                             style: TextStyle(
-                                fontSize: 16,
-                                color: AppColor.drawerLight),
+                              fontSize: 14, // Updated font size to 14
+                              color: AppColor.drawerLight,
+                            ),
                           ),
                         ),
+                        SizedBox(height: 8), // Updated height to 8
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 18, bottom: 18, top: 18),
-                          child: Text(
-                            'Company',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: AppColor.drawerLight),
+                            left: 18,
+                            bottom: 5,
+                            top: 22,
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 18, bottom: 18, top: 18),
                           child: Text(
                             'Priority',
                             style: TextStyle(
-                                fontSize: 16,
-                                color: AppColor.drawerLight),
+                              fontSize: 14, // Updated font size to 14
+                              color: AppColor.drawerLight,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 8), // Updated height to 8
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 18,
+                            bottom: 5,
+                            top: 22,
+                          ),
+                          child: Text(
+                            'Source From', // Updated text here
+                            style: TextStyle(
+                              fontSize: 14, // Updated font size to 14
+                              color: AppColor.drawerLight,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 8), // Updated height to 8
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 18,
+                            bottom: 5,
+                            top: 22,
+                          ),
+                          child: Text(
+                            'Task Category',
+                            style: TextStyle(
+                              fontSize: 14, // Updated font size to 14
+                              color: AppColor.drawerLight,
+                            ),
                           ),
                         ),
                         // Add more text fields here
                       ],
-                    ),
+                    )
+
+
+
                   ),
                   const VerticalDivider(
                     thickness: 2,
@@ -399,6 +430,33 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                value: dropdownvalue3,
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 12,
+                                ),
+                                items: items3.map((String item) {
+                                  return DropdownMenuItem(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue3 = newValue!;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 2),
                             TextField(
                               controller: createTaskDueDateController,
                               onTap: () {
@@ -422,38 +480,11 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                 color: Colors.black,
                               ),
                             ),
-                            SizedBox(height: 2),
-                            DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                value: dropdownvalue1,
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  size: 12,
-                                ),
-                                items: items1.map((String item) {
-                                  return DropdownMenuItem(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownvalue1 = newValue!;
-                                  });
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             DropdownButtonHideUnderline(
                               child: DropdownButton(
                                 value: dropdownvalue2,
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.keyboard_arrow_down,
                                   size: 12,
                                 ),
@@ -462,7 +493,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                     value: items,
                                     child: Text(
                                       items,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
                                       ),
@@ -478,38 +509,11 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 2),
-                            DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                value: dropdownvalue3,
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  size: 12,
-                                ),
-                                items: items3.map((String item) {
-                                  return DropdownMenuItem(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownvalue3 = newValue!;
-                                  });
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 2),
                             DropdownButtonHideUnderline(
                               child: DropdownButton(
                                 value: dropdownvalue4,
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.keyboard_arrow_down,
                                   size: 12,
                                 ),
@@ -518,7 +522,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                     value: item,
                                     child: Text(
                                       item,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
                                       ),
@@ -532,21 +536,77 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                                 },
                               ),
                             ),
+                            const SizedBox(height: 2),
+                            DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                value: dropdownvalue1,
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 12,
+                                ),
+                                items: items1.map((String item) {
+                                  return DropdownMenuItem(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue1 = newValue!;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                value: dropdownvalue5,
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 12,
+                                ),
+                                items: items5.map((String item) {
+                                  return DropdownMenuItem(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownvalue5 = newValue!;
+                                  });
+                                },
+                              ),
+                            ),
                           ],
-                        ),
+                        )
+
                       );
                     },
                   )
                 ],
               ),
             ),
-            SizedBox(height: 20), // Add spacing between the form and buttons
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
+            const SizedBox(height: 20), // Add spacing between the form and buttons
+            Container(
+              width: double.infinity, // Set the width to control the container's size
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end, // Align buttons at each end
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
                     child: MaterialButton(
                       color: Colors.deepPurple,
                       onPressed: () {
@@ -559,8 +619,10 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                         assignTo.clear();
 
                         print(widget.username);
+                        print(widget.firstName);
+                        print(widget.lastName);
                       },
-                      child: Text(
+                      child: const Text(
                         'CLEAR',
                         style: TextStyle(
                           fontSize: 14,
@@ -570,17 +632,15 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
                     child: MaterialButton(
                       color: Colors.deepPurple,
                       onPressed: () {
                         mainTask(context);
+                        Navigator.of(context).pop();
                       },
-                      child: Text(
+                      child: const Text(
                         'SUBMIT',
                         style: TextStyle(
                           fontSize: 14,
@@ -590,9 +650,10 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            )
+
           ],
         ),
       ),

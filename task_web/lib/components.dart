@@ -281,6 +281,7 @@ String dropdownvalue2 = 'Assign To';
 
 var items3 = [
   'Company',
+  'Beneficiary',
   '-All-',
   'A W M Riza',
   'Academy of Digital Business Pvt. Ltd',
@@ -385,10 +386,13 @@ var items3 = [
   'Univiser (Pvt) Ltd',
   'UP Weerasinghe Properties Pvt. Ltd'
 ];
-String dropdownvalue3 = 'Company';
+String dropdownvalue3 = 'Beneficiary';
 
 var items4 = ['Priority','-All-', 'Top Urgent', 'Medium', 'Regular', 'Low'];
 String dropdownvalue4 = 'Priority';
+
+var items5 = ['Category','-All-', 'Regular', 'Ad hoc'];
+String dropdownvalue5 = 'Category';
 
 DateTime selectedDate = DateTime.now(); // Initialize selectedDate with a default value
 
