@@ -39,6 +39,21 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
   TextEditingController documentNumberController = TextEditingController();
   TextEditingController assignToController = TextEditingController();
 
+  void selectDate(BuildContext context, TextEditingController controller) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime(2030),
+    );
+
+    if (picked != null && picked != controller.text) {
+      print('Selected date: $picked'); // Add this line for debugging
+      controller.text = DateFormat('yyyy-MM-dd').format(picked); // Adjust the date format as needed
+    }
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -265,23 +280,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                Expanded(child: TextField(
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  controller: subTitleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Sub Task Title',
-                    hintText: 'Sub Task Title',
-                  ),
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14),
-                ),),
-                SizedBox(width: 35,),
-              ],
-            ),
+
             Row(
               children: [
                 Expanded(
@@ -295,7 +294,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                     labelText: 'Description',
                     hintText: 'Description',
                   ),
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 14),
                 ),),
                 SizedBox(width: 35,)
@@ -457,27 +456,30 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                               ),
                             ),
                             const SizedBox(height: 2),
-                            TextField(
-                              controller: createTaskDueDateController,
-                              onTap: () {
-                                selectDate(context, createTaskDueDateController);
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'Due Date',
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    selectDate(context, createTaskDueDateController);
-                                  },
-                                  icon: Icon(
-                                    Icons.date_range,
-                                    color: Colors.blue,
-                                    size: 12,
+                            SizedBox(
+                              width:150,
+                              child: TextField(
+                                controller: createTaskDueDateController,
+                                onTap: () {
+                                  selectDate(context, createTaskDueDateController);
+                                },
+                                decoration: InputDecoration(
+                                  hintText: 'Due Date',
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      selectDate(context, createTaskDueDateController);
+                                    },
+                                    icon: const Icon(
+                                      Icons.date_range,
+                                      color: Colors.blue,
+                                      size: 14,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 2),

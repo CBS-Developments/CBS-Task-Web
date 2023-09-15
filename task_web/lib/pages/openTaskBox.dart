@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_web/methods/colors.dart';
 import 'package:task_web/methods/subTaskTable.dart';
+import 'package:task_web/pages/editMainTask.dart';
 import '../methods/taskTable.dart';
 
 class TaskDetailsDialog extends StatelessWidget {
@@ -22,7 +23,7 @@ class TaskDetailsDialog extends StatelessWidget {
               Container(
                 width: 700,
                 height: 500,
-                // color: Colors.greenAccent,
+                 //color: Colors.greenAccent,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -39,7 +40,12 @@ class TaskDetailsDialog extends StatelessWidget {
                           children: [
 
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return  const EditMainTask(); // Use the dialog widget here
+                                  },
+                                );},
                                 tooltip: 'Edit Task',
                                 icon: Icon(
                                   Icons.edit_note_rounded,
