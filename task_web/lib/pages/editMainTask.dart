@@ -320,29 +320,18 @@ class EditMainTaskState extends State<EditMainTask> {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        "$firstName $lastName",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
 
                   const SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: SelectableText(
-                        "TASK ID : ${widget.mainTaskId}",
+                        "Task ID : ${widget.mainTaskId}",
                         style: const TextStyle(
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -350,15 +339,15 @@ class EditMainTaskState extends State<EditMainTask> {
                   const SizedBox(
                     height: 10,
                   ),
-                   Padding(
+                   const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "This task create by: ${widget.taskCreateBy}",
+                        "This task create by:",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -368,10 +357,11 @@ class EditMainTaskState extends State<EditMainTask> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        taskCreateBy,
+                       " ${widget.taskCreateBy}",
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ),
@@ -379,15 +369,15 @@ class EditMainTaskState extends State<EditMainTask> {
                   const SizedBox(
                     height: 10,
                   ),
-                   Padding(
+                   const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Company name: ${widget.company}",
+                        "Company name:",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -397,10 +387,11 @@ class EditMainTaskState extends State<EditMainTask> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        company,
+                        "${widget.company}",
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ),
@@ -408,15 +399,15 @@ class EditMainTaskState extends State<EditMainTask> {
                   const SizedBox(
                     height: 10,
                   ),
-                   Padding(
+                   const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'This source from: ${widget.sourceFrom}',
+                        'This source from: ',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -426,10 +417,11 @@ class EditMainTaskState extends State<EditMainTask> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        sourceFrom,
+                       " ${widget.sourceFrom}",
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ),
@@ -437,15 +429,15 @@ class EditMainTaskState extends State<EditMainTask> {
                   const SizedBox(
                     height: 10,
                   ),
-                   Padding(
+                   const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'This task assign to: ${widget.assign_to}',
+                        'This task assign to: ',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -455,10 +447,11 @@ class EditMainTaskState extends State<EditMainTask> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        assign_to,
+                        widget.assign_to,
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ),
@@ -466,15 +459,15 @@ class EditMainTaskState extends State<EditMainTask> {
                   const SizedBox(
                     height: 10,
                   ),
-                   Padding(
+                   const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Task due date: ${widget.dueDate}',
+                        'Task due date: ',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -484,10 +477,11 @@ class EditMainTaskState extends State<EditMainTask> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        dueDate,
+                        widget.dueDate,
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ),
@@ -495,15 +489,15 @@ class EditMainTaskState extends State<EditMainTask> {
                   const SizedBox(
                     height: 10,
                   ),
-                   Padding(
+                   const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Task status: ${widget.taskStatusName}',
+                        'Task status: ',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -513,10 +507,10 @@ class EditMainTaskState extends State<EditMainTask> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        taskStatusName,
+                       " ${widget.taskStatusName}",
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -525,15 +519,15 @@ class EditMainTaskState extends State<EditMainTask> {
                   const SizedBox(
                     height: 10,
                   ),
-                   Padding(
+                   const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Document Number: ${widget.documentNumber}',
+                        'Document Number:',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -543,10 +537,11 @@ class EditMainTaskState extends State<EditMainTask> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        documentNumber,
+                       " ${widget.documentNumber}",
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ),
@@ -554,15 +549,15 @@ class EditMainTaskState extends State<EditMainTask> {
                   const SizedBox(
                     height: 10,
                   ),
-                   Padding(
+                   const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Task create date: ${widget.taskCreateDate}',
+                        'Task create date: ',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -572,10 +567,11 @@ class EditMainTaskState extends State<EditMainTask> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        taskCreateDate,
+                        widget.taskCreateDate,
                         style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ),
@@ -583,7 +579,7 @@ class EditMainTaskState extends State<EditMainTask> {
                 ],
               ),
             ),
-            VerticalDivider(),
+            const VerticalDivider(),
 
             Container(
               width: 500,
@@ -601,12 +597,12 @@ class EditMainTaskState extends State<EditMainTask> {
                           controller: titleController,
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Task Title',
                             hintText: 'Task Title',
                           ),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
@@ -626,7 +622,7 @@ class EditMainTaskState extends State<EditMainTask> {
 
 
                   ListTile(
-                    title: Text(
+                    title: const Text(
                       'Top Urgent',
                       style: TextStyle(fontSize: 14),
                     ),
@@ -647,7 +643,7 @@ class EditMainTaskState extends State<EditMainTask> {
                     ),
                   ),
                   ListTile(
-                    title: Text(
+                    title: const Text(
                       'Urgent with in 24 hour',
                       style: TextStyle(fontSize: 14),
                     ),
@@ -670,7 +666,7 @@ class EditMainTaskState extends State<EditMainTask> {
                   ),
 
                   ListTile(
-                    title: Text(
+                    title: const Text(
                       'Regular',
                       style: TextStyle(fontSize: 14),
                     ),
@@ -691,7 +687,7 @@ class EditMainTaskState extends State<EditMainTask> {
                     ),
                   ),
                   ListTile(
-                    title: Text(
+                    title: const Text(
                       'Medium',
                       style: TextStyle(fontSize: 14),
                     ),
@@ -712,7 +708,7 @@ class EditMainTaskState extends State<EditMainTask> {
                     ),
                   ),
                   ListTile(
-                    title: Text(
+                    title: const Text(
                       'Low',
                       style: TextStyle(fontSize: 14),
                     ),
@@ -732,7 +728,7 @@ class EditMainTaskState extends State<EditMainTask> {
 
                     ),
                   ),
-                  SizedBox(height: 2,),
+                  const SizedBox(height: 2,),
                   DropdownButtonHideUnderline(
                       child: DropdownButton(
                         value: dropdownvalue1,
@@ -741,7 +737,7 @@ class EditMainTaskState extends State<EditMainTask> {
                             value: items,
                             child: Text(
                               items,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 14),
                             ),
@@ -754,7 +750,7 @@ class EditMainTaskState extends State<EditMainTask> {
                         },
                       ),
                     ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
 
                   DropdownButtonHideUnderline(
                     child: DropdownButton(
@@ -764,7 +760,7 @@ class EditMainTaskState extends State<EditMainTask> {
                           value: items,
                           child: Text(
                             items,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 14),
                           ),
@@ -780,25 +776,45 @@ class EditMainTaskState extends State<EditMainTask> {
                     ),
                   ),
 
-                  SizedBox(height: 2,),
+                  const SizedBox(height: 2,),
 
-                  TextField(
-                    controller:  editDueDateController,
-                    onTap: () {
-                      selectDate(context,
-                          editDueDateController);
-                    },
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      hintText: 'Due Date',
-
+                  SizedBox(
+                    width: 250,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: editDueDateController,
+                            onTap: () {
+                              selectDate(context, editDueDateController);
+                            },
+                            decoration: const InputDecoration(
+                              //border: const OutlineInputBorder(),
+                              hintText: 'Due Date',
+                            ),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            // Add your icon button functionality here
+                          },
+                          icon: const Icon(
+                            Icons.date_range,
+                            color: Colors.deepPurple,
+                            size: 14,
+                          ),
+                        ),
+                      ],
                     ),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14),
                   ),
 
-                  SizedBox(height: 2,),
+
+
+                  const SizedBox(height: 2,),
 
                   DropdownButtonHideUnderline(
                     child: DropdownButton(
@@ -808,7 +824,7 @@ class EditMainTaskState extends State<EditMainTask> {
                           value: items,
                           child: Text(
                             items,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 14),
                           ),
@@ -822,7 +838,7 @@ class EditMainTaskState extends State<EditMainTask> {
                     ),
                   ),
 
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
 
 
                   Row(
@@ -830,7 +846,7 @@ class EditMainTaskState extends State<EditMainTask> {
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: MaterialButton(
                             color: Colors.deepPurple,
                             onPressed: () {
@@ -841,7 +857,7 @@ class EditMainTaskState extends State<EditMainTask> {
                               editDueDateController.text = "";
                               assignTo.clear();
                             },
-                            child: Text(
+                            child: const Text(
                               'CLEAR',
                               style: TextStyle(
                                 fontSize: 10,
@@ -855,7 +871,7 @@ class EditMainTaskState extends State<EditMainTask> {
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: MaterialButton(
                             color: Colors.deepPurple,
                             onPressed: () {
@@ -869,7 +885,7 @@ class EditMainTaskState extends State<EditMainTask> {
                                 documentNumberController.text,
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               'UPDATE',
                               style: TextStyle(
                                 fontSize: 10,
