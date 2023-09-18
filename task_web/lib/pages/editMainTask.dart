@@ -304,7 +304,7 @@ class EditMainTaskState extends State<EditMainTask> {
           children: [
             Container(
               width: 400,
-              height: 350,
+              height: 500,
               //color: Colors.greenAccent,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -587,22 +587,244 @@ class EditMainTaskState extends State<EditMainTask> {
 
             Container(
               width: 500,
-              height: 350,
+              height: 600,
               //color: Colors.amberAccent,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+
                 children: [
-                  // Add your input fields and buttons here...
-                  // Example:
-                  TextFormField(
-                    controller: titleController,
-                    decoration: InputDecoration(
-                      labelText: 'Task Title',
-                      errorText: titleValidation ? "Title cannot be empty" : null,
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: titleController,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Task Title',
+                            hintText: 'Task Title',
+                          ),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: const Icon(
+                          Icons.cancel_outlined,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+
+
+                  ListTile(
+                    title: Text(
+                      'Top Urgent',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    trailing: Radio<menuitem>(
+                      activeColor: const Color(0xffff0000),
+                      value: menuitem.item1,
+                      groupValue: mitem,
+                      onChanged: (menuitem? value) {
+                        if (value != null) {
+                          setState(() {
+                            mitem = value;
+                            taskTypePosition = 1;
+                            taskTypeString = "Top Urgent";
+                          });
+                        }
+                      },
+
                     ),
                   ),
-                  // Other input fields...
+                  ListTile(
+                    title: Text(
+                      'Urgent with in 24 hour',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    minLeadingWidth: 1,
+                    trailing: Radio<menuitem>(
+                      value: menuitem.item2,
+                      activeColor: const Color(0xff800000),
+                      groupValue: mitem,
+                      onChanged: (menuitem? value) {
+                        if (value != null) {
+                          setState(() {
+                            mitem = value;
+                            taskTypePosition = 2;
+                            taskTypeString = "Urgent 24Hr";
+                          });
+                        }
+                      },
 
-                  // Buttons...
+                    ),
+                  ),
+
+                  ListTile(
+                    title: Text(
+                      'Regular',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    trailing: Radio<menuitem>(
+                      activeColor: const Color.fromARGB(255, 190, 114, 0),
+                      value: menuitem.item9,
+                      groupValue: mitem,
+                      onChanged: (menuitem? value) {
+                        if (value != null) {
+                          setState(() {
+                            mitem = value;
+                            taskTypePosition = 9;
+                            taskTypeString = "Regular";
+                          });
+                        }
+                      },
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Medium',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    trailing: Radio<menuitem>(
+                      activeColor: const Color.fromARGB(255, 0, 3, 190),
+                      value: menuitem.item10,
+                      groupValue: mitem,
+                      onChanged: (menuitem? value) {
+                        if (value != null) {
+                          setState(() {
+                            mitem = value;
+                            taskTypePosition = 10;
+                            taskTypeString = "Medium";
+                          });
+                        }
+                      },
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Low',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    trailing: Radio<menuitem>(
+                      activeColor: const Color.fromARGB(255, 14, 168, 0),
+                      value: menuitem.item11,
+                      groupValue: mitem,
+                      onChanged: (menuitem? value) {
+                        if (value != null) {
+                          setState(() {
+                            mitem = value;
+                            taskTypePosition = 11;
+                            taskTypeString = "Low";
+                          });
+                        }
+                      },
+
+                    ),
+                  ),
+                  SizedBox(height: 2,),
+                  DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        value: dropdownvalue1,
+                        items: items1.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(
+                              items,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue1 = newValue!;
+                          });
+                        },
+                      ),
+                    ),
+                  SizedBox(height: 10,),
+
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      value: dropdownvalue2,
+                      items: items2.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(
+                            items,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownvalue2 = newValue!;
+                          assignTo.add(dropdownvalue2);
+                          assignToController.text = assignTo.toString();
+                        });
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: 2,),
+
+                  TextField(
+                    controller:  editDueDateController,
+                    onTap: () {
+                      selectDate(context,
+                          editDueDateController);
+                    },
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText: 'Due Date',
+
+                    ),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14),
+                  ),
+
+                  SizedBox(height: 2,),
+
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      value: dropdownvalue3,
+                      items: items3.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(
+                            items,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownvalue3 = newValue!;
+                        });
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: 10,),
+
+
                   Row(
                     children: [
                       Expanded(
