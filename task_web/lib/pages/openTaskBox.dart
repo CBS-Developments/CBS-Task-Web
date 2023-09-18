@@ -43,7 +43,10 @@ class TaskDetailsDialog extends StatelessWidget {
                                 onPressed: () {showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return  const EditMainTask(); // Use the dialog widget here
+                                    return  const EditMainTask(lastName: '', firstName: '', userName: '', assign_to: '', company: '', documentNumber: '',
+                                      dueDate: '', mainTaskId: '', sourceFrom: '', taskCreateBy: '', taskCreateDate: '', taskCreatedTimestamp: '', taskStatus: '', taskStatusName: '', taskTitle: '', taskType: '', taskTypeName: '',
+
+                                    ); // Use the dialog widget here
                                   },
                                 );},
                                 tooltip: 'Edit Task',
