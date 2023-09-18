@@ -20,13 +20,12 @@ class TaskDetailsDialog extends StatefulWidget {
 }
 
 class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
-
-  String userName;
-  String firstName;
-  String lastName;
-  String userRole;
-  String mainTaskId;
-  String mainTaskTitle;
+  String userName ='';
+  String firstName='';
+  String lastName='';
+  String userRole='';
+  String mainTaskId='';
+  String mainTaskTitle='';
 
   TextEditingController mainTaskCommentController = TextEditingController();
 
@@ -62,7 +61,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
     };
 
     http.Response res = await http.post(
-      url,
+      Uri.parse(url),
       body: data,
       headers: {
         "Accept": "application/json",
@@ -87,17 +86,17 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
       if (!mounted) return false;
       snackBar(context, "Error", Colors.redAccent);
     }
-    return true;
+    return false; // Return false in case of error
   }
 
-  Future<List<comment>?> getMainTaskCommentList(var taskId) async {
+  Future<List<comment>> getMainTaskCommentList(var taskId) async {
     var data = {
       "task_id": "$taskId",
     };
 
     const url = "http://dev.connect.cbs.lk/commentListById.php";
     http.Response res = await http.post(
-      url,
+      Uri.parse(url),
       body: data,
       headers: {
         "Accept": "application/json",
@@ -112,16 +111,14 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
         if (jsonResponse != null) {
           return jsonResponse.map((sec) => comment.fromJson(sec)).toList();
         }
-      } else {
-        return null;
       }
     } else {
       throw Exception('Failed to load jobs from API');
     }
-    return null;
+    return []; // Return an empty list in case of error
   }
 
-  Future<bool> deleteCommentInMainTask(
+  Future<void> deleteCommentInMainTask(
       var commentId, var commentStatus, var userName, var name) async {
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     int taskTimeStamp = timestamp;
@@ -143,7 +140,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
     };
 
     http.Response res = await http.post(
-      url,
+      Uri.parse(url),
       body: data,
       headers: {
         "Accept": "application/json",
@@ -157,14 +154,11 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
         setState(() {
           getMainTaskCommentList(mainTaskId);
         });
-        if (!mounted) return false;
         snackBar(context, "Delete", Colors.redAccent);
       }
     } else {
-      if (!mounted) return false;
       snackBar(context, "Error", Colors.redAccent);
     }
-    return true;
   }
 
   @override
@@ -189,17 +183,16 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: SizedBox(
-          width: 1120, // Set the width of the dialog
-          height: 500, // Set the height of the dialog
-          child: SingleChildScrollView(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        width: 1120,
+        height: 500,
+        child: SingleChildScrollView(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
                 width: 700,
                 height: 500,
-                 //color: Colors.greenAccent,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -214,33 +207,50 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                         ),
                         Row(
                           children: [
-
                             IconButton(
-                                onPressed: () {showDialog(
+                              onPressed: () {
+                                showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return   EditMainTask(lastName: '', firstName: '', userName: '', assign_to: '', company: widget.task.company, documentNumber: widget.task.documentNumber,
-                                      dueDate: widget.task.dueDate, mainTaskId: widget.task.taskId, sourceFrom: widget.task.sourceFrom, taskCreateBy:widget.task.taskCreateBy, taskCreateDate: widget.task.taskCreateDate, taskCreatedTimestamp: widget.task.taskCreatedTimestamp,
-                                      taskStatus: widget.task.taskStatus, taskStatusName: widget.task.taskStatusName, taskTitle: widget.task.taskTitle, taskType: widget.task.taskType, taskTypeName: widget.task.taskTypeName,
-
-                                    ); // Use the dialog widget here
+                                    return EditMainTask(
+                                      lastName: '',
+                                      firstName: '',
+                                      userName: '',
+                                      assign_to: '',
+                                      company: widget.task.company,
+                                      documentNumber: widget.task.documentNumber,
+                                      dueDate: widget.task.dueDate,
+                                      mainTaskId: widget.task.taskId,
+                                      sourceFrom: widget.task.sourceFrom,
+                                      taskCreateBy: widget.task.taskCreateBy,
+                                      taskCreateDate: widget.task.taskCreateDate,
+                                      taskCreatedTimestamp:
+                                      widget.task.taskCreatedTimestamp,
+                                      taskStatus: widget.task.taskStatus,
+                                      taskStatusName: widget.task.taskStatusName,
+                                      taskTitle: widget.task.taskTitle,
+                                      taskType: widget.task.taskType,
+                                      taskTypeName: widget.task.taskTypeName,
+                                    );
                                   },
-                                );},
-                                tooltip: 'Edit Task',
-                                icon: Icon(
-                                  Icons.edit_note_rounded,
-                                  color: Colors.black,
-                                  size: 22,
-                                )),
-
+                                );
+                              },
+                              tooltip: 'Edit Task',
+                              icon: Icon(
+                                Icons.edit_note_rounded,
+                                color: Colors.black,
+                                size: 22,
+                              ),
+                            ),
                             IconButton(
-                                onPressed: () {},
-                                tooltip: 'Delete Task',
-                                icon: Icon(
-                                  Icons.delete_rounded,
-                                  color: Colors.redAccent,
-                                  size: 19,
-                                )),
+                              onPressed: () {},
+                              tooltip: 'Delete Task',
+                              icon: Icon(
+                                Icons.delete_rounded,
+                                color: Colors.redAccent,
+                                size: 19,
+                              ),
+                            ),
                           ],
                         )
                       ],
@@ -265,15 +275,18 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                           SizedBox(
                             width: 120,
                             height: 160,
-                            child:  Column(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
                                 Row(
                                   children: [
-                                    Icon(Icons.calendar_month_rounded,size: 15,),
+                                    Icon(
+                                      Icons.calendar_month_rounded,
+                                      size: 15,
+                                    ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 4, bottom: 8, top: 8,right: 4 ),
+                                      padding: const EdgeInsets.only(
+                                          left: 4, bottom: 8, top: 8, right: 4),
                                       child: Text(
                                         'Start',
                                         style: TextStyle(
@@ -281,11 +294,14 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                                             color: AppColor.drawerLight),
                                       ),
                                     ),
-
-                                    Icon(Icons.arrow_forward,color: AppColor.drawerLight,size: 15,),
-
+                                    Icon(
+                                      Icons.arrow_forward,
+                                      color: AppColor.drawerLight,
+                                      size: 15,
+                                    ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 4, bottom: 8, top: 8,right: 4 ),
+                                      padding: const EdgeInsets.only(
+                                          left: 4, bottom: 8, top: 8, right: 4),
                                       child: Text(
                                         'Due',
                                         style: TextStyle(
@@ -293,12 +309,11 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                                             color: AppColor.drawerLight),
                                       ),
                                     ),
-
                                   ],
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 8),
                                   child: Text(
                                     'Company',
                                     style: TextStyle(
@@ -306,9 +321,9 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                                         color: AppColor.drawerLight),
                                   ),
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 8),
                                   child: Text(
                                     'Assign To',
                                     style: TextStyle(
@@ -316,9 +331,9 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                                         color: AppColor.drawerLight),
                                   ),
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 8),
                                   child: Text(
                                     'Priority',
                                     style: TextStyle(
@@ -326,9 +341,9 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                                         color: AppColor.drawerLight),
                                   ),
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 8),
                                   child: Text(
                                     'Status',
                                     style: TextStyle(
@@ -336,9 +351,9 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                                         color: AppColor.drawerLight),
                                   ),
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 8),
                                   child: Text(
                                     'Created By',
                                     style: TextStyle(
@@ -346,146 +361,162 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                                         color: AppColor.drawerLight),
                                   ),
                                 ),
-
                               ],
                             ),
                           ),
                           VerticalDivider(
                             thickness: 2,
                           ),
-
                           SizedBox(
                             height: 160,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
                                 Row(
                                   children: [
-                                    Icon(Icons.calendar_month_rounded,size: 15,),
+                                    Icon(
+                                      Icons.calendar_month_rounded,
+                                      size: 15,
+                                    ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 4, bottom: 8, top: 8,right: 4 ),
+                                      padding: const EdgeInsets.only(
+                                          left: 4, bottom: 8, top: 8, right: 4),
                                       child: Text(
                                         '${widget.task.taskCreateDate}',
                                         style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,),
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ),
-
-                                    Icon(Icons.arrow_forward,color: Colors.black,size: 15,),
-
+                                    Icon(
+                                      Icons.arrow_forward,
+                                      color: Colors.black,
+                                      size: 15,
+                                    ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 4, bottom: 8, top: 8,right: 4 ),
+                                      padding: const EdgeInsets.only(
+                                          left: 4, bottom: 8, top: 8, right: 4),
                                       child: Text(
                                         '${widget.task.dueDate}',
                                         style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,),
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ),
-
                                   ],
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 8),
                                   child: Text(
                                     '${widget.task.company}',
                                     style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black,),
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 8),
                                   child: Text(
                                     '${widget.task.assignTo}',
                                     style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black,),
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 8),
                                   child: Text(
                                     '${widget.task.taskTypeName}',
                                     style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black,),
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 8),
                                   child: Text(
                                     '${widget.task.taskStatusName}',
                                     style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black,),
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 18,bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 8),
                                   child: Text(
                                     '${widget.task.taskCreateBy}',
                                     style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black,),
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-
                               ],
                             ),
                           ),
-
                         ],
                       ),
                     ),
-
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextButton(
-                            onPressed: (){},
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('Mark As Complete',style:
-                              TextStyle(fontSize: 14,color: Colors.redAccent),),
-                            ) ),
-
+                          onPressed: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Mark As Complete',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.redAccent,
+                              ),
+                            ),
+                          ),
+                        ),
                         TextButton(
-                            onPressed: (){},
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('Create Sub Task',style:
-                              TextStyle(fontSize: 14,color: Colors.green),),
-                            ) ),
+                          onPressed: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Create Sub Task',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-
-                    SizedBox(height: 5,),
-
-                    Text('Subtasks',style: TextStyle(fontSize: 18),),
-
-                    SizedBox(height: 5,),
-
-                    SubTaskTable(subtasks: [],)
-
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Subtasks',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    SubTaskTable(subtasks: []),
                   ],
                 ),
               ),
-
               VerticalDivider(),
-
               Container(
                 width: 360,
                 height: 500,
-                // color: Colors.lightBlueAccent,
                 child: Column(
                   children: [
                     Container(
@@ -497,96 +528,104 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text('Special Notice',style: TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: 16,
-                            ),),
+                            child: Text(
+                              'Special Notice',
+                              style: TextStyle(
+                                color: Colors.redAccent,
+                                fontSize: 16,
+                              ),
+                            ),
                           ),
-
                         ],
                       ),
                     ),
-
                     Container(
-                      width:300,
+                      width: 300,
                       height: 150,
                       color: Colors.white,
                     ),
-
                     Container(
                       width: 330,
                       height: 35,
                       color: Colors.grey.shade300,
-                      child: Align(alignment: Alignment.centerLeft,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text('Comment',style: TextStyle(
-                            color: Colors.grey.shade700,
-                            fontSize: 16,
-                          ),),
+                          child: Text(
+                            'Comment',
+                            style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-
                     Container(
                       width: 330,
                       height: 225,
                       color: Colors.white,
                       child: FutureBuilder<List<comment>>(
-                          future: getMainTaskCommentList(mainTaskId),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              List<comment> data = snapshot.data;
-                              return ListView.builder(
-                                  itemCount: data.length,
-                                  itemBuilder: (context, index) {
-                                    return Card(
-                                        child: ListTile(
-                                          title: SelectableText(
-                                            data[index].commnt,
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12),
-                                          ),
-                                          subtitle: Text(
-                                            "${data[index].commentCreateDate}      ${data[index].commentCreateBy}",
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          trailing: IconButton(
-                                            icon: Icon(
-                                              Icons.delete,
-                                              size: 14,
-                                              color: Colors.red,
-                                            ),
-                                            // highlightColor: Colors.pink,
-                                            onPressed: () {
-                                              if (data[index].commentCreateById ==
-                                                  userName) {
-                                                deleteCommentInMainTask(
-                                                    data[index].commentId,
-                                                    "0",
-                                                    userName,
-                                                    "$firstName $lastName");
-                                              } else {
-                                                snackBar(
-                                                    context,
-                                                    "You can't delete this comment",
-                                                    Colors.red);
-                                              }
-                                            },
-                                          ),
-                                        ));
-                                  });
-                            } else if (snapshot.hasError) {
-                              return const Text("-Empty-");
-                            }
-                            return const Text("Loading...");
-                          }),
+                        future: getMainTaskCommentList(mainTaskId),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            List<comment>? data = snapshot.data;
+                            return ListView.builder(
+                              itemCount: data!.length,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  child: ListTile(
+                                    title: SelectableText(
+                                      data[index].commnt,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      "${data[index].commentCreateDate}      ${data[index].commentCreateBy}",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    trailing: IconButton(
+                                      icon: Icon(
+                                        Icons.delete,
+                                        size: 14,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () {
+                                        if (data[index].commentCreateById ==
+                                            userName) {
+                                          deleteCommentInMainTask(
+                                            data[index].commentId,
+                                            "0",
+                                            userName,
+                                            "$firstName $lastName",
+                                          );
+                                        } else {
+                                          snackBar(
+                                            context,
+                                            "You can't delete this comment",
+                                            Colors.red,
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          } else if (snapshot.hasError) {
+                            return const Text("-Empty-");
+                          }
+                          return const Text("Loading...");
+                        },
+                      ),
                     ),
-
                     Container(
                       width: 330,
                       height: 40,
@@ -595,27 +634,25 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                         decoration: InputDecoration(
                           fillColor: Colors.grey.shade300,
                           hintText: 'Write a Comment...',
-                          helperStyle: TextStyle(color: Colors.grey.shade700,fontSize: 14),
-                          filled: true
+                          helperStyle: TextStyle(
+                              color: Colors.grey.shade700, fontSize: 14),
+                          filled: true,
                         ),
-
                       ),
                     ),
-
-
-
                   ],
                 ),
               ),
-
               IconButton(
-                  onPressed: (){
-                    Navigator.of(context).pop();
-                  },
-                  icon: Icon(Icons.cancel_outlined,size: 20,))
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(Icons.cancel_outlined, size: 20),
+              )
             ],
-          ))),
-
+          ),
+        ),
+      ),
     );
   }
 }
