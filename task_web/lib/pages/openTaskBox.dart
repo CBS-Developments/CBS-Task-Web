@@ -12,7 +12,7 @@ class TaskDetailsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Container(
+      content: SizedBox(
           width: 1120, // Set the width of the dialog
           height: 500, // Set the height of the dialog
           child: SingleChildScrollView(
@@ -20,7 +20,7 @@ class TaskDetailsDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              SizedBox(
                 width: 700,
                 height: 500,
                  //color: Colors.greenAccent,
@@ -43,8 +43,9 @@ class TaskDetailsDialog extends StatelessWidget {
                                 onPressed: () {showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return  const EditMainTask(lastName: '', firstName: '', userName: '', assign_to: '', company: '', documentNumber: '',
-                                      dueDate: '', mainTaskId: '', sourceFrom: '', taskCreateBy: '', taskCreateDate: '', taskCreatedTimestamp: '', taskStatus: '', taskStatusName: '', taskTitle: '', taskType: '', taskTypeName: '',
+                                    return   EditMainTask(lastName: '', firstName: '', userName: '', assign_to: '', company: task.company, documentNumber: task.documentNumber,
+                                      dueDate: task.dueDate, mainTaskId: task.taskId, sourceFrom: task.sourceFrom, taskCreateBy:task.taskCreateBy, taskCreateDate: task.taskCreateDate, taskCreatedTimestamp: task.taskCreatedTimestamp,
+                                      taskStatus: task.taskStatus, taskStatusName: task.taskStatusName, taskTitle: task.taskTitle, taskType: task.taskType, taskTypeName: task.taskTypeName,
 
                                     ); // Use the dialog widget here
                                   },
