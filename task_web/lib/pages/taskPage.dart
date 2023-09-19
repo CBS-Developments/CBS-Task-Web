@@ -65,21 +65,7 @@ class _TaskPageState extends State<TaskPage> {
 
               SizedBox(height: 18),
 
-              ElevatedButton.icon(
-                onPressed: () { showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CreateTaskDialog(userName, firstName, lastName); // Use the dialog widget here
-                  },
-                );
-                  },
-                icon: Icon(Icons.add_circle_outline_rounded, color: Colors.red,),
-                label: Text("Add Task"),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  backgroundColor: Colors.white, // Text color
-                ),
-              ),
+
 
             ],
           )

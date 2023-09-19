@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/colors.dart';
 import 'package:task_web/methods/labelPopUpMenu.dart';
 import 'package:task_web/methods/statusPopUpMenu.dart';
@@ -7,6 +8,7 @@ import 'package:task_web/methods/taskPopUpMenu.dart';
 import 'package:task_web/methods/companyPopUpMenu.dart';
 
 
+import '../pages/create MainTask.dart';
 import '../sizes/pageSizes.dart';
 import 'assignedPopUpMenu.dart';
 
@@ -18,6 +20,29 @@ class UpMainRow extends StatefulWidget {
 }
 
 class _UpMainRowState extends State<UpMainRow> {
+  String userName = "";
+  String firstName = "";
+  String lastName = "";
+  String phone = "";
+  String userRole = "";
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  void loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('user_name') ?? "";
+      firstName = prefs.getString('first_name') ?? "";
+      lastName = prefs.getString('last_name') ?? "";
+      phone = prefs.getString('phone') ?? "";
+      userRole = prefs.getString('user_role') ?? "";
+
+    });
+  }
 
   TextEditingController taskListController = TextEditingController();
 
@@ -32,14 +57,14 @@ class _UpMainRowState extends State<UpMainRow> {
     AssignedDropdownState assignedDropdownState = Provider.of<AssignedDropdownState>(context);
     AssignedDropdownState companyDropdownState = Provider.of<AssignedDropdownState>(context);
     return Container(
-      width: getPageWidth(context)-240,
+      width: getPageWidth(context)-440,
       height: 50,
       // color: Colors.blue,
       child: Row(
         children: [
           Container(
             // width: 420,
-            width: getPageWidth(context)-1020,
+            width: 250,
            
             height: 50,
             padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
@@ -69,8 +94,23 @@ class _UpMainRowState extends State<UpMainRow> {
 
             ),
           ),
+          SizedBox(width: 5,),
 
-          SizedBox(width: 100,),
+
+          IconButton(
+            onPressed: () { showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CreateTaskDialog(userName, firstName, lastName); // Use the dialog widget here
+              },
+            );
+            },
+            icon: Icon(Icons.add_circle_outline_rounded, color: Colors.green,),
+          ),
+
+          SizedBox(width: 10,),
+
+
 
 
           Container(
@@ -124,7 +164,7 @@ class _UpMainRowState extends State<UpMainRow> {
             ),
           ),
 
-          SizedBox(width: 5,),
+
 
           Container(
             width: 120,
@@ -178,7 +218,7 @@ class _UpMainRowState extends State<UpMainRow> {
             ),
           ),
 
-          SizedBox(width: 5,),
+
 
           Container(
             width: 120,
@@ -226,10 +266,9 @@ class _UpMainRowState extends State<UpMainRow> {
               ],
             ),
           ),
-          SizedBox(width: 5,),
 
           Container(
-            width: 180,
+            width: 120,
             height: 50,
             // color: Colors.white,
             child: Column(
@@ -282,6 +321,7 @@ class _UpMainRowState extends State<UpMainRow> {
           ),
 
           SizedBox(width: 5,),
+
 
           Container(
             width: 120,
