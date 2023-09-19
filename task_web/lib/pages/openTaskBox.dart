@@ -487,12 +487,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CreateSubTask();
-                            },
-                          );},
+                          onPressed: () {},
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
