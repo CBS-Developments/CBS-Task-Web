@@ -49,6 +49,12 @@ class _TaskTableState extends State<TaskTable> {
             ),
             DataColumn(
               label: Text(
+                '',
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 12),
+              ),
+            ),
+            DataColumn(
+              label: Text(
                 'Company',
                 style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 12),
               ),
@@ -145,6 +151,7 @@ class _TaskTableState extends State<TaskTable> {
                       ],
                     ),
                         )),
+                    DataCell(IconButton(onPressed: () {  },icon:Icon(Icons.add_circle,size: 14,))),
                     DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
                     DataCell(Text(task.taskCreateDate,style: TextStyle(fontSize: 10),)), // Display Start-Date
                     DataCell(Text(task.dueDate,style: TextStyle(fontSize: 10),)),
@@ -213,6 +220,8 @@ class _TaskTableState extends State<TaskTable> {
                       ],
                     ),
                         )),
+
+                    DataCell(IconButton(onPressed: () {  },icon:Icon(Icons.add_circle,size: 14,))),
 
                     DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
                     DataCell(Text(task.taskCreateDate,style: TextStyle(fontSize: 10),)), // Display Start-Date
