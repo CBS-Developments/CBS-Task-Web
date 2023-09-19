@@ -10,6 +10,8 @@ import '../components.dart';
 import '../methods/taskTable.dart';
 import 'package:http/http.dart' as http;
 
+import 'createSubTask.dart';
+
 class TaskDetailsDialog extends StatefulWidget {
   final MainTask task;
 
@@ -485,7 +487,12 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CreateSubTask();
+                            },
+                          );},
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
