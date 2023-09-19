@@ -566,10 +566,16 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                       width: 330,
                       height: 225,
                       color: Colors.white,
-                      child: FutureBuilder<List<comment>>(
+                      child:FutureBuilder<List<comment>>(
                         future: getMainTaskCommentList(mainTaskId),
                         builder: (context, snapshot) {
-                          if (snapshot.hasData) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator(); // Display a loading indicator while fetching data
+                          } else if (snapshot.hasError) {
+                            return Text("Error: ${snapshot.error}");
+                          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return Text("No comments available"); // Replace with your custom message
+                          } else {
                             List<comment>? data = snapshot.data;
                             return ListView.builder(
                               itemCount: data!.length,
@@ -598,8 +604,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                                         color: Colors.red,
                                       ),
                                       onPressed: () {
-                                        if (data[index].commentCreateById ==
-                                            userName) {
+                                        if (data[index].commentCreateById == userName) {
                                           deleteCommentInMainTask(
                                             data[index].commentId,
                                             "0",
@@ -619,12 +624,10 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                                 );
                               },
                             );
-                          } else if (snapshot.hasError) {
-                            return const Text("-Empty-");
                           }
-                          return const Text("Loading...");
                         },
-                      ),
+                      )
+
                     ),
                     Container(
                       width: 330,
