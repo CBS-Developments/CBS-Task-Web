@@ -271,6 +271,15 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                 ),
                 IconButton(
                   onPressed: () {
+                    setState(() {
+                      titleController.clear();
+                      descriptionController.clear();
+                      subTitleController.clear();
+                      assignToController.clear();
+                      documentNumberController.clear();
+                      createTaskDueDateController.clear();
+                      assignTo.clear();
+                    });
                     Navigator.of(context).pop();
                   },
                   icon: const Icon(
@@ -278,6 +287,11 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                     size: 20,
                   ),
                 ),
+
+
+
+
+
               ],
             ),
 
@@ -620,9 +634,6 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                         createTaskDueDateController.text = "";
                         assignTo.clear();
 
-                        print(widget.username);
-                        print(widget.firstName);
-                        print(widget.lastName);
                       },
                       child: const Text(
                         'CLEAR',
@@ -638,9 +649,19 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                     padding: const EdgeInsets.all(10),
                     child: MaterialButton(
                       color: Colors.deepPurple,
-                      onPressed: () {
-                        mainTask(context);
-                        Navigator.of(context).pop();
+                      onPressed: () async {
+                        bool success = await mainTask(context);
+                        if (success) {
+                          // Clear form fields on successful submission
+                          titleController.text = "";
+                          descriptionController.text = "";
+                          subTitleController.text = "";
+                          assignToController.text = "";
+                          documentNumberController.text = "";
+                          createTaskDueDateController.text = "";
+                          assignTo.clear();
+                        }
+                        Navigator.of(context).pop(); // Close the dialog
                       },
                       child: const Text(
                         'SUBMIT',
@@ -652,6 +673,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                       ),
                     ),
                   ),
+
                 ],
               ),
             )
