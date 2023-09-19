@@ -17,7 +17,7 @@ class CreateSubTask extends StatefulWidget {
   // final String userRole;
   // final String mainTaskId;
   // final String mainTaskTitle;
-
+  //
   // const CreateSubTask(this.userName,this.mainTaskId, this.firstName, this.lastName, this.intentFrom, this.mainTaskTitle, this.userRole, {Key? key}) : super(key: key);
 
   @override
@@ -168,6 +168,32 @@ class _CreateSubTaskState extends State<CreateSubTask> {
         width: 850, // Set the width of the dialog
         height: 600,
         color: Colors.white70,
+        child: Column(
+          children: [
+            Row(
+              children:  const [
+                Text('Create Sub Task',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),),
+              ],
+            ),
+
+            Row(
+              children: [
+                Text(
+                  mainTaskTitle,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
 
     );
