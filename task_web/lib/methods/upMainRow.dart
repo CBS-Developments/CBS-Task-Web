@@ -75,8 +75,8 @@ class _UpMainRowState extends State<UpMainRow> {
               textAlignVertical: TextAlignVertical.bottom,
               decoration: InputDecoration(
                 prefixIcon:Icon(Icons.search,color: Colors.grey,) ,
-                  suffixIcon: IconButton(onPressed:(){} ,
-                      icon: Icon(Icons.cancel_outlined,color: Colors.grey,)),
+                  // suffixIcon: IconButton(onPressed:(){} ,
+                  //     icon: Icon(Icons.cancel_outlined,color: Colors.grey,)),
                   enabledBorder:  OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade200),
                     borderRadius: BorderRadius.circular(10.0),
