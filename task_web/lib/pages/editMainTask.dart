@@ -12,12 +12,6 @@ import '../methods/colors.dart';
 enum menuitem {
   item1,
   item2,
-  item3,
-  item4,
-  item5,
-  item6,
-  item7,
-  item8,
   item9,
   item10,
   item11
@@ -118,6 +112,10 @@ class EditMainTaskState extends State<EditMainTask> {
     lastName = widget.lastName;
     retrieverData(0);
     editDueDateController.addListener(textListenerDueDate);
+
+   // mitem = menuitem.item1;
+
+    setTaskType();
   }
 
   void retrieverData(int type) async {
@@ -176,30 +174,6 @@ class EditMainTaskState extends State<EditMainTask> {
       taskTypePosition = 2;
       taskTypeString = "Urgent 24Hr";
       mitem = menuitem.item2;
-    } else if (taskType == '3') {
-      taskTypePosition = 3;
-      taskTypeString = "Error";
-      mitem = menuitem.item3;
-    } else if (taskType == '4') {
-      taskTypePosition = 4;
-      taskTypeString = "Remind";
-      mitem = menuitem.item4;
-    } else if (taskType == '5') {
-      taskTypePosition = 5;
-      taskTypeString = "Do it again";
-      mitem = menuitem.item5;
-    } else if (taskType == '6') {
-      taskTypePosition = 6;
-      taskTypeString = "Correction";
-      mitem = menuitem.item6;
-    } else if (taskType == '7') {
-      taskTypePosition = 7;
-      taskTypeString = "Disappointed";
-      mitem = menuitem.item7;
-    } else if (taskType == '8') {
-      taskTypePosition = 8;
-      taskTypeString = "V.Disappointed";
-      mitem = menuitem.item8;
     } else if (taskType == '9') {
       taskTypePosition = 9;
       taskTypeString = "Regular";
@@ -302,7 +276,7 @@ class EditMainTaskState extends State<EditMainTask> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
+            SizedBox(
               width: 400,
               height: 500,
               //color: Colors.greenAccent,
@@ -387,7 +361,7 @@ class EditMainTaskState extends State<EditMainTask> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "${widget.company}",
+                        widget.company,
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 12,
@@ -581,7 +555,7 @@ class EditMainTaskState extends State<EditMainTask> {
             ),
             const VerticalDivider(),
 
-            Container(
+            SizedBox(
               width: 500,
               height: 600,
               //color: Colors.amberAccent,
@@ -639,7 +613,6 @@ class EditMainTaskState extends State<EditMainTask> {
                           });
                         }
                       },
-
                     ),
                   ),
                   ListTile(
@@ -661,10 +634,8 @@ class EditMainTaskState extends State<EditMainTask> {
                           });
                         }
                       },
-
                     ),
                   ),
-
                   ListTile(
                     title: const Text(
                       'Regular',
@@ -683,7 +654,6 @@ class EditMainTaskState extends State<EditMainTask> {
                           });
                         }
                       },
-
                     ),
                   ),
                   ListTile(
@@ -704,7 +674,6 @@ class EditMainTaskState extends State<EditMainTask> {
                           });
                         }
                       },
-
                     ),
                   ),
                   ListTile(
@@ -725,7 +694,6 @@ class EditMainTaskState extends State<EditMainTask> {
                           });
                         }
                       },
-
                     ),
                   ),
                   const SizedBox(height: 2,),
