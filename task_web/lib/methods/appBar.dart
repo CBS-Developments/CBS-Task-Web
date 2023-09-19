@@ -44,7 +44,7 @@ class _MyAppBarState extends State<MyAppBar> {
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       title: const Text(
-        'CBS Task System',
+        'CBS Workspace',
         style: TextStyle(
           color: Colors.black,
           fontSize: 20,
