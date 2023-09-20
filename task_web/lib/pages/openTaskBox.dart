@@ -511,7 +511,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                     SizedBox(
                       height: 5,
                     ),
-                    SubTaskTable(subtasks: []),
+                    SubTaskTable(subtasks: const []),
                   ],
                 ),
               ),
@@ -527,9 +527,9 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                       color: Colors.grey.shade300,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               'Special Notice',
                               style: TextStyle(

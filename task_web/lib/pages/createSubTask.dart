@@ -8,17 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components.dart';
 import '../methods/colors.dart';
+import '../methods/subTaskTable.dart';
 
 class CreateSubTask extends StatefulWidget {
-  // final String userName;
-  // final String firstName;
-  // final String lastName;
-  // final String intentFrom;
-  // final String userRole;
-  // final String mainTaskId;
-  // final String mainTaskTitle;
-  //
-  // const CreateSubTask(this.userName,this.mainTaskId, this.firstName, this.lastName, this.intentFrom, this.mainTaskTitle, this.userRole, {Key? key}) : super(key: key);
+  const CreateSubTask({super.key});
 
   @override
   State<CreateSubTask> createState() => _CreateSubTaskState();
@@ -169,14 +162,22 @@ class _CreateSubTaskState extends State<CreateSubTask> {
         height: 600,
         color: Colors.white70,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              children:  const [
-                Text('Create Sub Task',
+              mainAxisAlignment:MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Sub Task',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.cancel_outlined, size: 20),
+                )
               ],
             ),
 
@@ -191,7 +192,23 @@ class _CreateSubTaskState extends State<CreateSubTask> {
                   ),
                 ),
               ],
-            )
+            ),
+            SubTaskTable(subtasks: const []),
+
+            TextButton(
+              onPressed: () {},
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Create Sub Task',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.green,
+                  ),
+                ),
+              ),
+            ),
+
           ],
         ),
       ),
