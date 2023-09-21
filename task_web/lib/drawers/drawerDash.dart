@@ -4,6 +4,7 @@ import 'package:task_web/pages/taskPageOne.dart';
 
 import '../methods/colors.dart';
 import '../pages/chatPage.dart';
+import '../pages/dashboadPage.dart';
 import '../sizes/pageSizes.dart';
 
 class LeftDrawerDash extends StatefulWidget {
@@ -34,7 +35,7 @@ class _LeftDrawerDashState extends State<LeftDrawerDash> {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TaskMainPage()),
+                    MaterialPageRoute(builder: (context) => DashboardPage()),
                   );
                 },
                 child: SizedBox(
@@ -48,7 +49,7 @@ class _LeftDrawerDashState extends State<LeftDrawerDash> {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TaskPageOne()),
+                    MaterialPageRoute(builder: (context) => TaskMainPage()),
                   );
                 },
                 child: SizedBox(

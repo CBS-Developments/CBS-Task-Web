@@ -3,6 +3,7 @@ import 'package:task_web/methods/colors.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 
 import '../pages/chatPage.dart';
+import '../pages/dashboadPage.dart';
 import '../pages/taskMainPage.dart';
 import '../pages/taskPageOne.dart';
 
@@ -34,7 +35,7 @@ class _LeftDrawerState extends State<LeftDrawer> {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TaskMainPage()),
+                    MaterialPageRoute(builder: (context) => DashboardPage()),
                   );
                 },
                 child: SizedBox(
