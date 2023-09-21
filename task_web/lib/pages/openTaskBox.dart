@@ -486,19 +486,6 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                             ),
                           ),
                         ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Create Sub Task',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.green,
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                     SizedBox(
