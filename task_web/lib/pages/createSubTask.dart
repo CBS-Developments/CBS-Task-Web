@@ -1,14 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components.dart';
-import '../methods/colors.dart';
-import '../methods/subTaskTable.dart';
 
 class CreateSubTask extends StatefulWidget {
   const CreateSubTask({super.key});
@@ -159,7 +156,7 @@ class _CreateSubTaskState extends State<CreateSubTask> {
     return AlertDialog(
       content: Container(
         width: 850, // Set the width of the dialog
-        height: 600,
+        height: 500,
         color: Colors.white70,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +164,7 @@ class _CreateSubTaskState extends State<CreateSubTask> {
             Row(
               mainAxisAlignment:MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Sub Task',
+                const Text('Create Sub Task',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -176,7 +173,7 @@ class _CreateSubTaskState extends State<CreateSubTask> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(Icons.cancel_outlined, size: 20),
+                  icon: const Icon(Icons.cancel_outlined, size: 20),
                 )
               ],
             ),
@@ -192,21 +189,6 @@ class _CreateSubTaskState extends State<CreateSubTask> {
                   ),
                 ),
               ],
-            ),
-            SubTaskTable(subtasks: const []),
-
-            TextButton(
-              onPressed: () {},
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Create Sub Task',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.green,
-                  ),
-                ),
-              ),
             ),
 
           ],

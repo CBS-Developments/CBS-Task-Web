@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/colors.dart';
+import 'package:task_web/pages/openSubTaskMain.dart';
 import 'dart:convert';
 
 import '../pages/createSubTask.dart';
@@ -175,9 +176,9 @@ class _TaskTableState extends State<TaskTable> {
                     if (!mounted) return; showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return CreateSubTask();
+                        return const OpenSubTask();
                       },
-                    ); },icon:Icon(Icons.account_tree_rounded,size: 14,))),
+                    ); },icon:const Icon(Icons.account_tree_rounded,size: 14,))),
                     DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
                     DataCell(Text(task.taskCreateDate,style: TextStyle(fontSize: 10),)), // Display Start-Date
                     DataCell(Text(task.dueDate,style: TextStyle(fontSize: 10),)),
@@ -270,9 +271,9 @@ class _TaskTableState extends State<TaskTable> {
                     if (!mounted) return; showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return CreateSubTask();
+                        return const OpenSubTask();
                       },
-                    ); },icon:Icon(Icons.account_tree_rounded,size: 14,))),
+                    ); },icon:const Icon(Icons.account_tree_rounded,size: 14,))),
 
                     DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
                     DataCell(Text(task.taskCreateDate,style: TextStyle(fontSize: 10),)), // Display Start-Date
