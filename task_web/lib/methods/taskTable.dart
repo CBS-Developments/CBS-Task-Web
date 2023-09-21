@@ -46,49 +46,49 @@ class _TaskTableState extends State<TaskTable> {
             DataColumn(
               label: Text(
                 'Task Title',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 12),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 '',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 12),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Company',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 12),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Start-Date',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 12),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Due-Date',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 12),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Assignee',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 12),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Priority',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 12),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Status',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 12),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
               ),
             ),
             // Add more DataColumn as needed
