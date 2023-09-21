@@ -43,7 +43,7 @@ class _OpenSubTaskState extends State<OpenSubTask> {
             const SizedBox(height: 20,),
 
             TextButton(
-              onPressed: () { showDialog(
+              onPressed: () {showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return const CreateSubTask(   );

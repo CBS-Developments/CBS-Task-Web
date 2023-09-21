@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components.dart';
+import '../methods/colors.dart';
 
 class CreateSubTask extends StatefulWidget {
   const CreateSubTask({super.key});
@@ -156,19 +157,21 @@ class _CreateSubTaskState extends State<CreateSubTask> {
     return AlertDialog(
       content: Container(
         width: 850, // Set the width of the dialog
-        height: 500,
+        height: 600,
         color: Colors.white70,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment:MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Create Sub Task',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),),
+                const Text(
+                  'Create Sub Task',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
                 IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -177,7 +180,6 @@ class _CreateSubTaskState extends State<CreateSubTask> {
                 )
               ],
             ),
-
             Row(
               children: [
                 Text(
@@ -190,9 +192,400 @@ class _CreateSubTaskState extends State<CreateSubTask> {
                 ),
               ],
             ),
+            TextField(
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              controller: subTitleController,
+              decoration: const InputDecoration(
+                labelText: 'Sub Task Title',
+                hintText: 'Sub Task Title',
+              ),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
 
+            TextField(
+              textInputAction: TextInputAction.done,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              controller: descriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Description',
+                hintText: 'Description',
+              ),
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            const SizedBox(height: 20,),
+
+            Container(
+              width: 650,
+              height: 320,
+              color: Colors.grey.shade100,
+              child: Row(
+                children: [
+                  SizedBox(
+                      width: 120,
+                      height: 300,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 18,
+                              bottom: 7,
+                              top: 8,
+                            ),
+                            child: Text(
+                              'Beneficiary',
+                              style: TextStyle(
+                                fontSize: 14, // Updated font size to 14
+                                color: AppColor.drawerLight,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8), // Updated height to 8
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.calendar_month_rounded,
+                                size: 16,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 6,
+                                  bottom: 7,
+                                  top: 10,
+                                ),
+                                child: Text(
+                                  'Due Date',
+                                  style: TextStyle(
+                                    fontSize: 14, // Updated font size to 14
+                                    color: AppColor.drawerLight,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8), // Updated height to 8
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 18,
+                              bottom: 5,
+                              top: 22,
+                            ),
+                            child: Text(
+                              'Assign To',
+                              style: TextStyle(
+                                fontSize: 14, // Updated font size to 14
+                                color: AppColor.drawerLight,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8), // Updated height to 8
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 18,
+                              bottom: 5,
+                              top: 22,
+                            ),
+                            child: Text(
+                              'Priority',
+                              style: TextStyle(
+                                fontSize: 14, // Updated font size to 14
+                                color: AppColor.drawerLight,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8), // Updated height to 8
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 18,
+                              bottom: 5,
+                              top: 22,
+                            ),
+                            child: Text(
+                              'Source From', // Updated text here
+                              style: TextStyle(
+                                fontSize: 14, // Updated font size to 14
+                                color: AppColor.drawerLight,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8), // Updated height to 8
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 18,
+                              bottom: 5,
+                              top: 22,
+                            ),
+                            child: Text(
+                              'Task Category',
+                              style: TextStyle(
+                                fontSize: 14, // Updated font size to 14
+                                color: AppColor.drawerLight,
+                              ),
+                            ),
+                          ),
+                          // Add more text fields here
+                        ],
+                      )
+
+
+
+                  ),
+                  const VerticalDivider(
+                    thickness: 2,
+                  ),
+                  StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                      return Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  value: dropdownvalue3,
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    size: 12,
+                                  ),
+                                  items: items3.map((String item) {
+                                    return DropdownMenuItem(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownvalue3 = newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              SizedBox(
+                                width:150,
+                                child: TextField(
+                                  controller: createTaskDueDateController,
+                                  onTap: () {
+                                    selectDate(context, createTaskDueDateController);
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: 'Due Date',
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        selectDate(context, createTaskDueDateController);
+                                      },
+                                      icon: const Icon(
+                                        Icons.date_range,
+                                        color: Colors.blue,
+                                        size: 14,
+                                      ),
+                                    ),
+                                  ),
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  value: dropdownvalue2,
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    size: 12,
+                                  ),
+                                  items: items2.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(
+                                        items,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownvalue2 = newValue!;
+                                      assignTo.add(dropdownvalue2);
+                                      assignToController.text = assignTo.toString();
+                                    });
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  value: dropdownvalue4,
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    size: 12,
+                                  ),
+                                  items: items4.map((String item) {
+                                    return DropdownMenuItem(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownvalue4 = newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  value: dropdownvalue1,
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    size: 12,
+                                  ),
+                                  items: items1.map((String item) {
+                                    return DropdownMenuItem(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownvalue1 = newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  value: dropdownvalue5,
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    size: 12,
+                                  ),
+                                  items: items5.map((String item) {
+                                    return DropdownMenuItem(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownvalue5 = newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          )
+
+                      );
+                    },
+                  )
+                ],
+              ),
+            ),
+
+            SizedBox(height: 20,),
+
+            Container(
+              width: double.infinity, // Set the width to control the container's size
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end, // Align buttons at each end
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: MaterialButton(
+                      color: Colors.deepPurple,
+                      onPressed: () {
+                        descriptionController.text = "";
+                        subTitleController.text = "";
+                        assignToController.text = "";
+                        documentNumberController.text = "";
+                        createTaskDueDateController.text = "";
+                        assignTo.clear();
+
+                      },
+                      child: const Text(
+                        'CLEAR',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: MaterialButton(
+                      color: Colors.deepPurple,
+                      onPressed: () async {
+                        bool success = await createTask(context, mainTaskId);
+                        if (success) {
+                          descriptionController.text = "";
+                          subTitleController.text = "";
+                          assignToController.text = "";
+                          documentNumberController.text = "";
+                          createTaskDueDateController.text = "";
+                          assignTo.clear();
+                        }
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+
+                      child: const Text(
+                        'SUBMIT',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+            )
+            // Add more widgets here as needed
           ],
+
         ),
+
       ),
 
     );
