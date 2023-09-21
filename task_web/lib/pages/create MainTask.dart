@@ -287,11 +287,6 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                     size: 20,
                   ),
                 ),
-
-
-
-
-
               ],
             ),
 
