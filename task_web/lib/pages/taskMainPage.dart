@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/drawers/drawerDash.dart';
 import 'package:task_web/methods/taskLog.dart';
+import 'package:task_web/pages/taskPageOne.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 import 'package:http/http.dart' as http;
 
+import '../drawers/drawerTask.dart';
 import '../methods/appBar.dart';
 import '../methods/chartBox.dart';
+import '../methods/colors.dart';
 import '../methods/taskTable.dart';
 
 class TaskMainPage extends StatefulWidget {
@@ -70,9 +73,107 @@ class _TaskMainPageState extends State<TaskMainPage> {
 
       body: Row(
         children: [
-          LeftDrawerDash(),
+          LeftDrawer(),
+          
+          Container(
+            // color: Colors.white,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                left: BorderSide(
+                  color:Colors.grey.shade400, // Color of the left border
+                  width: 2.0, // Width of the left border
+                ),
+              ),
+            ),
+            width: 198,
+            height: getPageHeight(context),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextButton(
+                  onPressed:(){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TaskPageOne()),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Text('Taxation',style: TextStyle(
+                        color:AppColor.table,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
 
-          SizedBox(width: getPageWidth(context) - 240,
+                TextButton(
+                  onPressed:(){},
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Text('Talent Management',style: TextStyle(
+                        color: AppColor.table,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+
+
+                TextButton(
+                  onPressed:(){},
+                  child:  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Text('Finance & Accounting',style: TextStyle(
+                        color: AppColor.table,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+
+                TextButton(
+                  onPressed:(){},
+                  child:  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Text('Audit & Assurance',style: TextStyle(
+                        color: AppColor.table,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+
+                TextButton(
+                  onPressed:(){},
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Text('Company Secretarial',style: TextStyle(
+                        color: AppColor.table,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+
+                TextButton(
+                  onPressed:(){},
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Text('Development',style: TextStyle(
+                        color: AppColor.table,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                
+              ],
+            ),
+          ),
+
+          SizedBox(width: getPageWidth(context) - 440,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -114,58 +215,58 @@ class _TaskMainPageState extends State<TaskMainPage> {
                       ),
                     ),
 
-                    Container(
-                      width: 360,
-                      height: 40,
-                      color: Colors.white,
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        children: [
-                          TextButton(
-                              onPressed: () {},
-                              child: Row(
-                                children: [
-                                  Icon(Icons.add_circle_outline,
-                                    color: Colors.red,),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Text('User Creation', style:
-                                    TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.black
-                                    ),
-                                    ),
-                                  )
-                                ],
-                              )
-                          ),
-
-                          VerticalDivider(
-                            thickness: 2,
-                          ),
-
-                          TextButton(
-                              onPressed: () {},
-                              child: Row(
-                                children: [
-                                  Icon(Icons.add_circle_outline,
-                                    color: Colors.red,),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Text('Company Creation', style:
-                                    TextStyle(
-                                        fontSize: 16, color: Colors.black),),
-                                  )
-                                ],
-                              )
-                          ),
-
-
-                        ],
-                      ),
-                    )
+                    // Container(
+                    //   width: 360,
+                    //   height: 40,
+                    //   color: Colors.white,
+                    //   margin: EdgeInsets.symmetric(horizontal: 10),
+                    //   child: Row(
+                    //     children: [
+                    //       TextButton(
+                    //           onPressed: () {},
+                    //           child: Row(
+                    //             children: [
+                    //               Icon(Icons.add_circle_outline,
+                    //                 color: Colors.red,),
+                    //               Padding(
+                    //                 padding: const EdgeInsets.symmetric(
+                    //                     horizontal: 8.0),
+                    //                 child: Text('User Creation', style:
+                    //                 TextStyle(
+                    //                     fontSize: 16,
+                    //                     color: Colors.black
+                    //                 ),
+                    //                 ),
+                    //               )
+                    //             ],
+                    //           )
+                    //       ),
+                    //
+                    //       VerticalDivider(
+                    //         thickness: 2,
+                    //       ),
+                    //
+                    //       TextButton(
+                    //           onPressed: () {},
+                    //           child: Row(
+                    //             children: [
+                    //               Icon(Icons.add_circle_outline,
+                    //                 color: Colors.red,),
+                    //               Padding(
+                    //                 padding: const EdgeInsets.symmetric(
+                    //                     horizontal: 8.0),
+                    //                 child: Text('Company Creation', style:
+                    //                 TextStyle(
+                    //                     fontSize: 16, color: Colors.black),),
+                    //               )
+                    //             ],
+                    //           )
+                    //       ),
+                    //
+                    //
+                    //     ],
+                    //   ),
+                    // )
                   ],
                 ),
 
@@ -197,48 +298,48 @@ class _TaskMainPageState extends State<TaskMainPage> {
                 SizedBox(height: 25,),
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
-                      width: 450,
-                      height: 250,
-                      margin: EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            color: Colors.white,
-                            // Background color for the "Notification" text
-                            child: Row(
-                              children: [
-                                Icon(Icons.notifications_active,
-                                    color: Colors.red),
-                                SizedBox(width: 8),
-                                Text(
-                                  "Notification",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   width: 450,
+                    //   height: 250,
+                    //   margin: EdgeInsets.symmetric(horizontal: 15),
+                    //   decoration: BoxDecoration(
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //         color: Colors.grey.withOpacity(0.5),
+                    //         spreadRadius: 2,
+                    //         blurRadius: 5,
+                    //         offset: Offset(0, 3),
+                    //       ),
+                    //     ],
+                    //     color: Colors.white,
+                    //   ),
+                    //   child: Column(
+                    //     children: [
+                    //       Container(
+                    //         padding: EdgeInsets.all(8),
+                    //         color: Colors.white,
+                    //         // Background color for the "Notification" text
+                    //         child: Row(
+                    //           children: [
+                    //             Icon(Icons.notifications_active,
+                    //                 color: Colors.red),
+                    //             SizedBox(width: 8),
+                    //             Text(
+                    //               "Notification",
+                    //               style: TextStyle(
+                    //                 color: Colors.black,
+                    //                 fontSize: 14,
+                    //                 fontWeight: FontWeight.bold,
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     TaskLog(),
                   ],
                 )
