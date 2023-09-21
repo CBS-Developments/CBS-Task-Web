@@ -4,12 +4,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/colors.dart';
-import 'package:task_web/pages/dashboardPage.dart';
+import 'package:task_web/pages/taskMainPage.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 import 'package:http/http.dart' as http;
 
 import '../components.dart';
-import 'taskPage.dart';
+import 'taskPageOne.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
           if (!mounted) return true;
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const Dashboard()),
+            MaterialPageRoute(builder: (context) => const TaskMainPage()),
           );
         } else {
           snackBar(context, "Permission denied", Colors.yellow);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:task_web/pages/chatPage.dart';
 
-import '../pages/dashboardPage.dart';
-import '../pages/taskPage.dart';
+import '../pages/taskMainPage.dart';
+import '../pages/taskPageOne.dart';
 import '../sizes/pageSizes.dart';
 
 class DrawerChat extends StatelessWidget {
@@ -28,7 +28,7 @@ class DrawerChat extends StatelessWidget {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboard()),
+                    MaterialPageRoute(builder: (context) => TaskMainPage()),
                   );
                 },
                 child: SizedBox(
@@ -42,7 +42,7 @@ class DrawerChat extends StatelessWidget {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TaskPage()),
+                    MaterialPageRoute(builder: (context) => TaskPageOne()),
                   );
                 },
                 child: SizedBox(

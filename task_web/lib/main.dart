@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_web/methods/companyPopUpMenu.dart';
-import 'package:task_web/pages/dashboardPage.dart';
+import 'package:task_web/pages/taskMainPage.dart';
 import 'package:task_web/pages/loginPage.dart';
-import 'package:task_web/pages/taskPage.dart';
+import 'package:task_web/pages/taskPageOne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'methods/assignedPopUpMenu.dart';
@@ -73,7 +73,7 @@ class LandingPage extends StatelessWidget {
 
   Widget _decideMainPage() {
     if (prefs.getString('login_state') != null) {
-      return const Dashboard();
+      return const TaskMainPage();
     } else {
       return const LoginPage();
     }

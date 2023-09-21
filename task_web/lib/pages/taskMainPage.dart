@@ -11,14 +11,14 @@ import '../methods/appBar.dart';
 import '../methods/chartBox.dart';
 import '../methods/taskTable.dart';
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+class TaskMainPage extends StatefulWidget {
+  const TaskMainPage({super.key});
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<TaskMainPage> createState() => _TaskMainPageState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _TaskMainPageState extends State<TaskMainPage> {
   List<MainTask> mainTaskList = [];
 
   String userName = "";

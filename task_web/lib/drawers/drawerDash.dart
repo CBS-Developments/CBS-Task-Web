@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_web/pages/dashboardPage.dart';
-import 'package:task_web/pages/taskPage.dart';
+import 'package:task_web/pages/taskMainPage.dart';
+import 'package:task_web/pages/taskPageOne.dart';
 
 import '../methods/colors.dart';
 import '../pages/chatPage.dart';
@@ -34,7 +34,7 @@ class _LeftDrawerDashState extends State<LeftDrawerDash> {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Dashboard()),
+                    MaterialPageRoute(builder: (context) => TaskMainPage()),
                   );
                 },
                 child: SizedBox(
@@ -48,7 +48,7 @@ class _LeftDrawerDashState extends State<LeftDrawerDash> {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TaskPage()),
+                    MaterialPageRoute(builder: (context) => TaskPageOne()),
                   );
                 },
                 child: SizedBox(
