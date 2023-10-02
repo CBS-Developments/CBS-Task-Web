@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_web/methods/appBar.dart';
-import 'package:task_web/drawers/drawerTask.dart';
-import 'package:task_web/methods/taskTable.dart';
-import 'package:task_web/methods/upMainRow.dart';
-import 'package:task_web/pages/taskPageTwo.dart';
+import 'package:task_web/pages/taskPageOne.dart';
 
+import '../drawers/drawerTask.dart';
+import '../methods/appBar.dart';
 import '../methods/colors.dart';
+import '../methods/taskTable.dart';
+import '../methods/upMainRow.dart';
 import '../sizes/pageSizes.dart';
-import 'create MainTask.dart';
 
-
-
-class TaskPageOne extends StatefulWidget {
-  const TaskPageOne({super.key});
+class TaskPageTwo extends StatefulWidget {
+  const TaskPageTwo({super.key});
 
   @override
-  State<TaskPageOne> createState() => _TaskPageOneState();
+  State<TaskPageTwo> createState() => _TaskPageTwoState();
 }
 
-class _TaskPageOneState extends State<TaskPageOne> {
+class _TaskPageTwoState extends State<TaskPageTwo> {
 
   String userName = "";
   String firstName = "";
@@ -85,7 +82,7 @@ class _TaskPageOneState extends State<TaskPageOne> {
                   child: Padding(
                     padding: EdgeInsets.all(5),
                     child: Text('Taxation',style: TextStyle(
-                        color:AppColor.drawerDark,
+                        color:AppColor.table,
                         fontSize: 12,
                         fontWeight: FontWeight.bold),
                     ),
@@ -102,7 +99,7 @@ class _TaskPageOneState extends State<TaskPageOne> {
                   child: Padding(
                     padding: EdgeInsets.all(5),
                     child: Text('Talent Management',style: TextStyle(
-                        color: AppColor.table,
+                        color: AppColor.drawerDark,
                         fontSize: 12,
                         fontWeight: FontWeight.bold),
                     ),
@@ -181,3 +178,4 @@ class _TaskPageOneState extends State<TaskPageOne> {
     );
   }
 }
+

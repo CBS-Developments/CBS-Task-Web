@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/drawers/drawerDash.dart';
 import 'package:task_web/methods/taskLog.dart';
 import 'package:task_web/pages/taskPageOne.dart';
+import 'package:task_web/pages/taskPageTwo.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 import 'package:http/http.dart' as http;
 
@@ -109,7 +110,12 @@ class _TaskMainPageState extends State<TaskMainPage> {
                 ),
 
                 TextButton(
-                  onPressed:(){},
+                  onPressed:(){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TaskPageTwo()),
+                    );
+                  },
                   child: Padding(
                     padding: EdgeInsets.all(5),
                     child: Text('Talent Management',style: TextStyle(

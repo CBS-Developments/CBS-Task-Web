@@ -37,7 +37,7 @@ class _TaskTableState extends State<TaskTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: getPageWidth(context) - 460,
+      width: getPageWidth(context) - 450,
       height: 500,
       color: Colors.white,
       child: SingleChildScrollView(
