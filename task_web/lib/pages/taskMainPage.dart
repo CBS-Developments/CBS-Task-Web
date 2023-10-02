@@ -2,18 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_web/drawers/drawerDash.dart';
 import 'package:task_web/drawers/subDrawer.dart';
 import 'package:task_web/methods/taskLog.dart';
-import 'package:task_web/pages/taskPageOne.dart';
-import 'package:task_web/pages/taskPageTwo.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 import 'package:http/http.dart' as http;
 
 import '../drawers/drawerTask.dart';
 import '../methods/appBar.dart';
 import '../methods/chartBox.dart';
-import '../methods/colors.dart';
 import '../methods/taskTable.dart';
 
 class TaskMainPage extends StatefulWidget {
@@ -68,16 +64,16 @@ class _TaskMainPageState extends State<TaskMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: MyAppBar(),
       ),
 
       body: Row(
         children: [
-          LeftDrawer(),
+          const LeftDrawer(),
 
-          SubDrawer(),
+          const SubDrawer(),
 
           SizedBox(width: getPageWidth(context) - 440,
             child: Column(
@@ -95,14 +91,14 @@ class _TaskMainPageState extends State<TaskMainPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
                       height: 60,
                       width: 120,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(6.0),
+                          const Padding(
+                            padding: EdgeInsets.all(6.0),
                             child: Text('Total Tasks', style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold
@@ -112,7 +108,7 @@ class _TaskMainPageState extends State<TaskMainPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 6.0),
-                            child: Text('$allTaskCount', style: TextStyle(
+                            child: Text('$allTaskCount', style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold
                             ),),
@@ -176,7 +172,7 @@ class _TaskMainPageState extends State<TaskMainPage> {
                   ],
                 ),
 
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
                 SizedBox(
                   width: getPageWidth(context) - 240,
@@ -201,7 +197,7 @@ class _TaskMainPageState extends State<TaskMainPage> {
                   ),
                 ),
 
-                SizedBox(height: 25,),
+                const SizedBox(height: 25,),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
