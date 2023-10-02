@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/drawers/subDrawer.dart';
-import 'package:task_web/pages/taskPageOne.dart';
-import 'package:task_web/pages/taskPageTwo.dart';
+
 
 import '../drawers/drawerTask.dart';
 import '../methods/appBar.dart';
-import '../methods/colors.dart';
 import '../methods/taskTable.dart';
 import '../methods/upMainRow.dart';
-import '../sizes/pageSizes.dart';
+
 
 class TaskPageThree extends StatefulWidget {
   const TaskPageThree({super.key});
@@ -49,7 +47,7 @@ class _TaskPageThreeState extends State<TaskPageThree> {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
 
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: MyAppBar(),
       ),
@@ -58,16 +56,16 @@ class _TaskPageThreeState extends State<TaskPageThree> {
         children: [
           const LeftDrawer(),
 
-          SubDrawer(),
+          const SubDrawer(),
 
           Column(
             children:  [
-              UpMainRow(),
-              SizedBox(height: 20,),
+              const UpMainRow(),
+              const SizedBox(height: 20,),
               TaskTable(
               ),
 
-              SizedBox(height: 18),
+              const SizedBox(height: 18),
 
 
 
