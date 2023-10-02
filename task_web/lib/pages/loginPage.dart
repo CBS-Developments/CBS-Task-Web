@@ -141,11 +141,11 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       alignLabelWithHint: true,
                       border: const OutlineInputBorder(),
-                      labelText: 'Mobile Number',
-                      hintText: '7X-XXX-XXXX',
+                      labelText: 'Enter Your Email',
+                      hintText: '',
                       suffixIcon: IconButton(
                         icon: Icon(
-                          Icons.smartphone_rounded,
+                          Icons.email_outlined,
                           color: AppColor.loginF,
                         ),
                         onPressed: () {},
@@ -168,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                       alignLabelWithHint: true,
                       border: const OutlineInputBorder(),
                       labelText: 'Password',
-                      hintText: '********',
+                      hintText: '',
                       suffixIcon: IconButton(
                         icon: Icon(
                           Icons.password_rounded,
