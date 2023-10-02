@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/drawers/drawerDash.dart';
+import 'package:task_web/drawers/subDrawer.dart';
 import 'package:task_web/methods/taskLog.dart';
 import 'package:task_web/pages/taskPageOne.dart';
 import 'package:task_web/pages/taskPageTwo.dart';
@@ -75,109 +76,8 @@ class _TaskMainPageState extends State<TaskMainPage> {
       body: Row(
         children: [
           LeftDrawer(),
-          
-          Container(
-            // color: Colors.white,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                left: BorderSide(
-                  color:Colors.grey.shade400, // Color of the left border
-                  width: 2.0, // Width of the left border
-                ),
-              ),
-            ),
-            width: 198,
-            height: getPageHeight(context),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextButton(
-                  onPressed:(){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TaskPageOne()),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Text('Taxation',style: TextStyle(
-                        color:AppColor.table,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
 
-                TextButton(
-                  onPressed:(){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TaskPageTwo()),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Text('Talent Management',style: TextStyle(
-                        color: AppColor.table,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-
-
-                TextButton(
-                  onPressed:(){},
-                  child:  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Text('Finance & Accounting',style: TextStyle(
-                        color: AppColor.table,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-
-                TextButton(
-                  onPressed:(){},
-                  child:  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Text('Audit & Assurance',style: TextStyle(
-                        color: AppColor.table,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-
-                TextButton(
-                  onPressed:(){},
-                  child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Text('Company Secretarial',style: TextStyle(
-                        color: AppColor.table,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-
-                TextButton(
-                  onPressed:(){},
-                  child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Text('Development',style: TextStyle(
-                        color: AppColor.table,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                
-              ],
-            ),
-          ),
+          SubDrawer(),
 
           SizedBox(width: getPageWidth(context) - 440,
             child: Column(
