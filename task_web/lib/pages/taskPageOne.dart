@@ -5,11 +5,7 @@ import 'package:task_web/methods/appBar.dart';
 import 'package:task_web/drawers/drawerTask.dart';
 import 'package:task_web/methods/taskTable.dart';
 import 'package:task_web/methods/upMainRow.dart';
-import 'package:task_web/pages/taskPageTwo.dart';
 
-import '../methods/colors.dart';
-import '../sizes/pageSizes.dart';
-import 'create MainTask.dart';
 
 
 
@@ -51,7 +47,7 @@ class _TaskPageOneState extends State<TaskPageOne> {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
 
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: MyAppBar(),
       ),
@@ -60,16 +56,16 @@ class _TaskPageOneState extends State<TaskPageOne> {
         children: [
           const LeftDrawer(),
 
-          SubDrawer(),
+          const SubDrawer(),
 
           Column(
             children:  [
-              UpMainRow(),
-              SizedBox(height: 20,),
+              const UpMainRow(),
+              const SizedBox(height: 20,),
               TaskTable(
               ),
 
-              SizedBox(height: 18),
+              const SizedBox(height: 18),
 
 
 
