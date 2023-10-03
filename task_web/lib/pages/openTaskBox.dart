@@ -28,6 +28,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
   String userRole='';
   String mainTaskId='';
   String mainTaskTitle='';
+  String assign_to='';
 
   TextEditingController mainTaskCommentController = TextEditingController();
 

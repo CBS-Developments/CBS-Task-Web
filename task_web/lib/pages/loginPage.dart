@@ -19,22 +19,25 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
 
   Future<bool> login(BuildContext context) async {
-    if (phoneNumberController.text.trim().isEmpty) {
-      snackBar(context, "Phone number can't be empty", Colors.redAccent);
+    if (emailController.text.trim().isEmpty) {
+      snackBar(context, "Email can't be empty", Colors.redAccent);
       return false;
     }
 
-    if (phoneNumberController.text.trim().length < 3) {
-      snackBar(context, "Invalid number. Number must be above 3 characters", Colors.yellow);
+    if (emailController.text.trim().length < 3) {
+      snackBar(context, "Invalid Email.", Colors.yellow);
       return false;
     }
 
-    var url = "http://dev.connect.cbs.lk/login.php";
+    var url = "http://dev.workspace.cbs.lk/login.php";
     var data = {
-      "phone": phoneNumberController.text,
+      "email": emailController.text,
+      "password_": passwordController.text,
     };
 
     http.Response res = await http.post(
@@ -58,6 +61,8 @@ class _LoginPageState extends State<LoginPage> {
           prefs.setString('user_name', result['user_name']);
           prefs.setString('first_name', result['first_name']);
           prefs.setString('last_name', result['last_name']);
+          prefs.setString('email', result['email']);
+          prefs.setString('password_', result['password_']);
           prefs.setString('phone', result['phone']);
           prefs.setString('user_role', result['user_role']);
           prefs.setString('activate', result['activate']);
@@ -136,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 60,
                   color: Colors.white,
                   child: TextField(
-                    controller: phoneNumberController,
+                    controller: emailController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       alignLabelWithHint: true,
@@ -163,6 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 60,
                   color: Colors.white,
                   child: TextField(
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       alignLabelWithHint: true,

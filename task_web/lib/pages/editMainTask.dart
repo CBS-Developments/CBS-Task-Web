@@ -228,7 +228,7 @@ class EditMainTaskState extends State<EditMainTask> {
       "task_edit_by_date": stringDate,
       "task_edit_by_timestamp": "$timeSt",
       "source_from": sourceFrom,
-      "assign_to": assignTo,
+      "assign_to": assign_to,
       "company": company,
       "document_number": documentNumber,
     };
@@ -697,51 +697,60 @@ class EditMainTaskState extends State<EditMainTask> {
                     ),
                   ),
                   const SizedBox(height: 2,),
-                  DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        value: dropdownvalue1,
-                        items: items1.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(
-                              items,
-                              style: const TextStyle(
+
+                  StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                      return DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: dropdownvalue1,
+                          items: items1.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(
+                                items,
+                                style: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 14),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue1 = newValue!;
-                          });
-                        },
-                      ),
-                    ),
+                                  fontSize: 14,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownvalue1 = newValue!;
+                            });
+                          },
+                        ),
+                      );
+                    },
+                  ),
                   const SizedBox(height: 10,),
 
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      value: dropdownvalue2,
-                      items: items2.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(
-                            items,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 14),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownvalue2 = newValue!;
-                          assignTo.add(dropdownvalue2);
-                          assignToController.text = assignTo.toString();
-                        });
-                      },
-                    ),
+                  StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                      return DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: dropdownvalue2,
+                          items: items2.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(
+                                items,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownvalue2 = newValue!;
+                            });
+                          },
+                        ),
+                      );
+                    },
                   ),
 
                   const SizedBox(height: 2,),
@@ -784,26 +793,31 @@ class EditMainTaskState extends State<EditMainTask> {
 
                   const SizedBox(height: 2,),
 
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      value: dropdownvalue3,
-                      items: items3.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(
-                            items,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 14),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownvalue3 = newValue!;
-                        });
-                      },
-                    ),
+                  StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                      return DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: dropdownvalue3,
+                          items: items3.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(
+                                items,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownvalue3 = newValue!;
+                            });
+                          },
+                        ),
+                      );
+                    },
                   ),
 
                   const SizedBox(height: 10,),
