@@ -230,7 +230,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       hintText: '',
                       suffixIcon: IconButton(
                         icon: Icon(
-                          Icons.email_outlined,
+                          Icons.phone_android_rounded,
                           color: AppColor.loginF,
                         ),
                         onPressed: () {},
