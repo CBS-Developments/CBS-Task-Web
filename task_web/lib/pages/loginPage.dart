@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/colors.dart';
+import 'package:task_web/pages/createAccountPage.dart';
 import 'package:task_web/pages/taskMainPage.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 import 'package:http/http.dart' as http;
@@ -181,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-                const SizedBox(height: 100),
+                const SizedBox(height: 60),
                 Container(
                   height: 50,
                   width: 200,
@@ -201,8 +202,35 @@ class _LoginPageState extends State<LoginPage> {
                     Text('Log In',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                    ),),
+                    ),
+                    ),
                   ),
+
+
+                ),
+
+                const SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an Account?",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreateAccountPage()),
+                          );
+                        },
+                        child: const Text(
+                          'Create an Account',
+                          style: TextStyle(fontSize: 18),
+                        ))
+                  ],
                 ),
               ],
             ),
