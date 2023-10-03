@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:task_web/methods/appBar.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
+import '../components.dart';
 import '../methods/colors.dart';
 import '../sizes/pageSizes.dart';
 import 'loginPage.dart';
-
+import 'package:http/http.dart' as http;
 
 
 class CreateAccountPage extends StatefulWidget {
@@ -20,6 +22,71 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  Future<void> createUser(BuildContext context) async {
+    // Validate input fields
+    if (firstNameController.text.trim().isEmpty ||
+        lastNameController.text.trim().isEmpty ||
+        emailController.text.trim().isEmpty ||
+        passwordController.text.isEmpty ||
+        mobileNumberController.text.isEmpty) {
+      // Show an error message if any of the required fields are empty
+      snackBar(context, "Please fill in all required fields", Colors.red);
+      return;
+    }
+
+    // Other validation logic can be added here
+
+    // If all validations pass, proceed with the registration
+    var url = "http://dev.workspace.cbs.lk/createUser.php";
+
+    var data = {
+      "user_name": firstNameController.text,
+      "first_name": firstNameController.text,
+      "last_name": lastNameController.text,
+      "email": emailController.text,
+      "password_": passwordController.text,
+      "phone": mobileNumberController.text,
+      "user_role": '0',
+      "activate": '1',
+    };
+
+    http.Response res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    if (res.statusCode.toString() == "200") {
+      if (jsonDecode(res.body) == "true") {
+        if (!mounted) return;
+        showSuccessSnackBar(context);// Show the success SnackBar
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      } else {
+        if (!mounted) return;
+        snackBar(context, "Error", Colors.red);
+      }
+    } else {
+      if (!mounted) return;
+      snackBar(context, "Error", Colors.redAccent);
+    }
+  }
+
+  void showSuccessSnackBar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('Registration successful!'),
+      backgroundColor: Colors.green, // You can customize the color
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -208,6 +275,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: ElevatedButton(
                     onPressed: () {
+                      createUser(context);
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: AppColor.loginF,
@@ -237,7 +305,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     TextButton(onPressed: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
                       );
                     }, child: const Text('Login',style: TextStyle(fontSize: 18),))
                   ],
