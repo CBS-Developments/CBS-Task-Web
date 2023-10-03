@@ -73,7 +73,7 @@ class _TaskLogState extends State<TaskLog> {
       return Container(); // Or display an error message
     }
 
-    final double textFontSmall =12;
+    final double textFontSmall =10;
 
     final int? time = int.tryParse(taskLogItem.logCreateByTimestamp ?? '0');
 
