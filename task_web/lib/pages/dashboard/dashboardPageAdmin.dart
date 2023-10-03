@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:task_web/drawers/drawerDash.dart';
 
-import '../methods/appBar.dart';
+import '../../drawers/drawerDash.dart';
+import '../../methods/appBar.dart';
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+class DashboardPageAdmin extends StatefulWidget {
+  const DashboardPageAdmin({super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<DashboardPageAdmin> createState() => _DashboardPageAdminState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageAdminState extends State<DashboardPageAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.redAccent,
 
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
