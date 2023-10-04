@@ -23,6 +23,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+
   Future<void> createUser(BuildContext context) async {
     // Validate input fields
     if (firstNameController.text.trim().isEmpty ||
@@ -41,7 +42,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     var url = "http://dev.workspace.cbs.lk/createUser.php";
 
     var data = {
-      "user_name": firstNameController.text,
+      "user_name": firstNameController.text.substring(0, 5) + mobileNumberController.text.substring(mobileNumberController.text.length - 2),
       "first_name": firstNameController.text,
       "last_name": lastNameController.text,
       "email": emailController.text,
@@ -50,6 +51,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       "user_role": '0',
       "activate": '1',
     };
+
 
     http.Response res = await http.post(
       Uri.parse(url),
