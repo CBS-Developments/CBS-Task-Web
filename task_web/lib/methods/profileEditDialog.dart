@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/colors.dart';
-import 'package:task_web/methods/profileEditDialog.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class ProfileEditPage extends StatefulWidget {
+  const ProfileEditPage({Key? key}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfileEditPage> createState() => _ProfileEditPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfileEditPageState extends State<ProfileEditPage> {
   String userName = "";
   String firstName = "";
   String lastName = "";
@@ -48,10 +47,10 @@ class _ProfilePageState extends State<ProfilePage> {
           right: 5, // Adjust this value to change the horizontal position
           child: AlertDialog(
             content: SizedBox(
-              height: 200,
+              height: 350,
               child: Column(
                 children: [
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.account_circle_sharp, size: 50,)
@@ -70,39 +69,37 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    "$firstName $lastName",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  Text(
-                    email,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black87,
+
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: '$firstName $lastName'
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  Text(
-                    phone,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black87,
+
+                  TextField(
+                    decoration: InputDecoration(
+                        hintText: email
                     ),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
-                  Text(
-                    password_,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black87,
+
+                  TextField(
+                    decoration: InputDecoration(
+                        hintText: phone
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  TextField(
+                    decoration: InputDecoration(
+                        hintText: password_
                     ),
                   ),
                 ],
@@ -111,15 +108,10 @@ class _ProfilePageState extends State<ProfilePage> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const ProfileEditPage();
-                    },
-                  );
+                  // Add logic for the edit button here
                 },
                 child: const Text(
-                  'Edit',
+                  'Save',
                   style: TextStyle(color: Colors.blue),
                 ),
               ),
