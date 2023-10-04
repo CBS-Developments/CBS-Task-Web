@@ -23,12 +23,13 @@ class _UserTableState extends State<UserTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 600,
-      height: 333,
+      margin: EdgeInsets.all(20),
+      width: 500,
+      height: 233,
       child: Column(
         children: [
           Container(
-            width: 600,
+            width: 500,
             height: 33,
             color: Colors.grey.shade300,
             child: Row(
@@ -53,29 +54,24 @@ class _UserTableState extends State<UserTable> {
           ),
           Container(
             width: 600,
-            height: 300,
+            height: 200,
             color: Colors.white,
             child: SingleChildScrollView(
               child: DataTable(
                 columns: [
                   DataColumn(
                     label: Text(
-                      'User Name',
+                      'ID',
                       style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table, fontSize: 11),
                     ),
                   ),
                   DataColumn(
                     label: Text(
-                      'First Name',
+                      'Name',
                       style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table, fontSize: 11),
                     ),
                   ),
-                  DataColumn(
-                    label: Text(
-                      'Last Name',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table, fontSize: 11),
-                    ),
-                  ),
+
                   DataColumn(
                     label: Text(
                       'Email',
@@ -87,8 +83,7 @@ class _UserTableState extends State<UserTable> {
                 rows: userList.map((user) {
                   return DataRow(cells: [
                     DataCell(Text(user.userName, style: TextStyle(fontSize: 10, color: Colors.black))),
-                    DataCell(Text(user.firstName, style: TextStyle(fontSize: 10, color: Colors.black))),
-                    DataCell(Text(user.lastName, style: TextStyle(fontSize: 10, color: Colors.black))),
+                    DataCell(Text(user.firstName +' '+ user.lastName, style: TextStyle(fontSize: 10, color: Colors.black))),
                     DataCell(Text(user.email, style: TextStyle(fontSize: 10, color: Colors.black))),
                     // Add more DataCell with other user properties
                   ]);
