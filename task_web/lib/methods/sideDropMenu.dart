@@ -68,12 +68,6 @@ void showPopupMenu(BuildContext context) {
         // Do something for Option 2
       } else if (value == 3) {
         // Open a dialog box for Option 3
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return const ProfilePage();
-          },
-        );
       }
     }
   });

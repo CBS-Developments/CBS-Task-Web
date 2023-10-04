@@ -32,88 +32,81 @@ class _ProfilePageState extends State<ProfilePage> {
       phone = prefs.getString('phone') ?? "";
       userRole = prefs.getString('user_role') ?? "";
       email = prefs.getString('email') ?? "";
-
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: SizedBox(
-        height: 200,
-        child: Column(
-          children: [
-             Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Profile',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: AppColor.drawerLight),),
+    return Stack(
+      children: [
+
+        Positioned(
+          top: 50, // Adjust this value to change the vertical position
+          right: 5, // Adjust this value to change the horizontal position
+          child: AlertDialog(
+            content: SizedBox(
+              height: 200,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.account_circle_sharp, size: 50,)
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    userName,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "$firstName $lastName",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  Text(
+                    email,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    phone,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Close',
+                  style:
+                  TextStyle(
+                      color: Colors.red
+                  ),),
+              ),
             ],
           ),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              userName,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  firstName,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.black87,
-                  ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  lastName,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.black87,
-                  ),
-                ),
-              ],
-            ),
-
-            Text(
-              email,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              phone,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
-              ),
-            ),
-
-          ],
-        ),
-      ),
-
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text('Close'),
         ),
       ],
     );
