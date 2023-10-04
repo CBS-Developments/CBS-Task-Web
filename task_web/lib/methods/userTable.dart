@@ -49,7 +49,7 @@ class _UserTableState extends State<UserTable> {
               Center(
                 child: TextButton(
                     onPressed: () {
-                      userStatus(user.userName);
+                      userStatusDeactivate(user.userName);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
@@ -205,7 +205,7 @@ class _UserTableState extends State<UserTable> {
   }
 }
 
-Future<void> userStatus(String userName) async {
+Future<void> userStatusDeactivate(String userName) async {
   var data = {
     "user_name": userName,
     "activate": '0',
