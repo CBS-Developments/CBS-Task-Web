@@ -13,11 +13,50 @@ class _UserTableState extends State<UserTable> {
   List<User> userList = [];
   int userCount = 0;
 
-
   @override
   void initState() {
     super.initState();
     getUserList();
+  }
+
+  // Method to show user details dialog
+  void _showUserDetailsDialog(User user) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('User Details'),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text('Name: ${user.firstName} ${user.lastName}'),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text('Email: ${user.email}'),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text('Mobile Number: ${user.phone}'),
+              ),
+
+              // Add more user details here
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -37,18 +76,23 @@ class _UserTableState extends State<UserTable> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Users:',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '$userCount', // Convert userCount to a string here
+                    'Users:',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                    ),)
+                    ),
+                  ),
                 ),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      '$userCount', // Convert userCount to a string here
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )),
               ],
             ),
           ),
@@ -62,29 +106,47 @@ class _UserTableState extends State<UserTable> {
                   DataColumn(
                     label: Text(
                       'ID',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table, fontSize: 11),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.table,
+                          fontSize: 11),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'Name',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table, fontSize: 11),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.table,
+                          fontSize: 11),
                     ),
                   ),
 
                   DataColumn(
                     label: Text(
                       'Email',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table, fontSize: 11),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.table,
+                          fontSize: 11),
                     ),
                   ),
                   // Add more DataColumn as needed
                 ],
                 rows: userList.map((user) {
                   return DataRow(cells: [
-                    DataCell(Text(user.userName, style: TextStyle(fontSize: 10, color: Colors.black))),
-                    DataCell(Text(user.firstName +' '+ user.lastName, style: TextStyle(fontSize: 10, color: Colors.black))),
-                    DataCell(Text(user.email, style: TextStyle(fontSize: 10, color: Colors.black))),
+                    DataCell(Text(user.userName,
+                        style: TextStyle(fontSize: 10, color: Colors.black))),
+                    DataCell(
+                      Text(user.firstName + ' ' + user.lastName,
+                          style: TextStyle(fontSize: 10, color: Colors.black)),
+                      onTap: () {
+                        // Show user details dialog when the name is clicked
+                        _showUserDetailsDialog(user);
+                      },
+                    ),
+                    DataCell(Text(user.email,
+                        style: TextStyle(fontSize: 10, color: Colors.black))),
                     // Add more DataCell with other user properties
                   ]);
                 }).toList(),
