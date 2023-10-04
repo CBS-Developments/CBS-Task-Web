@@ -10,6 +10,7 @@ import 'package:task_web/sizes/pageSizes.dart';
 import 'package:http/http.dart' as http;
 
 import '../components.dart';
+import 'dashboard/dashMain.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -70,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
           if (!mounted) return true;
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const TaskMainPage()),
+            MaterialPageRoute(builder: (context) => const DashManin()),
           );
         } else {
           snackBar(context, "Permission denied", Colors.yellow);
