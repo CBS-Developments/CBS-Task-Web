@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_web/methods/profileDialogBox.dart';
 import 'package:task_web/methods/sideDropMenu.dart';
 
 class MyAppBar extends StatefulWidget {
@@ -68,9 +69,16 @@ class _MyAppBarState extends State<MyAppBar> {
 
         IconButton(
             onPressed: ()
-            {},
+            {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const ProfilePage();
+                },
+              );
+            },
             icon: const Icon(
-              Icons.notifications_none_rounded,
+              Icons.account_circle_sharp,
               color: Colors.black,
             )),
 
