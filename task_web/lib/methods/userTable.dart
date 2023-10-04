@@ -40,8 +40,25 @@ class _UserTableState extends State<UserTable> {
               ),
               Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: Text('Mobile Number: ${user.phone}'),
+                child: Text('Mobile Number: 0${user.phone}'),
               ),
+
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: TextButton(
+                    onPressed: () {
+                      userStatus(user.userName);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text(
+                        'Deactivate User',
+                        style: TextStyle(color: Colors.redAccent),
+                      ),
+                    )),
+              )
 
               // Add more user details here
             ],
@@ -185,6 +202,28 @@ class _UserTableState extends State<UserTable> {
     } else {
       throw Exception('Failed to load users from API');
     }
+  }
+}
+
+Future<void> userStatus(String userName) async {
+  var data = {
+    "user_name": userName,
+    "activate": '0',
+  };
+
+  const url = "http://dev.workspace.cbs.lk/userStatus.php";
+  http.Response res = await http.post(
+    Uri.parse(url),
+    body: data,
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  );
+
+  if (res.statusCode.toString() == "200") {
+    Map<String, dynamic> result = jsonDecode(res.body);
+    print(result);
   }
 }
 

@@ -23,7 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
   Future<bool> login(BuildContext context) async {
     if (emailController.text.trim().isEmpty) {
       snackBar(context, "Email can't be empty", Colors.redAccent);
@@ -74,16 +73,18 @@ class _LoginPageState extends State<LoginPage> {
             MaterialPageRoute(builder: (context) => const DashManin()),
           );
         } else {
-          snackBar(context, "Permission denied", Colors.yellow);
+          snackBar(context, "Account Deactivated", Colors.redAccent); // Show Snackbar for deactivated account
         }
       } else {
-        snackBar(context, result['message'], Colors.redAccent);
+        snackBar(context, "Incorrect Password", Colors.yellow); // Show Snackbar for incorrect password
       }
     } else {
       snackBar(context, "Error", Colors.redAccent);
     }
     return true;
   }
+
+
 
   @override
   Widget build(BuildContext context) {
