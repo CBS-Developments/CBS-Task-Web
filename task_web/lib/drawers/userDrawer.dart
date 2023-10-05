@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_web/drawers/userDrawer.dart';
-import 'package:task_web/pages/dashboard/dashboardPageAdmin.dart';
 
 import '../pages/chatPage.dart';
 import '../pages/dashboard/dashMain.dart';
@@ -8,14 +6,14 @@ import '../pages/taskMainPage.dart';
 import '../pages/users/currentUser.dart';
 import '../sizes/pageSizes.dart';
 
-class AdminDrawer extends StatefulWidget {
-  const AdminDrawer({Key? key}) : super(key: key);
+class UserDrawer extends StatefulWidget {
+  const UserDrawer({Key? key}) : super(key: key);
 
   @override
-  State<AdminDrawer> createState() => _AdminDrawerState();
+  State<UserDrawer> createState() => _UserDrawerState();
 }
 
-class _AdminDrawerState extends State<AdminDrawer> {
+class _UserDrawerState extends State<UserDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +40,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
                 child: SizedBox(
                   height: 45,
                   width: 240,
-                  child: Image.asset('images/dash02.png'),
+                  child: Image.asset('images/dash.png'),
                 ),
               ),
 
@@ -103,7 +101,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
                 child: SizedBox(
                   height: 45,
                   width: 240,
-                  child: Image.asset('images/user.png'),
+                  child: Image.asset('images/user2.png'),
                 ),
               ),
             ],

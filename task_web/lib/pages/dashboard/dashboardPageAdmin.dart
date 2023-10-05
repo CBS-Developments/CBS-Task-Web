@@ -28,7 +28,6 @@ class _DashboardPageAdminState extends State<DashboardPageAdmin> {
       body: Row(
         children: [
           AdminDrawer(),
-          AdminSubDrawer(),
 
           Column(
             children: [
