@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_web/drawers/adminDrawer.dart';
 import 'package:task_web/methods/userTable.dart';
 
 import '../../drawers/drawerDash.dart';
@@ -24,7 +25,7 @@ class _DashboardPageAdminState extends State<DashboardPageAdmin> {
 
       body: Row(
         children: [
-          LeftDrawerDash(),
+          AdminDrawer(),
           Column(
             children: [
               UserTable()
