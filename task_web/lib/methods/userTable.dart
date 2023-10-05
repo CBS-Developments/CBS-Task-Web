@@ -47,20 +47,34 @@ class _UserTableState extends State<UserTable> {
                 height: 10,
               ),
               Center(
-                child: TextButton(
-                    onPressed: () {
-                      userStatus(user.userName);
-                      Navigator.of(context).pop();
-                      getUserList();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        'Deactivate User',
-                        style: TextStyle(color: Colors.redAccent),
-                      ),
-                    )),
-              )
+                child: user.activate == "1"
+                    ? TextButton(
+                  onPressed: () {
+                    userStatus(user.userName);
+                    Navigator.of(context).pop();
+                    getUserList();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      'Deactivate User',
+                      style: TextStyle(color: Colors.redAccent),
+                    ),
+                  ),
+                )
+                    : TextButton(
+                  onPressed: () {
+                    // Handle activation logic here
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      'Activate User',
+                      style: TextStyle(color: Colors.green),
+                    ),
+                  ),
+                ),
+              ),
 
               // Add more user details here
             ],
