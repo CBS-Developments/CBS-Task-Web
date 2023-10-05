@@ -49,7 +49,9 @@ class _UserTableState extends State<UserTable> {
               Center(
                 child: TextButton(
                     onPressed: () {
-                      userStatusDeactivate(user.userName);
+                      userStatus(user.userName);
+                      Navigator.of(context).pop();
+                      getUserList();
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
@@ -66,7 +68,8 @@ class _UserTableState extends State<UserTable> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();// Close the dialog
+                getUserList();
               },
               child: Text('Close'),
             ),
@@ -148,6 +151,16 @@ class _UserTableState extends State<UserTable> {
                           fontSize: 11),
                     ),
                   ),
+
+                  DataColumn(
+                    label: Text(
+                      'Status',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.table,
+                          fontSize: 11),
+                    ),
+                  ),
                   // Add more DataColumn as needed
                 ],
                 rows: userList.map((user) {
@@ -164,6 +177,18 @@ class _UserTableState extends State<UserTable> {
                     ),
                     DataCell(Text(user.email,
                         style: TextStyle(fontSize: 10, color: Colors.black))),
+
+                    DataCell(
+                      RichText(
+                        text: TextSpan(
+                          text: user.activate == "1" ? 'Active' : 'Deactivated',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: user.activate == "1" ? Colors.green : Colors.red,
+                          ),
+                        ),
+                      ),
+                    ),
                     // Add more DataCell with other user properties
                   ]);
                 }).toList(),
@@ -205,7 +230,7 @@ class _UserTableState extends State<UserTable> {
   }
 }
 
-Future<void> userStatusDeactivate(String userName) async {
+Future<void> userStatus(String userName) async {
   var data = {
     "user_name": userName,
     "activate": '0',
