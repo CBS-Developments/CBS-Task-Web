@@ -1,10 +1,15 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:task_web/pages/users/currentUser.dart';
+
+import '../../components.dart';
 import '../../drawers/adminSubDrawer.dart';
 import '../../drawers/userDrawer.dart';
 import '../../methods/appBar.dart';
 import '../../methods/colors.dart';
 import '../../methods/textFieldContainer.dart';
+import 'package:http/http.dart' as http;
 
 class UserCreation extends StatefulWidget {
   const UserCreation({Key? key}) : super(key: key);
@@ -23,6 +28,79 @@ class _UserCreationState extends State<UserCreation> {
   TextEditingController employeeIDCreateController = TextEditingController();
   TextEditingController designationCreateController = TextEditingController();
   TextEditingController companyCreateController = TextEditingController();
+
+  Future<void> createUser(BuildContext context) async {
+    // Validate input fields
+    if (firstNameCreateController.text.trim().isEmpty ||
+        lastNameCreateController.text.trim().isEmpty ||
+        emailCreateController.text.trim().isEmpty ||
+        passwordCreateController.text.isEmpty ||
+        contactCreateController.text.isEmpty||
+        employeeIDCreateController.text.isEmpty||
+        designationCreateController.text.isEmpty||
+        companyCreateController.text.isEmpty)
+    {
+      // Show an error message if any of the required fields are empty
+      snackBar(context, "Please fill in all required fields", Colors.red);
+      return;
+    }
+
+    // Other validation logic can be added here
+
+    // If all validations pass, proceed with the registration
+    var url = "http://dev.workspace.cbs.lk/createUser.php";
+
+    var data = {
+      "user_name": firstNameCreateController.text.substring(0, 5) + contactCreateController.text.substring(contactCreateController.text.length - 2),
+      "first_name": firstNameCreateController.text,
+      "last_name": lastNameCreateController.text,
+      "email": emailCreateController.text,
+      "password_": passwordCreateController.text,
+      "phone": contactCreateController.text,
+      "employee_ID": employeeIDCreateController.text,
+      "designation": designationCreateController.text,
+      "company": companyCreateController.text,
+      "user_role": '0',
+      "activate": '1',
+    };
+
+
+    http.Response res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    if (res.statusCode.toString() == "200") {
+      if (jsonDecode(res.body) == "true") {
+        if (!mounted) return;
+        showSuccessSnackBar(context);// Show the success SnackBar
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CurrentUser()),
+        );
+      } else {
+        if (!mounted) return;
+        snackBar(context, "Error", Colors.red);
+      }
+    } else {
+      if (!mounted) return;
+      snackBar(context, "Error", Colors.redAccent);
+    }
+  }
+
+  void showSuccessSnackBar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('User Created Successfully!'),
+      backgroundColor: Colors.green, // You can customize the color
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +175,7 @@ class _UserCreationState extends State<UserCreation> {
                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                            child: ElevatedButton(
                              onPressed: () {
+                               createUser(context);
                              },
                              style: ElevatedButton.styleFrom(
                                foregroundColor: AppColor.loginF,
@@ -122,6 +201,10 @@ class _UserCreationState extends State<UserCreation> {
                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                            child: ElevatedButton(
                              onPressed: () {
+                               Navigator.push(
+                                 context,
+                                 MaterialPageRoute(builder: (context) => const CurrentUser()),
+                               );
                              },
                              style: ElevatedButton.styleFrom(
                                foregroundColor: AppColor.loginF,
