@@ -17,7 +17,7 @@ class DashboardPageAdmin extends StatefulWidget {
 class _DashboardPageAdminState extends State<DashboardPageAdmin> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.grey,
 
       appBar: PreferredSize(
@@ -29,11 +29,6 @@ class _DashboardPageAdminState extends State<DashboardPageAdmin> {
         children: [
           AdminDrawer(),
 
-          Column(
-            children: [
-              UserTable()
-            ],
-          )
         ],
       ),
     );
