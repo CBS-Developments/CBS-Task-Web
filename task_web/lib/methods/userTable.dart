@@ -1,9 +1,7 @@
-
-
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:task_web/pages/users/editUser.dart';
 
 class UserTable extends StatefulWidget {
   @override
@@ -139,6 +137,15 @@ class _UserTableState extends State<UserTable> {
                       ),
                     ),
                   ),
+                  DataColumn(
+                    label: Text(
+                      'Edit',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                 ],
                 rows: userList.map((user) {
                   return DataRow(cells: [
@@ -165,7 +172,8 @@ class _UserTableState extends State<UserTable> {
                         user.activate == '1' ? 'Active' : 'Deactivated',
                         style: TextStyle(
                           fontSize: 10,
-                          color: user.activate == '1' ? Colors.green : Colors.red,
+                          color:
+                              user.activate == '1' ? Colors.green : Colors.red,
                         ),
                       ),
                     ),
@@ -181,6 +189,25 @@ class _UserTableState extends State<UserTable> {
                         activeColor: Colors.green,
                         inactiveTrackColor: Colors.redAccent.withOpacity(0.5),
                       ),
+                    ),
+                    DataCell(
+                      Icon(Icons.edit_note_rounded),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditUserPage(
+                                    firstName: user.firstName,
+                                    lastName: user.lastName,
+                                    email: user.email,
+                                    password: user.password,
+                                    phone: user.phone,
+                                    employeeID: user.employeeID,
+                                    designation: user.designation,
+                                    company: user.company,
+                                  )),
+                        );
+                      },
                     ),
                   ]);
                 }).toList(),
@@ -294,6 +321,9 @@ class User {
   String email = '';
   String password = '';
   String phone = '';
+  String employeeID = '';
+  String designation = '';
+  String company = '';
   String userRole = '';
   String activate = '';
 
@@ -304,6 +334,9 @@ class User {
     required this.email,
     required this.password,
     required this.phone,
+    required this.employeeID,
+    required this.designation,
+    required this.company,
     required this.userRole,
     required this.activate,
   });
@@ -316,6 +349,9 @@ class User {
       email: json['email'],
       password: json['password_'],
       phone: json['phone'],
+      employeeID: json['employee_ID'],
+      designation: json['designation'],
+      company: json['company'],
       userRole: json['user_role'],
       activate: json['activate'],
     );
