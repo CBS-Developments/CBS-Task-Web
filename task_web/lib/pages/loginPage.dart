@@ -64,6 +64,9 @@ class _LoginPageState extends State<LoginPage> {
           prefs.setString('email', result['email']);
           prefs.setString('password_', result['password_']);
           prefs.setString('phone', result['phone']);
+          prefs.setString('employee_ID', result['employee_ID']);
+          prefs.setString('designation', result['designation']);
+          prefs.setString('company', result['company']);
           prefs.setString('user_role', result['user_role']);
           prefs.setString('activate', result['activate']);
 

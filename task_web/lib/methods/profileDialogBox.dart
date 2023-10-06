@@ -18,6 +18,9 @@ class _ProfilePageState extends State<ProfilePage> {
   String userRole = "";
   String email = "";
   String password_ = "";
+  String employee_ID = "";
+  String designation = "";
+  String company = "";
 
   @override
   void initState() {
@@ -35,6 +38,9 @@ class _ProfilePageState extends State<ProfilePage> {
       userRole = prefs.getString('user_role') ?? "";
       email = prefs.getString('email') ?? "";
       password_ = prefs.getString('password_') ?? "";
+      employee_ID = prefs.getString('employee_ID') ?? "";
+      designation = prefs.getString('designation') ?? "";
+      company = prefs.getString('company') ?? "";
     });
   }
 
@@ -48,94 +54,198 @@ class _ProfilePageState extends State<ProfilePage> {
           right: 5, // Adjust this value to change the horizontal position
           child: AlertDialog(
             content: SizedBox(
-              height: 200,
+              height: 380,
+              width: 350,
               child: Column(
                 children: [
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.account_circle_sharp, size: 50,)
+                      Icon(Icons.account_circle_sharp, size: 120,)
+                    ],
+                  ),
+                  Text(
+                    'ID: $employee_ID',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "$firstName $lastName",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        designation,
+                        style:  TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[700],
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    userName,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "$firstName $lastName",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  Text(
-                    email,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    phone,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black87,
-                    ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding:  EdgeInsets.symmetric(horizontal: 2.0),
+                        child: Icon(Icons.phone,size: 16,),
+                      ),
+                      Text(
+                        'Tel: ',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        '0$phone',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    password_,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black87,
-                    ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding:  EdgeInsets.symmetric(horizontal: 3.0),
+                        child: Icon(Icons.email_outlined,size: 16,),
+                      ),
+                      Text(
+                        'Email: ',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        '$email',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
                   ),
+
+                  const SizedBox(
+                    height: 5,
+                  ),
+
+                  Row(
+                    children: [
+                      Padding(
+                        padding:  EdgeInsets.symmetric(horizontal: 3.0),
+                        child: Icon(Icons.maps_home_work_outlined,size: 16,),
+                      ),
+                      Text(
+                        'Company: ',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      Text(
+                        company,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(
+                    height: 50,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 180,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // createUser(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: AppColor.loginF,
+                            backgroundColor: Colors.blueGrey.shade50,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5), // Rounded corners
+                            ),
+                          ),
+                          child: const
+                          Text('Reset Password',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+
+                      ),
+
+                      Container(
+                        height: 40,
+                        width: 140,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => const CurrentUser()),
+                            // );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: AppColor.loginF,
+                            backgroundColor: Colors.blueGrey.shade50,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5), // Rounded corners
+                            ),
+                          ),
+                          child: const
+                          Text('Logout',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,color: Colors.redAccent
+                            ),
+                          ),
+                        ),
+
+
+                      ),
+
+
+                    ],
+                  ),
+
                 ],
               ),
             ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const ProfileEditPage();
-                    },
-                  );
-                },
-                child: const Text(
-                  'Edit',
-                  style: TextStyle(color: Colors.blue),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Close',
-                  style:
-                  TextStyle(
-                      color: Colors.red
-                  ),),
-              ),
 
 
-            ],
           ),
         ),
       ],
