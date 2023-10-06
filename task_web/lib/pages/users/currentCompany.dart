@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../drawers/adminSubDrawer.dart';
+import '../../drawers/userDrawer.dart';
+import '../../methods/appBar.dart';
+import '../../methods/userTable.dart';
+
 class CurrentCompany extends StatefulWidget {
   const CurrentCompany({Key? key}) : super(key: key);
 
@@ -10,6 +15,21 @@ class CurrentCompany extends StatefulWidget {
 class _CurrentCompanyState extends State<CurrentCompany> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      backgroundColor: Colors.grey,
+
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: MyAppBar(),
+      ),
+
+      body: Row(
+        children: [
+          UserDrawer(),
+          AdminSubDrawer(),
+
+        ],
+      ),
+    );
   }
 }
