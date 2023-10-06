@@ -832,12 +832,12 @@ class EditMainTaskState extends State<EditMainTask> {
                           child: MaterialButton(
                             color: Colors.deepPurple,
                             onPressed: () {
-                              titleController.text = "";
-                              descriptionController.text = "";
-                              assignToController.text = "";
-                              documentNumberController.text = "";
-                              editDueDateController.text = "";
-                              assignTo.clear();
+                              // titleController.text = "";
+                              // descriptionController.text = "";
+                              // assignToController.text = "";
+                              // documentNumberController.text = "";
+                              // editDueDateController.text = "";
+                              // assignTo.clear();
                             },
                             child: const Text(
                               'CLEAR',

@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
+import '../../components.dart';
 import '../../drawers/adminSubDrawer.dart';
 import '../../drawers/userDrawer.dart';
 import '../../methods/appBar.dart';
 import '../../methods/colors.dart';
 import '../../methods/textFieldContainer.dart';
 import 'currentUser.dart';
+import 'package:http/http.dart' as http;
 
 class CompanyCreation extends StatefulWidget {
   const CompanyCreation({Key? key}) : super(key: key);
@@ -24,6 +28,76 @@ class _CompanyCreationState extends State<CompanyCreation> {
   TextEditingController contactPerCreateController = TextEditingController();
   TextEditingController contactPerMobileCreateController = TextEditingController();
   TextEditingController contactPerEmailCreateController = TextEditingController();
+
+  Future<void> createCompany(BuildContext context) async {
+    // Validate input fields
+    if (cinNoCreateController.text.trim().isEmpty ||
+        companyNameCreateController.text.trim().isEmpty ||
+        companyEmailCreateController.text.trim().isEmpty ||
+        regNoCreateController.text.isEmpty ||
+        addressCreateController.text.isEmpty||
+        contactPerCreateController.text.isEmpty||
+        contactPerMobileCreateController.text.isEmpty||
+        contactPerEmailCreateController.text.isEmpty)
+    {
+      // Show an error message if any of the required fields are empty
+      snackBar(context, "Please fill in all required fields", Colors.red);
+      return;
+    }
+
+
+    // If all validations pass, proceed with the registration
+    var url = "http://dev.workspace.cbs.lk/createCompany.php";
+
+    var data = {
+      "cin_no": cinNoCreateController.text,
+      "company_name": companyNameCreateController.text,
+      "company_email": companyEmailCreateController.text,
+      "reg_no": regNoCreateController.text,
+      "address_": addressCreateController.text,
+      "contact_person_name": contactPerCreateController.text,
+      "contact_person_phone": contactPerMobileCreateController.text,
+      "contact_person_email": contactPerEmailCreateController.text,
+      "user_role": '0',
+      "activate": '1',
+    };
+
+
+    http.Response res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    if (res.statusCode.toString() == "200") {
+      if (jsonDecode(res.body) == "true") {
+        if (!mounted) return;
+        showSuccessSnackBar(context);// Show the success SnackBar
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CurrentUser()),
+        );
+      } else {
+        if (!mounted) return;
+        snackBar(context, "Error", Colors.red);
+      }
+    } else {
+      if (!mounted) return;
+      snackBar(context, "Error", Colors.redAccent);
+    }
+  }
+
+  void showSuccessSnackBar(BuildContext context) {
+    final snackBar =  SnackBar(
+      content: Text('Company Created Successfully!'),
+      backgroundColor: Colors.green, // You can customize the color
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +179,7 @@ class _CompanyCreationState extends State<CompanyCreation> {
                             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                             child: ElevatedButton(
                               onPressed: () {
-                                // createUser(context);
+                                createCompany(context);
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: AppColor.loginF,
