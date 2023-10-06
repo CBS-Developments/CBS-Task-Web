@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_web/pages/resetPasswordTwo.dart';
 
 import '../methods/colors.dart';
 import '../sizes/pageSizes.dart';
@@ -129,7 +130,7 @@ class _ResetPasswordOneState extends State<ResetPasswordOne> {
                     decoration: InputDecoration(
                       alignLabelWithHint: true,
                       border: const OutlineInputBorder(),
-                      labelText: 'Password your current password',
+                      labelText: 'Enter your current password',
                       hintText: '',
                     ),
                   ),
@@ -162,6 +163,37 @@ class _ResetPasswordOneState extends State<ResetPasswordOne> {
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: ElevatedButton(
                         onPressed: () {
+                          // Check if the entered password matches the stored password
+                          if (passwordVerifyController.text == password_) {
+                            // Passwords match, navigate to ResetPasswordTwo
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ResetPasswordTwo(userName: userName,
+                                  firstName: firstName,
+                                  lastName: lastName, email: email, obscureText: obscureText,),
+                              ),
+                            );
+                          } else {
+                            // Passwords don't match, show an error message
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Error'),
+                                  content: Text('Password verification failed. Please try again.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: AppColor.loginF,

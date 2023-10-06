@@ -1,52 +1,64 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../components.dart';
 import '../methods/colors.dart';
 import '../sizes/pageSizes.dart';
+import 'package:http/http.dart' as http;
+
+import 'loginPage.dart';
 
 class ResetPasswordTwo extends StatefulWidget {
-  const ResetPasswordTwo({super.key});
+  final String userName;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final bool obscureText;
+  const ResetPasswordTwo({
+    super.key,
+    required this.userName,
+    required this.firstName,
+    required this.lastName,
+    required this.email, required this.obscureText,
+  });
 
   @override
   State<ResetPasswordTwo> createState() => _ResetPasswordTwoState();
 }
 
 class _ResetPasswordTwoState extends State<ResetPasswordTwo> {
-
   TextEditingController newPasswordController = TextEditingController();
-  bool obscureText = true;
 
-  String userName = "";
-  String firstName = "";
-  String lastName = "";
-  String phone = "";
-  String userRole = "";
-  String email = "";
-  String password_ = "";
-  String employee_ID = "";
-  String designation = "";
-  String company = "";
+  bool obscureTextTwo =true;
 
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
+  Future<bool> resetPassword(
+      String userName, String newPassword) async {
+    var data = {
+      "user_name": userName,
+      "password_": newPassword,
+    };
 
-  void loadData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userName = prefs.getString('user_name') ?? "";
-      firstName = prefs.getString('first_name') ?? "";
-      lastName = prefs.getString('last_name') ?? "";
-      phone = prefs.getString('phone') ?? "";
-      userRole = prefs.getString('user_role') ?? "";
-      email = prefs.getString('email') ?? "";
-      password_ = prefs.getString('password_') ?? "";
-      employee_ID = prefs.getString('employee_ID') ?? "";
-      designation = prefs.getString('designation') ?? "";
-      company = prefs.getString('company') ?? "";
-    });
+    const url = "http://dev.workspace.cbs.lk/resetPassword.php";
+    final res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    );
+
+    if (res.statusCode == 200) {
+      if (jsonDecode(res.body) == "true") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -78,7 +90,10 @@ class _ResetPasswordTwoState extends State<ResetPasswordTwo> {
                   child: Image.asset('images/logonew.png'),
                 ),
 
-                Text('$firstName $lastName', style: TextStyle(fontSize: 24),),
+                Text(
+                  '${widget.firstName} ${widget.lastName}',
+                  style: TextStyle(fontSize: 24),
+                ),
                 SizedBox(height: 10,),
 
                 Row(
@@ -100,7 +115,7 @@ class _ResetPasswordTwoState extends State<ResetPasswordTwo> {
                             children: [
                               Icon(Icons.account_circle_rounded),
                               SizedBox(width: 5,),
-                              Text(email, style: TextStyle(fontSize: 16)),
+                              Text(widget.email, style: TextStyle(fontSize: 16)),
                             ],
                           ),
                         ),
@@ -114,7 +129,7 @@ class _ResetPasswordTwoState extends State<ResetPasswordTwo> {
                     SizedBox(width: 30,),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: Text("To continue, first verify that it's you",style: TextStyle(fontSize: 16)),
+                      child: Text("Set a strong new password for your account",style: TextStyle(fontSize: 16)),
                     ),
                   ],
                 ),
@@ -126,11 +141,11 @@ class _ResetPasswordTwoState extends State<ResetPasswordTwo> {
                   color: Colors.white,
                   child: TextField(
                     controller: newPasswordController,
-                    obscureText: obscureText,
+                    obscureText: obscureTextTwo, // Use the local variable
                     decoration: InputDecoration(
                       alignLabelWithHint: true,
                       border: const OutlineInputBorder(),
-                      labelText: 'Password your current password',
+                      labelText: 'Enter new password',
                       hintText: '',
                     ),
                   ),
@@ -138,13 +153,12 @@ class _ResetPasswordTwoState extends State<ResetPasswordTwo> {
 
                 Row(
                   children: [
-                    SizedBox(width: 50,),
-
+                    SizedBox(width: 50),
                     Checkbox(
-                      value: !obscureText,
+                      value: !obscureTextTwo, // Inverse the value for the checkbox
                       onChanged: (value) {
                         setState(() {
-                          obscureText = !value!;
+                          obscureTextTwo = !value!; // Update the local variable
                         });
                       },
                     ),
@@ -162,8 +176,26 @@ class _ResetPasswordTwoState extends State<ResetPasswordTwo> {
                       width: 100,
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          final success = await resetPassword(
+                            widget.userName,
+                            newPasswordController.text,
+                          );
+                          if (success) {
+                            snackBar(context, "Password reset successful! Please log in again.", Colors.green);
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.remove("login_state"); // Remove the "login_state" key
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return const LoginPage();
+                              }),
+                            );
+                          } else {
+                            snackBar(context, "Password reset failed. Please try again.", Colors.red);
+                          }
                         },
+
                         style: ElevatedButton.styleFrom(
                           foregroundColor: AppColor.loginF,
                           backgroundColor: Colors.blueGrey.shade50,
@@ -178,16 +210,11 @@ class _ResetPasswordTwoState extends State<ResetPasswordTwo> {
                           ),
                         ),
                       ),
-
-
                     ),
 
                     SizedBox(width: 40,)
                   ],
                 ),
-
-
-
               ],
             ),
           ),
