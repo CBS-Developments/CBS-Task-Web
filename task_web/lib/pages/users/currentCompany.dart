@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_web/methods/companyTable.dart';
 
 import '../../drawers/adminSubDrawer.dart';
 import '../../drawers/userDrawer.dart';
@@ -27,9 +28,15 @@ class _CurrentCompanyState extends State<CurrentCompany> {
         children: [
           UserDrawer(),
           AdminSubDrawer(),
+          Column(
+            children: [
+              CompanyTable()
+            ],
+          )
 
         ],
       ),
+
     );
   }
 }
