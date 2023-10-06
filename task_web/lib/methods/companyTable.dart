@@ -24,7 +24,7 @@ class _CompanyTableState extends State<CompanyTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       width: 800,
       height: 400,
       child: Column(
@@ -50,7 +50,7 @@ class _CompanyTableState extends State<CompanyTable> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     '$companyCount',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -116,21 +116,21 @@ class _CompanyTableState extends State<CompanyTable> {
                   return DataRow(cells: [
                     DataCell(Text(
                       company.cinNo,
-                      style: TextStyle(fontSize: 10, color: Colors.black),
+                      style: const TextStyle(fontSize: 10, color: Colors.black),
                     )),
                     DataCell(
                       Text(
                         company.companyName,
-                        style: TextStyle(fontSize: 10, color: Colors.black),
+                        style: const TextStyle(fontSize: 10, color: Colors.black),
                       ),
                       onTap: () {
                         //_showUserDetailsDialog(user);
-                        getCompanyList();
+                        //getCompanyList();
                       },
                     ),
                     DataCell(Text(
                       company.companyEmail,
-                      style: TextStyle(fontSize: 10, color: Colors.black),
+                      style: const TextStyle(fontSize: 10, color: Colors.black),
                     )),
                     // DataCell(
                     //   Text(
