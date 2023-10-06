@@ -4,6 +4,7 @@ import 'package:task_web/methods/colors.dart';
 import 'package:task_web/methods/profileEditDialog.dart';
 
 import '../pages/loginPage.dart';
+import '../pages/resetPasswordOne.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -191,10 +192,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: ElevatedButton(
                           onPressed: () {
                             // createUser(context);
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => const CurrentUser()),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const ResetPasswordOne()),
+                            );
 
                           },
                           style: ElevatedButton.styleFrom(
