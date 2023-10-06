@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:task_web/pages/users/currentCompany.dart';
 
 import '../../components.dart';
 import '../../drawers/adminSubDrawer.dart';
@@ -207,7 +208,7 @@ class _CompanyCreationState extends State<CompanyCreation> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const CurrentUser()),
+                                  MaterialPageRoute(builder: (context) => const CurrentCompany()),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
