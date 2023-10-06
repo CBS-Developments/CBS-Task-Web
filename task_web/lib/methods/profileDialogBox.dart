@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/colors.dart';
 import 'package:task_web/methods/profileEditDialog.dart';
 
+import '../pages/loginPage.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -189,6 +191,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: ElevatedButton(
                           onPressed: () {
                             // createUser(context);
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => const CurrentUser()),
+                            // );
+
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: AppColor.loginF,
@@ -213,11 +220,16 @@ class _ProfilePageState extends State<ProfilePage> {
                         width: 140,
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: ElevatedButton(
-                          onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => const CurrentUser()),
-                            // );
+                          onPressed: () async {
+
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.remove("login_state"); // Remove the "login_state" key
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return const LoginPage();
+                              }),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: AppColor.loginF,
