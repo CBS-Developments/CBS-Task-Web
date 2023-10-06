@@ -28,15 +28,15 @@ class _CompanyCreationState extends State<CompanyCreation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: MyAppBar(),
       ),
 
       body: Row(
         children: [
-          UserDrawer(),
-          AdminSubDrawer(),
+          const UserDrawer(),
+          const AdminSubDrawer(),
 
           Column(
             children: [
@@ -48,10 +48,10 @@ class _CompanyCreationState extends State<CompanyCreation> {
                   fontWeight: FontWeight.bold
                 ),),
               Container(
-                margin: EdgeInsets.all(30),
+                margin: const EdgeInsets.all(30),
                 width: 800,
                 height: 500,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -92,7 +92,7 @@ class _CompanyCreationState extends State<CompanyCreation> {
                       ],
                     ),
 
-                    SizedBox(height: 50,),
+                    const SizedBox(height: 50,),
 
                     SizedBox(
                       width: 750,

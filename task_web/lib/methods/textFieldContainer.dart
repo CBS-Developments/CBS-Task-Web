@@ -22,12 +22,17 @@ class TextFieldContainer extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(2.0),
-            child: Text(
-              topic,
-              style: TextStyle(fontSize: 15),
+            child: Row(
+              children: [
+                Text(
+                  topic,
+                  style: const TextStyle(fontSize: 15),
+                ),
+                const Text('*', style: TextStyle(color: Colors.red),)
+              ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 350,
             height: 35,
             child: TextField(
