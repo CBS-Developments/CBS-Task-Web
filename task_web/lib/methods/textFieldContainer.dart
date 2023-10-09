@@ -46,6 +46,7 @@ class TextFieldContainer extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.black, width: 1.0),
                 ),
                 hintText: hintText,
+                hintStyle: TextStyle(fontSize: 14,color: Colors.grey.shade500),
                 contentPadding: EdgeInsets.all( 5.0), // Adjust vertical padding
               ),
             )
