@@ -10,5 +10,6 @@ class AppColor {
   static  Color complete = const Color(0xFF0400D1);
   static  Color pending = const Color(0xFF809FB8);
   static  Color table = const Color(0xFF7B96E1);
+  static  Color tealLog = const Color(0xFF367A7A);
 
 }

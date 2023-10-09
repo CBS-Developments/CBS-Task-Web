@@ -1,9 +1,10 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_web/methods/TextFieldLogin.dart';
 import 'package:task_web/methods/colors.dart';
+import 'package:task_web/methods/textFieldContainer.dart';
 import 'package:task_web/pages/createAccountPage.dart';
 import 'package:task_web/pages/taskMainPage.dart';
 import 'package:task_web/sizes/pageSizes.dart';
@@ -76,18 +77,18 @@ class _LoginPageState extends State<LoginPage> {
             MaterialPageRoute(builder: (context) => const DashManin()),
           );
         } else {
-          snackBar(context, "Account Deactivated", Colors.redAccent); // Show Snackbar for deactivated account
+          snackBar(context, "Account Deactivated",
+              Colors.redAccent); // Show Snackbar for deactivated account
         }
       } else {
-        snackBar(context, "Incorrect Password", Colors.yellow); // Show Snackbar for incorrect password
+        snackBar(context, "Incorrect Password",
+            Colors.yellow); // Show Snackbar for incorrect password
       }
     } else {
       snackBar(context, "Error", Colors.redAccent);
     }
     return true;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -98,105 +99,98 @@ class _LoginPageState extends State<LoginPage> {
         height: getPageHeight(context),
         child: Center(
           child: Container(
-            width: 500,
-            height: 500,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.grey.shade300,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade500,
-                  offset: const Offset(4, 4),
-                  blurRadius: 5,
-                  spreadRadius: 1,
-                ),
-                const BoxShadow(
-                  color: Colors.white,
-                  offset: Offset(-4, -4),
-                  blurRadius: 15,
-                  spreadRadius: 1,
-                ),
-              ],
-            ),
+            width: 800,
+            height: 800,
+            color: Colors.white,
             child: Column(
               children: [
                 const SizedBox(height: 20),
                 //Image.asset('images/mobile.png', width: 200),
-                const SizedBox(height: 10),
+                const SizedBox(height: 60),
                 const Text(
-                  'Log In',
+                  'Workspace',
                   style: TextStyle(
                     fontSize: 42,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Colors.deepPurple,
                   ),
                 ),
                 const SizedBox(height: 15),
-                const Text(
-                  'Log in and start managing your tasks!',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                  ),
-                ),
+                const Divider(),
                 const SizedBox(height: 50),
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  width: 330,
-                  height: 60,
-                  color: Colors.white,
-                  child: TextField(
-                    controller: emailController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      alignLabelWithHint: true,
-                      border: const OutlineInputBorder(),
-                      labelText: 'Enter Your Email',
-                      hintText: '',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.email_outlined,
-                          color: AppColor.loginF,
-                        ),
-                        onPressed: () {},
+
+                TextFieldLogin(
+                  topic: 'Email Address',
+                  obscureText: false,
+                  controller: emailController,
+                  hintText: '',
+                  suficon: const Icon(Icons.email),
+                  onPressed: () {},
+                  onSubmitted: (value) {
+                    login(context);
+                  },
+                ),
+
+                const SizedBox(height: 10),
+                TextFieldLogin(
+                  topic: 'Password',
+                  obscureText: true,
+                  controller: passwordController,
+                  hintText: '',
+                  suficon: const Icon(Icons.remove_red_eye_rounded),
+                  onPressed: () {},
+                  onSubmitted: (value) {
+                    login(context);
+                  },
+                ),
+                // Container(
+                //   padding: const EdgeInsets.all(5),
+                //   width: 330,
+                //   height: 60,
+                //   color: Colors.white,
+                //   child: TextField(
+                //     controller: passwordController,
+                //     obscureText: true,
+                //     decoration: InputDecoration(
+                //       alignLabelWithHint: true,
+                //       border: const OutlineInputBorder(),
+                //       labelText: 'Password',
+                //       hintText: '',
+                //       suffixIcon: IconButton(
+                //         icon: Icon(
+                //           Icons.password_rounded,
+                //           color: AppColor.loginF,
+                //         ),
+                //         onPressed: () {},
+                //       ),
+                //     ),
+                //     onSubmitted: (value) {
+                //       login(context);
+                //     },
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 200),
+                  child: Row(
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Forgot your password ? ",
+                        style: TextStyle(fontSize: 18),
                       ),
-                    ),
-                    onSubmitted: (value) {
-                      login(context);
-                    },
+                      TextButton(
+                          onPressed: () {   },
+                          child: Text(
+                            'Reset It',
+                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold, color: AppColor.tealLog),
+                          ))
+                    ],
                   ),
                 ),
                 const SizedBox(height: 20),
                 Container(
-                  padding: const EdgeInsets.all(5),
-                  width: 330,
-                  height: 60,
-                  color: Colors.white,
-                  child: TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      alignLabelWithHint: true,
-                      border: const OutlineInputBorder(),
-                      labelText: 'Password',
-                      hintText: '',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.password_rounded,
-                          color: AppColor.loginF,
-                        ),
-                        onPressed: () {},
-                      ),
-                    ),
-                    onSubmitted: (value) {
-                      login(context);
-                    },
-                  ),
-                ),
-                const SizedBox(height: 60),
-                Container(
                   height: 50,
-                  width: 200,
+                  width: 400,
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: ElevatedButton(
                     onPressed: () {
@@ -204,20 +198,21 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: AppColor.loginF,
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.teal,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5), // Rounded corners
+                        borderRadius:
+                            BorderRadius.circular(5), // Rounded corners
                       ),
                     ),
-                    child: const
-                    Text('Log In',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20
+                      ),
                     ),
                   ),
-
-
                 ),
 
                 const SizedBox(height: 20),
@@ -225,8 +220,8 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Don't have an Account?",
+                    const Text(
+                      "New to Workspace ?",
                       style: TextStyle(fontSize: 18),
                     ),
                     TextButton(
@@ -234,12 +229,12 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CreateAccountPage()),
+                                builder: (context) => const CreateAccountPage()),
                           );
                         },
-                        child: const Text(
-                          'Create an Account',
-                          style: TextStyle(fontSize: 18),
+                        child: Text(
+                          'Get Started',
+                          style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold, color: AppColor.tealLog),
                         ))
                   ],
                 ),
