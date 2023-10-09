@@ -99,7 +99,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         height: getPageHeight(context),
         child: Center(
           child: Container(
-            width: 500,
+            width: 800,
             height: 600,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
