@@ -12,6 +12,7 @@ import '../../methods/textFieldContainer.dart';
 import 'package:http/http.dart' as http;
 
 class EditUserPage extends StatefulWidget {
+  final String userName;
   final String firstName;
   final String lastName;
   final String email;
@@ -21,21 +22,99 @@ class EditUserPage extends StatefulWidget {
   final String designation;
   final String company;
 
-  const EditUserPage({super.key, required this.firstName, required this.lastName, required this.email, required this.password, required this.phone, required this.employeeID, required this.designation, required this.company});
+  const EditUserPage(
+      {super.key,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.password,
+      required this.phone,
+      required this.employeeID,
+      required this.designation,
+      required this.company,
+      required this.userName});
 
   @override
   State<EditUserPage> createState() => _EditUserPageState();
 }
 
 class _EditUserPageState extends State<EditUserPage> {
-  TextEditingController firstNameCreateController = TextEditingController();
-  TextEditingController lastNameCreateController = TextEditingController();
-  TextEditingController emailCreateController = TextEditingController();
-  TextEditingController passwordCreateController = TextEditingController();
-  TextEditingController contactCreateController = TextEditingController();
-  TextEditingController employeeIDCreateController = TextEditingController();
-  TextEditingController designationCreateController = TextEditingController();
-  TextEditingController companyCreateController = TextEditingController();
+  TextEditingController newFirstNameController = TextEditingController();
+  TextEditingController newLastNameController = TextEditingController();
+  TextEditingController newEmailController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController newContactController = TextEditingController();
+  TextEditingController newEmployeeIDController = TextEditingController();
+  TextEditingController newDesignationController = TextEditingController();
+  TextEditingController newCompanyController = TextEditingController();
+
+
+  Future<bool> editUser(
+      String userName,
+      String newFirstName,
+      String newLastName,
+      String newEmail,
+      String newPassword,
+      String newContact,
+      String newEmployeeID,
+      String newDesignation,
+      String newCompany,
+      ) async {
+    // Prepare the data to be sent to the PHP script.
+    var data = {
+      "user_name": userName,
+      "first_name": newFirstName,
+      "last_name": newLastName,
+      "email": newEmail,
+      "password_": newPassword,
+      "phone": newContact,
+      "employee_ID": newEmployeeID,
+      "designation": newDesignation,
+      "company": newCompany,
+    };
+
+    // URL of your PHP script.
+    const url = "http://dev.workspace.cbs.lk/editUser.php";
+
+    try {
+      final res = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      if (res.statusCode == 200) {
+        final responseBody = jsonDecode(res.body);
+
+        // Debugging: Print the response data.
+        print("Response from PHP script: $responseBody");
+
+        if (responseBody == "true") {
+          print('Successful');
+          snackBar(context, "Profile Edite successful!", Colors.green);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return const CurrentUser();
+            }),
+          );
+          return true; // PHP code was successful.
+        } else {
+          print('PHP code returned "false".');
+          return false; // PHP code returned "false."
+        }
+      } else {
+        print('HTTP request failed with status code: ${res.statusCode}');
+        return false; // HTTP request failed.
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false; // An error occurred.
+    }
+  }
 
 
   @override
@@ -69,13 +148,13 @@ class _EditUserPageState extends State<EditUserPage> {
                     children: [
                       TextFieldContainer(
                         topic: 'First Name:',
-                        controller: firstNameCreateController,
+                        controller: newFirstNameController,
                         hintText: widget.firstName,
                       ),
                       TextFieldContainer(
                         topic: 'Last Name:',
-                        controller: lastNameCreateController,
-                        hintText:  widget.lastName,
+                        controller: newLastNameController,
+                        hintText: widget.lastName,
                       ),
                     ],
                   ),
@@ -83,13 +162,13 @@ class _EditUserPageState extends State<EditUserPage> {
                     children: [
                       TextFieldContainer(
                         topic: 'Email:',
-                        controller: emailCreateController,
-                        hintText:  widget.email,
+                        controller: newEmailController,
+                        hintText: widget.email,
                       ),
                       TextFieldContainer(
                         topic: 'Password:',
-                        controller: passwordCreateController,
-                        hintText:  widget.password,
+                        controller: newPasswordController,
+                        hintText: widget.password,
                       ),
                     ],
                   ),
@@ -97,13 +176,13 @@ class _EditUserPageState extends State<EditUserPage> {
                     children: [
                       TextFieldContainer(
                         topic: 'Contact Number:',
-                        controller: contactCreateController,
-                        hintText:  widget.phone,
+                        controller: newContactController,
+                        hintText: widget.phone,
                       ),
                       TextFieldContainer(
                         topic: 'Employee ID:',
-                        controller: employeeIDCreateController,
-                        hintText:  widget.employeeID,
+                        controller: newEmployeeIDController,
+                        hintText: widget.employeeID,
                       ),
                     ],
                   ),
@@ -111,13 +190,13 @@ class _EditUserPageState extends State<EditUserPage> {
                     children: [
                       TextFieldContainer(
                         topic: 'Designation:',
-                        controller: designationCreateController,
-                        hintText:  widget.designation,
+                        controller: newDesignationController,
+                        hintText: widget.designation,
                       ),
                       TextFieldContainer(
                         topic: 'Company:',
-                        controller: companyCreateController,
-                        hintText:  widget.company,
+                        controller: newCompanyController,
+                        hintText: widget.company,
                       ),
                     ],
                   ),
@@ -135,13 +214,23 @@ class _EditUserPageState extends State<EditUserPage> {
                           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                           child: ElevatedButton(
                             onPressed: () {
+                              editUser(
+                                  widget.userName,
+                                  newFirstNameController.text,
+                                  newLastNameController.text,
+                                  newEmailController.text,
+                                  newPasswordController.text,
+                                  newContactController.text,
+                                  newEmployeeIDController.text,
+                                  newDesignationController.text,
+                                  newCompanyController.text);
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: AppColor.loginF,
                               backgroundColor: Colors.lightBlue.shade50,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    5), // Rounded corners
+                                borderRadius:
+                                    BorderRadius.circular(5), // Rounded corners
                               ),
                             ),
                             child: const Text(
@@ -161,16 +250,15 @@ class _EditUserPageState extends State<EditUserPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CurrentUser()),
+                                    builder: (context) => const CurrentUser()),
                               );
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: AppColor.loginF,
                               backgroundColor: Colors.lightBlue.shade50,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    5), // Rounded corners
+                                borderRadius:
+                                    BorderRadius.circular(5), // Rounded corners
                               ),
                             ),
                             child: const Text(
