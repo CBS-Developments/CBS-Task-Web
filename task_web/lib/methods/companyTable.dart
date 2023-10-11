@@ -26,7 +26,7 @@ class _CompanyTableState extends State<CompanyTable> {
     return Container(
       margin: const EdgeInsets.all(20),
       width: 800,
-      height: 400,
+      height: 233,
       child: Column(
         children: [
           Container(
@@ -111,6 +111,15 @@ class _CompanyTableState extends State<CompanyTable> {
                       ),
                     ),
                   ),
+                  DataColumn(
+                    label: Text(
+                      'Edit',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                 ],
                 rows: companyList.map((company) {
                   return DataRow(cells: [
@@ -132,28 +141,33 @@ class _CompanyTableState extends State<CompanyTable> {
                       company.companyEmail,
                       style: const TextStyle(fontSize: 10, color: Colors.black),
                     )),
-                    // DataCell(
-                    //   Text(
-                    //     user.activate == '1' ? 'Active' : 'Deactivated',
-                    //     style: TextStyle(
-                    //       fontSize: 10,
-                    //       color: user.activate == '1' ? Colors.green : Colors.red,
-                    //     ),
-                    //   ),
-                    // ),
-                    // DataCell(
-                    //   Switch(
-                    //     value: user.activate == '1' ? true : false,
-                    //     onChanged: (value) {
-                    //       setState(() {
-                    //         user.activate = value ? '1' : '0';
-                    //       });
-                    //       userStatusToggle(user.userName, value);
-                    //     },
-                    //     activeColor: Colors.green,
-                    //     inactiveTrackColor: Colors.redAccent.withOpacity(0.5),
-                    //   ),
-                    // ),
+                    DataCell(
+                      Text(
+                        company.activate == '1' ? 'Active' : 'Deactivated',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: company.activate == '1' ? Colors.green : Colors.red,
+                        ),
+                      ),
+                    ),
+                    DataCell(
+                      Switch(
+                        value: company.activate == '1' ? true : false,
+                        onChanged: (value) {
+                          setState(() {
+                            company.activate = value ? '1' : '0';
+                          });
+                          companyStatusToggle(company.cinNo, value);
+                        },
+                        activeColor: Colors.green,
+                        inactiveTrackColor: Colors.redAccent.withOpacity(0.5),
+                      ),
+                    ),
+                    DataCell(
+                      Icon(Icons.edit_note_rounded),
+                      onTap: () {
+                      },
+                    ),
                   ]);
                 }).toList(),
               ),
@@ -192,6 +206,72 @@ class _CompanyTableState extends State<CompanyTable> {
     }
   }
 
+  Future<void> companyStatusDeactivate(String cinNo) async {
+    var data = {
+      "cin_no": cinNo,
+      "activate": '0',
+    };
+
+    const url = "http://dev.workspace.cbs.lk/companyStatus.php";
+    final res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    );
+
+    if (res.statusCode.toString() == "200") {
+      Map<String, dynamic> result = jsonDecode(res.body);
+      print(result);
+    }
+  }
+
+  Future<void> companyStatusActivate(String cinNo) async {
+    var data = {
+      "cin_no": cinNo,
+      "activate": '1',
+    };
+
+    const url = "http://dev.workspace.cbs.lk/companyStatus.php";
+    final res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    );
+
+    if (res.statusCode.toString() == "true") {
+      Map<String, dynamic> result = jsonDecode(res.body);
+      print(result);
+    }
+  }
+
+  Future<void> companyStatusToggle(String cinNo, bool activate) async {
+    var data = {
+      "cin_No": cinNo,
+      "activate": activate ? '1' : '0',
+    };
+
+    const url = "http://dev.workspace.cbs.lk/companyStatus.php";
+    http.Response res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    );
+
+    if (res.statusCode == 200) {
+      Map<String, dynamic> result = jsonDecode(res.body);
+      print(result);
+    }
+  }
+
 }
 
 class Company {
@@ -221,14 +301,14 @@ class Company {
 
   factory Company.fromJson(Map<String, dynamic> json) {
     return Company(
-      cinNo: json['user_name'],
-      companyName: json['first_name'],
-      companyEmail: json['last_name'],
-      regNo: json['email'],
-      address: json['password_'],
-      conPersonNo: json['phone'],
-      conPersonPhone: json['phone'],
-      conPersonEmail: json['phone'],
+      cinNo: json['cin_no'],
+      companyName: json['company_name'],
+      companyEmail: json['company_email'],
+      regNo: json['reg_no'],
+      address: json['address_'],
+      conPersonNo: json['contact_person_name'],
+      conPersonPhone: json['contact_person_phone'],
+      conPersonEmail: json['contact_person_email'],
       userRole: json['user_role'],
       activate: json['activate'],
     );
