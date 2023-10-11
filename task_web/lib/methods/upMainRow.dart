@@ -6,6 +6,7 @@ import 'package:task_web/methods/labelPopUpMenu.dart';
 import 'package:task_web/methods/statusPopUpMenu.dart';
 import 'package:task_web/methods/taskPopUpMenu.dart';
 import 'package:task_web/methods/companyPopUpMenu.dart';
+import 'package:task_web/pages/createMainTaskNew.dart';
 
 
 import '../pages/create MainTask.dart';
@@ -97,6 +98,16 @@ class _UpMainRowState extends State<UpMainRow> {
           SizedBox(width: 5,),
 
 
+          // IconButton(
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => CreateMainTaskNew(firstName,lastName,userName)),
+          //     );
+          //   },
+          //   icon: Icon(Icons.add_circle_outline_rounded, color: Colors.red,),
+          // ),
           IconButton(
             onPressed: () { showDialog(
               context: context,

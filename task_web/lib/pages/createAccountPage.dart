@@ -25,6 +25,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController designationController = TextEditingController();
   TextEditingController companyController = TextEditingController();
+  TextEditingController empIDController = TextEditingController();
 
 
   Future<void> createUser(BuildContext context) async {
@@ -35,6 +36,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         mobileNumberController.text.isEmpty ||
         designationController.text.isEmpty ||
         passwordController.text.isEmpty ||
+        empIDController.text.isEmpty ||
         companyController.text.isEmpty) {
       // Show an error message if any of the required fields are empty
       snackBar(context, "Please fill in all required fields", Colors.red);
@@ -55,6 +57,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       "phone": mobileNumberController.text,
       "designation": designationController.text,
       "company": companyController.text,
+      "employee_ID": empIDController.text,
       "user_role": '0',
       "activate": '1',
     };
@@ -109,24 +112,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             child: Container(
               width: 850,
               height: getPageHeight(context),
-              // decoration: BoxDecoration(
-              //   borderRadius: BorderRadius.circular(20),
-              //   color: Colors.white60,
-              //   boxShadow: [
-              //     BoxShadow(
-              //       color: Colors.grey.shade500,
-              //       offset: const Offset(4, 4),
-              //       blurRadius: 5,
-              //       spreadRadius: 1,
-              //     ),
-              //     const BoxShadow(
-              //       color: Colors.white,
-              //       offset: Offset(-4, -4),
-              //       blurRadius: 15,
-              //       spreadRadius: 1,
-              //     ),
-              //   ],
-              // ),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -192,175 +177,40 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            TextFieldLogin(topic: 'Employee Id', controller: empIDController, hintText: '', suficon: Icon(Icons.numbers_rounded)),
                             TextFieldLogin(topic: 'Password', controller: passwordController, hintText: '', suficon: Icon(Icons.remove_red_eye))
                           ],
                         )
                       ],
                     ),
-                    // Container(
-                    //   padding: const EdgeInsets.all(5),
-                    //   width: 330,
-                    //   height: 60,
-                    //   color: Colors.white,
-                    //   child: TextField(
-                    //     controller: firstNameController,
-                    //     keyboardType: TextInputType.number,
-                    //     decoration: InputDecoration(
-                    //       alignLabelWithHint: true,
-                    //       border: const OutlineInputBorder(),
-                    //       labelText: 'First Name',
-                    //       hintText: '',
-                    //       suffixIcon: IconButton(
-                    //         icon: Icon(
-                    //           Icons.person_outline_rounded,
-                    //           color: AppColor.loginF,
-                    //         ),
-                    //         onPressed: () {},
-                    //       ),
-                    //     ),
-                    //     onSubmitted: (value) {
-                    //     },
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 20),
-                    //
-                    // Container(
-                    //   padding: const EdgeInsets.all(5),
-                    //   width: 330,
-                    //   height: 60,
-                    //   color: Colors.white,
-                    //   child: TextField(
-                    //     controller: lastNameController,
-                    //     keyboardType: TextInputType.number,
-                    //     decoration: InputDecoration(
-                    //       alignLabelWithHint: true,
-                    //       border: const OutlineInputBorder(),
-                    //       labelText: 'Last Name',
-                    //       hintText: '',
-                    //       suffixIcon: IconButton(
-                    //         icon: Icon(
-                    //           Icons.person_outline_rounded,
-                    //           color: AppColor.loginF,
-                    //         ),
-                    //         onPressed: () {},
-                    //       ),
-                    //     ),
-                    //     onSubmitted: (value) {
-                    //     },
-                    //   ),
-                    // ),
-                    //
-                    // const SizedBox(height: 20),
-                    //
-                    // Container(
-                    //   padding: const EdgeInsets.all(5),
-                    //   width: 330,
-                    //   height: 60,
-                    //   color: Colors.white,
-                    //   child: TextField(
-                    //     controller: emailController,
-                    //     keyboardType: TextInputType.number,
-                    //     decoration: InputDecoration(
-                    //       alignLabelWithHint: true,
-                    //       border: const OutlineInputBorder(),
-                    //       labelText: 'Enter Your Email',
-                    //       hintText: '',
-                    //       suffixIcon: IconButton(
-                    //         icon: Icon(
-                    //           Icons.email_outlined,
-                    //           color: AppColor.loginF,
-                    //         ),
-                    //         onPressed: () {},
-                    //       ),
-                    //     ),
-                    //     onSubmitted: (value) {
-                    //     },
-                    //   ),
-                    // ),
-                    //
-                    // const SizedBox(height: 20),
-                    //
-                    // Container(
-                    //   padding: const EdgeInsets.all(5),
-                    //   width: 330,
-                    //   height: 60,
-                    //   color: Colors.white,
-                    //   child: TextField(
-                    //     controller: mobileNumberController,
-                    //     keyboardType: TextInputType.number,
-                    //     decoration: InputDecoration(
-                    //       alignLabelWithHint: true,
-                    //       border: const OutlineInputBorder(),
-                    //       labelText: 'Mobile Number',
-                    //       hintText: '',
-                    //       suffixIcon: IconButton(
-                    //         icon: Icon(
-                    //           Icons.phone_android_rounded,
-                    //           color: AppColor.loginF,
-                    //         ),
-                    //         onPressed: () {},
-                    //       ),
-                    //     ),
-                    //     onSubmitted: (value) {
-                    //     },
-                    //   ),
-                    // ),
-                    //
-                    // const SizedBox(height: 20),
-                    //
-                    // Container(
-                    //   padding: const EdgeInsets.all(5),
-                    //   width: 330,
-                    //   height: 60,
-                    //   color: Colors.white,
-                    //   child: TextField(
-                    //     controller: passwordController,
-                    //     obscureText: true,
-                    //     decoration: InputDecoration(
-                    //       alignLabelWithHint: true,
-                    //       border: const OutlineInputBorder(),
-                    //       labelText: 'Password',
-                    //       hintText: '',
-                    //       suffixIcon: IconButton(
-                    //         icon: Icon(
-                    //           Icons.password_rounded,
-                    //           color: AppColor.loginF,
-                    //         ),
-                    //         onPressed: () {},
-                    //       ),
-                    //     ),
-                    //     onSubmitted: (value) {
-                    //     },
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 25),
-                    // Container(
-                    //   height: 50,
-                    //   width: 200,
-                    //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    //   child: ElevatedButton(
-                    //     onPressed: () {
-                    //       createUser(context);
-                    //     },
-                    //     style: ElevatedButton.styleFrom(
-                    //       foregroundColor: AppColor.loginF,
-                    //       backgroundColor: Colors.white,
-                    //       shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(5), // Rounded corners
-                    //       ),
-                    //     ),
-                    //     child: const
-                    //     Text('Sign Up',
-                    //       style: TextStyle(
-                    //         fontWeight: FontWeight.bold,
-                    //         fontSize: 18
-                    //       ),
-                    //     ),
-                    //   ),
-                    //
-                    //
-                    // ),
 
+                    const SizedBox(height: 10),
+                    Container(
+                      height: 50,
+                      width: 400,
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          createUser(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: AppColor.loginF,
+                          backgroundColor: Colors.teal,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.circular(5), // Rounded corners
+                          ),
+                        ),
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 20
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 10),
 
                     Row(

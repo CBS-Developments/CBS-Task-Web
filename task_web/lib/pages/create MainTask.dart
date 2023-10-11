@@ -621,13 +621,6 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                     child: MaterialButton(
                       color: Colors.deepPurple,
                       onPressed: () {
-                        titleController.text = "";
-                        descriptionController.text = "";
-                        subTitleController.text = "";
-                        assignToController.text = "";
-                        documentNumberController.text = "";
-                        createTaskDueDateController.text = "";
-                        assignTo.clear();
 
                       },
                       child: const Text(
@@ -656,7 +649,6 @@ class _CreateTaskDialogState extends State<CreateTaskDialog> {
                           createTaskDueDateController.text = "";
                           assignTo.clear();
                         }
-                        Navigator.of(context).pop(); // Close the dialog
                       },
                       child: const Text(
                         'SUBMIT',
