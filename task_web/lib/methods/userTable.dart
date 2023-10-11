@@ -204,7 +204,7 @@ class _UserTableState extends State<UserTable> {
                                     phone: user.phone,
                                     employeeID: user.employeeID,
                                     designation: user.designation,
-                                    company: user.company,
+                                    company: user.company, userName: user.userName,
                                   )),
                         );
                       },
