@@ -98,16 +98,16 @@ class _UpMainRowState extends State<UpMainRow> {
           SizedBox(width: 5,),
 
 
-          // IconButton(
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => CreateMainTaskNew(firstName,lastName,userName)),
-          //     );
-          //   },
-          //   icon: Icon(Icons.add_circle_outline_rounded, color: Colors.red,),
-          // ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CreateMainTaskNew(firstName,lastName,userName)),
+              );
+            },
+            icon: Icon(Icons.add_circle_outline_rounded, color: Colors.red,),
+          ),
           IconButton(
             onPressed: () { showDialog(
               context: context,
