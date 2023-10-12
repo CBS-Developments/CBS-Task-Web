@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'createAccountPopups/assigntoPopUp.dart';
 import 'createAccountPopups/beneficiaryPopUp.dart';
+import 'createAccountPopups/priortyPopUp.dart';
 import 'methods/assignedPopUpMenu.dart';
 import 'methods/labelPopUpMenu.dart';
 import 'methods/statusPopUpMenu.dart'; // Import the DropdownState class
@@ -64,7 +65,11 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<AssignToState>.value(
             value: AssignToState(),
-          )
+          ),
+
+          ChangeNotifierProvider<PriorityState>.value(
+            value: PriorityState(), // Provide an instance of PriorityState
+          ),
         ],
         child: LandingPage(
             prefs: prefs), // Pass the plugin instance to LandingPage

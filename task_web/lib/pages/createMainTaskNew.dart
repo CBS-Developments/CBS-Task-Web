@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../components.dart';
 import '../createAccountPopups/assigntoPopUp.dart';
 import '../createAccountPopups/beneficiaryPopUp.dart';
+import '../createAccountPopups/priortyPopUp.dart';
 import '../methods/appBar.dart';
 import 'package:http/http.dart' as http;
 
@@ -385,7 +386,7 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                     ),
 
                                     SizedBox(
-                                      height: 12,
+                                      height: 17,
                                     ),
 
                                     Consumer<AssignToState>(
@@ -415,7 +416,41 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                           ),
                                         );
                                       },
+                                    ),
+
+                                    SizedBox(
+                                      height: 17,
+                                    ),
+
+                                    Consumer<PriorityState>(
+                                      builder: (context, priorityState, child) {
+                                        return TextButton(
+                                          onPressed: () {
+                                            priorityPopupMenu(context, priorityState);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                priorityState.value ?? 'Priority',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons.keyboard_arrow_down_rounded,
+                                                  color: Colors.black,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      },
                                     )
+
 
 
                                   ],

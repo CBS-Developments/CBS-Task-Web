@@ -13,7 +13,7 @@ class PriorityState extends ChangeNotifier {
 }
 
 
-void priorityPopupMenu(BuildContext context) {
+void priorityPopupMenu(BuildContext context, PriorityState priorityState) {
   final RenderBox overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
   final RenderBox button = context.findRenderObject() as RenderBox;
 
@@ -28,9 +28,7 @@ void priorityPopupMenu(BuildContext context) {
   );
 
   final priorityItems = [
-    'Priority 1',
-    'Priority 2',
-    'Priority 3',
+    'Top Urgent', 'Medium', 'Regular', 'Low'
     // Add your priority levels here
   ];
 
