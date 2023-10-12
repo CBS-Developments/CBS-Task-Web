@@ -160,7 +160,7 @@ class Task {
   String assignTo;
   String company;
   String documentNumber;
-  String priority;
+
 
   Task(
       {required this.taskId,
@@ -200,7 +200,7 @@ class Task {
         required this.assignTo,
         required this.company,
         required this.documentNumber,
-        required this.priority,
+
       });
 
   factory Task.fromJson(Map<String, dynamic> json) {
@@ -242,7 +242,7 @@ class Task {
         assignTo: json['assign_to'],
         company: json['company'],
         documentNumber: json['document_number'],
-        priority: json['priority']);
+        );
   }
 }
 
