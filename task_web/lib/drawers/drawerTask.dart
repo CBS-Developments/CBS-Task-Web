@@ -59,6 +59,14 @@ class _LeftDrawerState extends State<LeftDrawer> {
                   child: Image.asset('images/task.png'),
                 ),
               ),
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/mail.png'),
+                ),
+              ),
 
               GestureDetector(
                 onTap: (){},
@@ -89,6 +97,22 @@ class _LeftDrawerState extends State<LeftDrawer> {
                   height: 45,
                   width: 240,
                   child: Image.asset('images/chat.png'),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/meet.png'),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/apps.png'),
                 ),
               ),
             ],

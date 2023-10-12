@@ -57,7 +57,14 @@ class _UserDrawerState extends State<UserDrawer> {
                   child: Image.asset('images/task02.png'),
                 ),
               ),
-
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/mail.png'),
+                ),
+              ),
 
               GestureDetector(
                 onTap: (){},
@@ -102,6 +109,22 @@ class _UserDrawerState extends State<UserDrawer> {
                   height: 45,
                   width: 240,
                   child: Image.asset('images/user2.png'),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/meet.png'),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/apps.png'),
                 ),
               ),
             ],

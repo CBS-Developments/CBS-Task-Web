@@ -60,6 +60,15 @@ class _AdminDrawerState extends State<AdminDrawer> {
                 ),
               ),
 
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/mail.png'),
+                ),
+              ),
+
 
               GestureDetector(
                 onTap: (){},
@@ -104,6 +113,23 @@ class _AdminDrawerState extends State<AdminDrawer> {
                   height: 45,
                   width: 240,
                   child: Image.asset('images/user.png'),
+                ),
+              ),
+
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/meet.png'),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  height: 45,
+                  width: 240,
+                  child: Image.asset('images/apps.png'),
                 ),
               ),
             ],
