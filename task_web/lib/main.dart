@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_web/methods/companyPopUpMenu.dart';
+import 'package:task_web/pages/createMainTaskNew.dart';
 import 'package:task_web/pages/dashboard/dashMain.dart';
 import 'package:task_web/pages/taskMainPage.dart';
 import 'package:task_web/pages/loginPage.dart';
 import 'package:task_web/pages/taskPageOne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'createAccountPopups/beneficiaryPopUp.dart';
 import 'methods/assignedPopUpMenu.dart';
 import 'methods/labelPopUpMenu.dart';
 import 'methods/statusPopUpMenu.dart'; // Import the DropdownState class
@@ -49,6 +51,13 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<LabelDropdownState>.value(
             value: LabelDropdownState(), // Provide an instance of AssignedDropdownState
           ),
+          ChangeNotifierProvider<BeneficiaryState>(
+            create: (context) => BeneficiaryState(),
+          ),
+          ChangeNotifierProvider<DueDateState>(
+            create: (context) => DueDateState(),
+          )
+
         ],
         child: LandingPage(prefs: prefs), // Pass the plugin instance to LandingPage
       ),

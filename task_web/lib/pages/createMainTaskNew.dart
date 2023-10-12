@@ -1,24 +1,24 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../components.dart';
+import '../createAccountPopups/beneficiaryPopUp.dart';
 import '../methods/appBar.dart';
 import 'package:http/http.dart' as http;
 
 import '../methods/colors.dart';
 import 'package:intl/intl.dart';
 
-
-
+import '../methods/taskPopUpMenu.dart';
 
 class CreateMainTaskNew extends StatefulWidget {
- final String username;
- final String firstName;
- final String lastName;
+  final String username;
+  final String firstName;
+  final String lastName;
 
-  const CreateMainTaskNew(this.username, this.firstName, this.lastName, {Key? key})
+  const CreateMainTaskNew(this.username, this.firstName, this.lastName,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -32,23 +32,14 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
     return formattedDate;
   }
 
-  bool titleValidation = false;
-  bool subTaskTitleValidation = false;
-  bool descriptionValidation = false;
-
-  int taskType = 1;
-  String taskTypeString = "Top Urgent";
-
-  List<String> assignTo = [];
-
   TextEditingController titleController = TextEditingController();
-  TextEditingController subTitleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController createTaskDueDateController = TextEditingController();
   TextEditingController documentNumberController = TextEditingController();
   TextEditingController assignToController = TextEditingController();
 
-  void selectDate(BuildContext context, TextEditingController controller) async {
+  void selectDate(
+      BuildContext context, TextEditingController controller) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -58,7 +49,8 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
 
     if (picked != null && picked != controller.text) {
       print('Selected date: $picked'); // Add this line for debugging
-      controller.text = DateFormat('yyyy-MM-dd').format(picked); // Adjust the date format as needed
+      controller.text = DateFormat('yyyy-MM-dd')
+          .format(picked); // Adjust the date format as needed
     }
   }
 
@@ -74,461 +66,401 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: MyAppBar(),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Date and Time: ${getCurrentDateTime()}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => TaskDropdownState()),
+      ],
+      child: Scaffold(
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: MyAppBar(),
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Date and Time: ${getCurrentDateTime()}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  // Add other widgets as needed
-                ],
+                    // Add other widgets as needed
+                  ],
+                ),
               ),
-            ),
-
-            Container(
-              margin: const EdgeInsets.all(20),
-              width: 800,
-              height: 550,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey, // Shadow color
-                    blurRadius: 5, // Spread radius
-                    offset: Offset(0, 3), // Offset in x and y directions
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.multiline,
-                                maxLines: null,
-                                controller: titleController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Task Title',
-                                  hintText: 'Task Title',
-                                ),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                textInputAction: TextInputAction.done,
-                                keyboardType: TextInputType.multiline,
-                                maxLines: null,
-                                controller: descriptionController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Description',
-                                  hintText: 'Description',
-                                ),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: 650,
-                          height: 320,
-                          color: Colors.grey.shade100,
-                          child: Row(
+              Container(
+                margin: const EdgeInsets.all(20),
+                width: 800,
+                height: 550,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey, // Shadow color
+                      blurRadius: 5, // Spread radius
+                      offset: Offset(0, 3), // Offset in x and y directions
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          Row(
                             children: [
-                              SizedBox(
-                                  width: 120,
-                                  height: 300,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 18,
-                                          bottom: 7,
-                                          top: 8,
-                                        ),
-                                        child: Text(
-                                          'Beneficiary',
-                                          style: TextStyle(
-                                            fontSize: 14, // Updated font size to 14
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor.tealLog,
+                              Expanded(
+                                child: TextField(
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  controller: titleController,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Task Title',
+                                    hintText: 'Task Title',
+                                  ),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  textInputAction: TextInputAction.done,
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  controller: descriptionController,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Description',
+                                    hintText: 'Description',
+                                  ),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: 650,
+                            height: 320,
+                            color: Colors.grey.shade100,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                    width: 120,
+                                    height: 300,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 18,
+                                            bottom: 7,
+                                            top: 8,
                                           ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8), // Updated height to 8
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.calendar_month_rounded,
-                                            size: 16,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 6,
-                                              bottom: 7,
-                                              top: 10,
+                                          child: Text(
+                                            'Beneficiary',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  14, // Updated font size to 14
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColor.tealLog,
                                             ),
-                                            child: Text(
-                                              'Due Date',
-                                              style: TextStyle(
-                                                fontSize: 14, // Updated font size to 14
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColor.tealLog,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                            height: 8), // Updated height to 8
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.calendar_month_rounded,
+                                              size: 16,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 6,
+                                                bottom: 7,
+                                                top: 10,
+                                              ),
+                                              child: Text(
+                                                'Due Date',
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      14, // Updated font size to 14
+                                                  fontWeight: FontWeight.bold,
+                                                  color: AppColor.tealLog,
+                                                ),
                                               ),
                                             ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                            height: 8), // Updated height to 8
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 18,
+                                            bottom: 5,
+                                            top: 22,
                                           ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 8), // Updated height to 8
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 18,
-                                          bottom: 5,
-                                          top: 22,
-                                        ),
-                                        child: Text(
-                                          'Assign To',
-                                          style: TextStyle(
-                                            fontSize: 14, // Updated font size to 14
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor.tealLog,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8), // Updated height to 8
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 18,
-                                          bottom: 5,
-                                          top: 22,
-                                        ),
-                                        child: Text(
-                                          'Priority',
-                                          style: TextStyle(
-                                            fontSize: 14, // Updated font size to 14
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor.tealLog,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8), // Updated height to 8
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 18,
-                                          bottom: 5,
-                                          top: 22,
-                                        ),
-                                        child: Text(
-                                          'Source From', // Updated text here
-                                          style: TextStyle(
-                                            fontSize: 14, // Updated font size to 14
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor.tealLog,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8), // Updated height to 8
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 18,
-                                          bottom: 5,
-                                          top: 22,
-                                        ),
-                                        child: Text(
-                                          'Task Category',
-                                          style: TextStyle(
-                                            fontSize: 14, // Updated font size to 14
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor.tealLog,
-                                          ),
-                                        ),
-                                      ),
-                                      // Add more text fields here
-                                    ],
-                                  )
-                              ),
-                              const VerticalDivider(
-                                thickness: 2,
-                              ),
-
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: dropdownvalue3,
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        size: 12,
-                                      ),
-                                      items: items3.map((String item) {
-                                        return DropdownMenuItem(
-                                          value: item,
                                           child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
+                                            'Assign To',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  14, // Updated font size to 14
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColor.tealLog,
                                             ),
                                           ),
-                                        );
-                                      }
-                                      ).toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownvalue3 = newValue!;
-                                        });
-                                      },
+                                        ),
+                                        const SizedBox(
+                                            height: 8), // Updated height to 8
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 18,
+                                            bottom: 5,
+                                            top: 22,
+                                          ),
+                                          child: Text(
+                                            'Priority',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  14, // Updated font size to 14
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColor.tealLog,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                            height: 8), // Updated height to 8
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 18,
+                                            bottom: 5,
+                                            top: 22,
+                                          ),
+                                          child: Text(
+                                            'Source From', // Updated text here
+                                            style: TextStyle(
+                                              fontSize:
+                                                  14, // Updated font size to 14
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColor.tealLog,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                            height: 8), // Updated height to 8
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 18,
+                                            bottom: 5,
+                                            top: 22,
+                                          ),
+                                          child: Text(
+                                            'Task Category',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  14, // Updated font size to 14
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColor.tealLog,
+                                            ),
+                                          ),
+                                        ),
+                                        // Add more text fields here
+                                      ],
+                                    )),
+                                const VerticalDivider(
+                                  thickness: 2,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 7,
                                     ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  SizedBox(
-                                    width:150,
-                                    child: TextField(
-                                      controller: createTaskDueDateController,
-                                      onTap: () {
-                                        selectDate(context, createTaskDueDateController);
-                                      },
-                                      decoration: InputDecoration(
-                                        hintText: 'Due Date',
-                                        suffixIcon: IconButton(
+                                    Consumer<BeneficiaryState>(
+                                      builder:
+                                          (context, beneficiaryState, child) {
+                                        return TextButton(
                                           onPressed: () {
-                                            selectDate(context, createTaskDueDateController);
+                                            beneficiaryPopupMenu(
+                                                context, beneficiaryState);
                                           },
-                                          icon: const Icon(
-                                            Icons.date_range,
-                                            color: Colors.blue,
-                                            size: 14,
-                                          ),
-                                        ),
-                                      ),
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: dropdownvalue2,
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        size: 12,
-                                      ),
-                                      items: items2.map((String items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: Text(
-                                            items,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                beneficiaryState.value ?? 'Beneficiary',
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      14, // Updated font size to 14
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons
+                                                      .keyboard_arrow_down_rounded,
+                                                  color: Colors.black,
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         );
-                                      }).toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownvalue2 = newValue!;
-                                          assignTo.add(dropdownvalue2);
-                                          assignToController.text = assignTo.toString();
-                                        });
                                       },
                                     ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: dropdownvalue4,
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        size: 12,
-                                      ),
-                                      items: items4.map((String item) {
-                                        return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownvalue4 = newValue!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: dropdownvalue1,
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        size: 12,
-                                      ),
-                                      items: items1.map((String item) {
-                                        return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownvalue1 = newValue!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: dropdownvalue5,
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        size: 12,
-                                      ),
-                                      items: items5.map((String item) {
-                                        return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownvalue5 = newValue!;
-                                        });
-                                      },
-                                    ),
-                                  ),
 
-                                ],
-                              )
+                                    Consumer<DueDateState>(
+                                      builder: (context, dueDateState, child) {
+                                        return Column(
+                                          children: [
+                                            TextButton(
+                                              onPressed: () {
+                                                showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2023),
+                                                  lastDate: DateTime(2030),
+                                                ).then((pickedDate) {
+                                                  if (pickedDate != null) {
+                                                    dueDateState.selectedDate = pickedDate;
+                                                  }
+                                                });
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Icon(Icons.calendar_today, color: Colors.teal),
+                                                  SizedBox(width: 8),
+                                                  Text(
+                                                    'Select Due Date',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            Text(
+                                              'Due Date: ${dueDateState.selectedDate != null ? DateFormat('yyyy-MM-dd').format(dueDateState.selectedDate!) : ''}',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    )
 
-                            ],
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20), // Add spacing between the form and buttons
-                        SizedBox(
-                          width: 750,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                height: 40,
-                                width: 140,
-                                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: AppColor.loginF,
-                                    backgroundColor: Colors.lightBlue.shade50,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5), // Rounded corners
+                          const SizedBox(
+                              height:
+                                  20), // Add spacing between the form and buttons
+                          SizedBox(
+                            width: 750,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  height: 40,
+                                  width: 140,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: AppColor.loginF,
+                                      backgroundColor: Colors.lightBlue.shade50,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            5), // Rounded corners
+                                      ),
                                     ),
-                                  ),
-                                  child: const
-                                  Text('Create',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                    child: const Text(
+                                      'Create',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
-
-
-                              ),
-
-                              Container(
-                                height: 40,
-                                width: 140,
-                                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: AppColor.loginF,
-                                    backgroundColor: Colors.lightBlue.shade50,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5), // Rounded corners
+                                Container(
+                                  height: 40,
+                                  width: 140,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: AppColor.loginF,
+                                      backgroundColor: Colors.lightBlue.shade50,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            5), // Rounded corners
+                                      ),
                                     ),
-                                  ),
-                                  child: const
-                                  Text('Clear',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,color: Colors.redAccent
+                                    child: const Text(
+                                      'Clear',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.redAccent),
                                     ),
                                   ),
                                 ),
-
-
-                              ),
-
-
-                            ],
-                          ),
-                        )
-                ],
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-
-            )
-          ],
+            ]),
+          ),
         ),
       ),
-      ]
-    ),
-    ),
     );
   }
 }
+
+class DueDateState extends ChangeNotifier {
+  DateTime? _selectedDate;
+
+  DateTime? get selectedDate => _selectedDate;
+
+  set selectedDate(DateTime? newDate) {
+    _selectedDate = newDate;
+    notifyListeners();
+  }
+}
+

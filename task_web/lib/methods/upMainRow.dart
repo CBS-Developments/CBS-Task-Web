@@ -108,16 +108,16 @@ class _UpMainRowState extends State<UpMainRow> {
             },
             icon: Icon(Icons.add_circle_outline_rounded, color: Colors.red,),
           ),
-          IconButton(
-            onPressed: () { showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return CreateTaskDialog(userName, firstName, lastName); // Use the dialog widget here
-              },
-            );
-            },
-            icon: Icon(Icons.add_circle_outline_rounded, color: Colors.green,),
-          ),
+          // IconButton(
+          //   onPressed: () { showDialog(
+          //     context: context,
+          //     builder: (BuildContext context) {
+          //       return CreateTaskDialog(userName, firstName, lastName); // Use the dialog widget here
+          //     },
+          //   );
+          //   },
+          //   icon: Icon(Icons.add_circle_outline_rounded, color: Colors.green,),
+          // ),
 
           SizedBox(width: 10,),
 
