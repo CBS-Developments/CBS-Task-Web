@@ -242,7 +242,7 @@ class _TaskMainPageState extends State<TaskMainPage> {
                     //     ],
                     //   ),
                     // ),
-                    TaskLog(),
+                    // TaskLog(),
                   ],
                 )
 
