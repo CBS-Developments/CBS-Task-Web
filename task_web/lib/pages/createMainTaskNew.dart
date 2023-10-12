@@ -331,9 +331,14 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                       },
                                     ),
 
+                                    SizedBox(
+                                      height: 6,
+                                    ),
+
+
                                     Consumer<DueDateState>(
                                       builder: (context, dueDateState, child) {
-                                        return Column(
+                                        return Row(
                                           children: [
                                             TextButton(
                                               onPressed: () {
@@ -345,6 +350,7 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                                 ).then((pickedDate) {
                                                   if (pickedDate != null) {
                                                     dueDateState.selectedDate = pickedDate;
+                                                    print(dueDateState.selectedDate);
                                                   }
                                                 });
                                               },
@@ -353,7 +359,7 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                                   Icon(Icons.calendar_today, color: Colors.teal),
                                                   SizedBox(width: 8),
                                                   Text(
-                                                    'Select Due Date',
+                                                    'Due Date : ',
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       fontWeight: FontWeight.bold,
@@ -365,7 +371,7 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                             ),
                                             SizedBox(height: 8),
                                             Text(
-                                              'Due Date: ${dueDateState.selectedDate != null ? DateFormat('yyyy-MM-dd').format(dueDateState.selectedDate!) : ''}',
+                                              '${dueDateState.selectedDate != null ? DateFormat('yyyy-MM-dd').format(dueDateState.selectedDate!) : ''}',
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,

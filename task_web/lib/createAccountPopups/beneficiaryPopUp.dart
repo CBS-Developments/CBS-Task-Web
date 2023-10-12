@@ -16,8 +16,8 @@ void beneficiaryPopupMenu(BuildContext context, beneficiaryState) {
   final RenderBox overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
   final RenderBox button = context.findRenderObject() as RenderBox;
 
-  final double topOffset = 100; // Adjust this value as needed
-  final double leftOffset = 850; // Adjust this value as needed
+  final double topOffset = 500; // Adjust this value as needed
+  final double leftOffset = 550; // Adjust this value as needed
 
   final position = RelativeRect.fromLTRB(
     leftOffset,
