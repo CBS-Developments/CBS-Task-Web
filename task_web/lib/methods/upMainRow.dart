@@ -103,7 +103,7 @@ class _UpMainRowState extends State<UpMainRow> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CreateMainTaskNew(firstName,lastName,userName)),
+                    builder: (context) => CreateMainTaskNew( lastName: lastName, username: userName, firstName: firstName,)),
               );
             },
             icon: Icon(Icons.add_circle_outline_rounded, color: Colors.red,),
