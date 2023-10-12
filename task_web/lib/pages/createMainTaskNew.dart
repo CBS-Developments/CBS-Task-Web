@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../components.dart';
+import '../createAccountPopups/assigntoPopUp.dart';
 import '../createAccountPopups/beneficiaryPopUp.dart';
 import '../methods/appBar.dart';
 import 'package:http/http.dart' as http;
@@ -381,7 +382,41 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                           ],
                                         );
                                       },
+                                    ),
+
+                                    SizedBox(
+                                      height: 12,
+                                    ),
+
+                                    Consumer<AssignToState>(
+                                      builder: (context, assignToState, child) {
+                                        return TextButton(
+                                          onPressed: () {
+                                            assignToPopupMenu(context, assignToState);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                assignToState.value ?? 'Assign To',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons.keyboard_arrow_down_rounded,
+                                                  color: Colors.black,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      },
                                     )
+
 
                                   ],
                                 )

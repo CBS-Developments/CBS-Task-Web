@@ -8,6 +8,7 @@ import 'package:task_web/pages/loginPage.dart';
 import 'package:task_web/pages/taskPageOne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'createAccountPopups/assigntoPopUp.dart';
 import 'createAccountPopups/beneficiaryPopUp.dart';
 import 'methods/assignedPopUpMenu.dart';
 import 'methods/labelPopUpMenu.dart';
@@ -17,7 +18,6 @@ import 'methods/taskPopUpMenu.dart'; // Import the TaskDropdownState class
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-
 
   runApp(MyApp(prefs: prefs));
 }
@@ -37,36 +37,44 @@ class MyApp extends StatelessWidget {
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider<StatusDropdownState>.value(
-            value: StatusDropdownState(), // Provide an instance of StatusDropdownState
+            value:
+                StatusDropdownState(), // Provide an instance of StatusDropdownState
           ),
           ChangeNotifierProvider<TaskDropdownState>.value(
-            value: TaskDropdownState(), // Provide an instance of TaskDropdownState
+            value:
+                TaskDropdownState(), // Provide an instance of TaskDropdownState
           ),
           ChangeNotifierProvider<AssignedDropdownState>.value(
-            value: AssignedDropdownState(), // Provide an instance of AssignedDropdownState
+            value:
+                AssignedDropdownState(), // Provide an instance of AssignedDropdownState
           ),
           ChangeNotifierProvider<CompanyDropdownState>.value(
-            value: CompanyDropdownState(), // Provide an instance of AssignedDropdownState
+            value:
+                CompanyDropdownState(), // Provide an instance of AssignedDropdownState
           ),
           ChangeNotifierProvider<LabelDropdownState>.value(
-            value: LabelDropdownState(), // Provide an instance of AssignedDropdownState
+            value:
+                LabelDropdownState(), // Provide an instance of AssignedDropdownState
           ),
           ChangeNotifierProvider<BeneficiaryState>(
             create: (context) => BeneficiaryState(),
           ),
           ChangeNotifierProvider<DueDateState>(
             create: (context) => DueDateState(),
+          ),
+          ChangeNotifierProvider<AssignToState>.value(
+            value: AssignToState(),
           )
-
         ],
-        child: LandingPage(prefs: prefs), // Pass the plugin instance to LandingPage
+        child: LandingPage(
+            prefs: prefs), // Pass the plugin instance to LandingPage
       ),
     );
   }
 }
 
 class LandingPage extends StatelessWidget {
-  final SharedPreferences prefs;// Add this line
+  final SharedPreferences prefs; // Add this line
 
   const LandingPage({Key? key, required this.prefs}) : super(key: key);
 
