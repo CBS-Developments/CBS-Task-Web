@@ -59,7 +59,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       "company": companyController.text,
       "employee_ID": empIDController.text,
       "user_role": '0',
-      "activate": '1',
+      "activate": '0',
     };
 
 
@@ -93,8 +93,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   void showSuccessSnackBar(BuildContext context) {
     final snackBar = SnackBar(
-      content: Text('Registration successful!'),
-      backgroundColor: Colors.green, // You can customize the color
+      content: Text('Registration successful! Admin will Activate your account!!'),
+      backgroundColor: Colors.blueAccent, // You can customize the color
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
