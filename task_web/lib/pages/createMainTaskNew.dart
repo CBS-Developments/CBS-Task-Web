@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import '../components.dart';
 import '../createAccountPopups/assigntoPopUp.dart';
 import '../createAccountPopups/beneficiaryPopUp.dart';
+import '../createAccountPopups/categoryPopUp.dart';
 import '../createAccountPopups/priortyPopUp.dart';
+import '../createAccountPopups/sourcefromPopUp.dart';
 import '../methods/appBar.dart';
 import 'package:http/http.dart' as http;
 
@@ -419,7 +421,7 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                     ),
 
                                     SizedBox(
-                                      height: 17,
+                                      height: 16,
                                     ),
 
                                     Consumer<PriorityState>(
@@ -449,7 +451,75 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                           ),
                                         );
                                       },
-                                    )
+                                    ),
+
+                                    SizedBox(
+                                      height: 13,
+                                    ),
+
+                                    Consumer<SourceFromState>(
+                                      builder: (context, sourceFromState, child) {
+                                        return TextButton(
+                                          onPressed: () {
+                                            sourceFromPopupMenu(context, sourceFromState);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                sourceFromState.value ?? 'Source From',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons.keyboard_arrow_down_rounded,
+                                                  color: Colors.black,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+
+                                    SizedBox(
+                                      height: 11,
+                                    ),
+
+                                    Consumer<CategoryState>(
+                                      builder: (context, categoryState, child) {
+                                        return TextButton(
+                                          onPressed: () {
+                                            categoryPopupMenu(context, categoryState);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                categoryState.value ?? 'Category',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Icon(
+                                                  Icons.keyboard_arrow_down_rounded,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+
+
 
 
 
