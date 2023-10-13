@@ -121,7 +121,7 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
 
         if (responseBody == "true") {
           print('Successful');
-          snackBar(context, "Profile Edite successful!", Colors.green);
+          snackBar(context, " Edit Main Task successful!", Colors.green);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) {
