@@ -157,6 +157,7 @@ class _TaskTableState extends State<TaskTable> {
                         await SharedPreferences.getInstance();
                     prefs.setString('main_task_id', task.taskId);
                     prefs.setString('task_title', task.taskTitle);
+                    prefs.setString('task_description', task.task_description);
                     prefs.setString('task_type', task.taskType);
                     prefs.setString(
                         'task_type_name', task.taskTypeName);
@@ -311,7 +312,7 @@ class _TaskTableState extends State<TaskTable> {
     mainTaskList.clear();
     var data = {};
 
-    const url = "http://dev.connect.cbs.lk/mainTaskList.php";
+    const url = "http://dev.workspace.cbs.lk/mainTaskList.php";
     http.Response res = await http.post(
       Uri.parse(url),
       body: data,
@@ -350,6 +351,7 @@ class MainTask {
   String taskType;
   String taskTypeName;
   String dueDate;
+  String task_description;
   String taskCreateById;
   String taskCreateBy;
   String taskCreateDate;
@@ -377,6 +379,8 @@ class MainTask {
   String assignTo;
   String company;
   String documentNumber;
+  String category_name;
+  String category;
 
   MainTask({
     required this.taskId,
@@ -384,6 +388,7 @@ class MainTask {
     required this.taskType,
     required this.taskTypeName,
     required this.dueDate,
+    required this.task_description,
     required this.taskCreateById,
     required this.taskCreateBy,
     required this.taskCreateDate,
@@ -411,6 +416,8 @@ class MainTask {
     required this.assignTo,
     required this.company,
     required this.documentNumber,
+    required this.category_name,
+    required this.category,
   });
 
   factory MainTask.fromJson(Map<String, dynamic> json) {
@@ -420,6 +427,7 @@ class MainTask {
       taskType: json['task_type'],
       taskTypeName: json['task_type_name'],
       dueDate: json['due_date'],
+      task_description: json['task_description'],
       taskCreateById: json['task_create_by_id'],
       taskCreateBy: json['task_create_by'],
       taskCreateDate: json['task_create_date'],
@@ -447,6 +455,8 @@ class MainTask {
       assignTo: json['assign_to'],
       company: json['company'],
       documentNumber: json['document_number'],
+      category_name: json['category_name'],
+      category: json['category'],
     );
   }
 }

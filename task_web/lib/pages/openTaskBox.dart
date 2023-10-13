@@ -23,12 +23,15 @@ class TaskDetailsDialog extends StatefulWidget {
 
 class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
   String userName ='';
+  String taskDescription ='';
   String firstName='';
   String lastName='';
   String userRole='';
   String mainTaskId='';
   String mainTaskTitle='';
   String assign_to='';
+  String beneficiary='';
+
 
   TextEditingController mainTaskCommentController = TextEditingController();
 
@@ -175,7 +178,9 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
     setState(() {
       mainTaskId = (prefs.getString('main_task_id') ?? '');
       mainTaskTitle = (prefs.getString('main_task_title') ?? '');
+      taskDescription = (prefs.getString('task_description') ?? '');
       userName = (prefs.getString('user_name') ?? '');
+      beneficiary = (prefs.getString('company') ?? '');
       userRole = (prefs.getString('user_role') ?? '');
       firstName = (prefs.getString('first_name') ?? '').toUpperCase();
       lastName = (prefs.getString('last_name') ?? '').toUpperCase();
@@ -212,31 +217,11 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return EditMainTask(
-                                      lastName: '',
-                                      firstName: '',
-                                      userName: '',
-                                      assign_to: '',
-                                      company: widget.task.company,
-                                      documentNumber: widget.task.documentNumber,
-                                      dueDate: widget.task.dueDate,
-                                      mainTaskId: widget.task.taskId,
-                                      sourceFrom: widget.task.sourceFrom,
-                                      taskCreateBy: widget.task.taskCreateBy,
-                                      taskCreateDate: widget.task.taskCreateDate,
-                                      taskCreatedTimestamp:
-                                      widget.task.taskCreatedTimestamp,
-                                      taskStatus: widget.task.taskStatus,
-                                      taskStatusName: widget.task.taskStatusName,
-                                      taskTitle: widget.task.taskTitle,
-                                      taskType: widget.task.taskType,
-                                      taskTypeName: widget.task.taskTypeName,
-                                    );
-                                  },
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => EditMainTaskPage()),
                                 );
+
                               },
                               tooltip: 'Edit Task',
                               icon: Icon(
