@@ -35,138 +35,6 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
 
   TextEditingController mainTaskCommentController = TextEditingController();
 
-  Future<bool> createCommentMainTask(BuildContext context) async {
-    int timestamp = DateTime.now().millisecondsSinceEpoch;
-    int taskTimeStamp = timestamp;
-    var timeSt = taskTimeStamp;
-
-    var dt = DateTime.fromMillisecondsSinceEpoch(taskTimeStamp);
-
-    var stringDate = DateFormat('MM/dd/yyyy, hh:mm a').format(dt);
-
-    var string = mainTaskCommentController.text.replaceAll("u0027", "'");
-
-    var url = "http://dev.connect.cbs.lk/" + "createComment.php";
-    var data = {
-      "comment_id": "$timeSt",
-      "task_id": mainTaskId,
-      "comment": string,
-      "comment_create_by_id": userName,
-      "comment_create_by": "$firstName $lastName",
-      "comment_create_date": stringDate,
-      "comment_created_timestamp": "$timeSt",
-      "comment_status": "1",
-      "comment_edit_by": "",
-      "comment_edit_by_id": '',
-      "comment_edit_by_date": "",
-      "comment_edit_by_timestamp": "",
-      "comment_delete_by": "",
-      "comment_delete_by_id": "",
-      "comment_delete_by_date": "",
-      "comment_delete_by_timestamp": "",
-    };
-
-    http.Response res = await http.post(
-      Uri.parse(url),
-      body: data,
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      encoding: Encoding.getByName("utf-8"),
-    );
-
-    if (res.statusCode.toString() == "200") {
-      if (jsonDecode(res.body) == "true") {
-        mainTaskCommentController.text = "";
-
-        setState(() {
-          getMainTaskCommentList(mainTaskId);
-        });
-        return true;
-      } else {
-        if (!mounted) return false;
-        snackBar(context, "Error", Colors.red);
-      }
-    } else {
-      if (!mounted) return false;
-      snackBar(context, "Error", Colors.redAccent);
-    }
-    return false; // Return false in case of error
-  }
-
-  Future<List<comment>> getMainTaskCommentList(var taskId) async {
-    var data = {
-      "task_id": "$taskId",
-    };
-
-    const url = "http://dev.connect.cbs.lk/commentListById.php";
-    http.Response res = await http.post(
-      Uri.parse(url),
-      body: data,
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      encoding: Encoding.getByName("utf-8"),
-    );
-
-    if (res.statusCode == 200) {
-      if (jsonDecode(res.body) != "Error") {
-        List jsonResponse = json.decode(res.body);
-        if (jsonResponse != null) {
-          return jsonResponse.map((sec) => comment.fromJson(sec)).toList();
-        }
-      }
-    } else {
-      throw Exception('Failed to load jobs from API');
-    }
-    return []; // Return an empty list in case of error
-  }
-
-  Future<void> deleteCommentInMainTask(
-      var commentId, var commentStatus, var userName, var name) async {
-    int timestamp = DateTime.now().millisecondsSinceEpoch;
-    int taskTimeStamp = timestamp;
-    var timeSt = taskTimeStamp;
-
-    var dt = DateTime.fromMillisecondsSinceEpoch(taskTimeStamp);
-
-    var stringDate = DateFormat('MM/dd/yyyy, hh:mm a').format(dt);
-    String url;
-
-    url = "http://dev.connect.cbs.lk/deleteComment.php";
-    var data = {
-      "comment_id": "$commentId",
-      "comment_delete_by": "$userName",
-      "comment_delete_by_id": "$name",
-      "action_taken_by": "$name",
-      "comment_delete_by_date": stringDate,
-      "comment_delete_by_timestamp": "$timeSt",
-    };
-
-    http.Response res = await http.post(
-      Uri.parse(url),
-      body: data,
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      encoding: Encoding.getByName("utf-8"),
-    );
-
-    if (res.statusCode.toString() == "200") {
-      if (jsonDecode(res.body) == "true") {
-        setState(() {
-          getMainTaskCommentList(mainTaskId);
-        });
-        snackBar(context, "Delete", Colors.redAccent);
-      }
-    } else {
-      snackBar(context, "Error", Colors.redAccent);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -541,67 +409,67 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                       width: 330,
                       height: 225,
                       color: Colors.white,
-                      child:FutureBuilder<List<comment>>(
-                        future: getMainTaskCommentList(mainTaskId),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return CircularProgressIndicator(); // Display a loading indicator while fetching data
-                          } else if (snapshot.hasError) {
-                            return Text("Error: ${snapshot.error}");
-                          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return Text("No comments available"); // Replace with your custom message
-                          } else {
-                            List<comment>? data = snapshot.data;
-                            return ListView.builder(
-                              itemCount: data!.length,
-                              itemBuilder: (context, index) {
-                                return Card(
-                                  child: ListTile(
-                                    title: SelectableText(
-                                      data[index].commnt,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      "${data[index].commentCreateDate}      ${data[index].commentCreateBy}",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    trailing: IconButton(
-                                      icon: Icon(
-                                        Icons.delete,
-                                        size: 14,
-                                        color: Colors.red,
-                                      ),
-                                      onPressed: () {
-                                        if (data[index].commentCreateById == userName) {
-                                          deleteCommentInMainTask(
-                                            data[index].commentId,
-                                            "0",
-                                            userName,
-                                            "$firstName $lastName",
-                                          );
-                                        } else {
-                                          snackBar(
-                                            context,
-                                            "You can't delete this comment",
-                                            Colors.red,
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                        },
-                      )
+                      // FutureBuilder<List<comment>>(
+                      //   future: getMainTaskCommentList(mainTaskId),
+                      //   builder: (context, snapshot) {
+                      //     if (snapshot.connectionState == ConnectionState.waiting) {
+                      //       return CircularProgressIndicator(); // Display a loading indicator while fetching data
+                      //     } else if (snapshot.hasError) {
+                      //       return Text("Error: ${snapshot.error}");
+                      //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      //       return Text("No comments available"); // Replace with your custom message
+                      //     } else {
+                      //       List<comment>? data = snapshot.data;
+                      //       return ListView.builder(
+                      //         itemCount: data!.length,
+                      //         itemBuilder: (context, index) {
+                      //           return Card(
+                      //             child: ListTile(
+                      //               title: SelectableText(
+                      //                 data[index].commnt,
+                      //                 style: TextStyle(
+                      //                   color: Colors.black,
+                      //                   fontSize: 12,
+                      //                 ),
+                      //               ),
+                      //               subtitle: Text(
+                      //                 "${data[index].commentCreateDate}      ${data[index].commentCreateBy}",
+                      //                 style: TextStyle(
+                      //                   color: Colors.black,
+                      //                   fontSize: 12,
+                      //                   fontWeight: FontWeight.bold,
+                      //                 ),
+                      //               ),
+                      //               trailing: IconButton(
+                      //                 icon: Icon(
+                      //                   Icons.delete,
+                      //                   size: 14,
+                      //                   color: Colors.red,
+                      //                 ),
+                      //                 onPressed: () {
+                      //                   if (data[index].commentCreateById == userName) {
+                      //                     deleteCommentInMainTask(
+                      //                       data[index].commentId,
+                      //                       "0",
+                      //                       userName,
+                      //                       "$firstName $lastName",
+                      //                     );
+                      //                   } else {
+                      //                     snackBar(
+                      //                       context,
+                      //                       "You can't delete this comment",
+                      //                       Colors.red,
+                      //                     );
+                      //                   }
+                      //                 },
+                      //               ),
+                      //             ),
+                      //           );
+                      //         },
+                      //       );
+                      //     }
+                      //   },
+                      // )
 
                     ),
                     Container(

@@ -271,6 +271,36 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                     height: 7,
                                   ),
 
+                                  Consumer<EditBeneficiaryState>(
+                                    builder: (context, editBeneficiaryState, child) {
+                                      return TextButton(
+                                        onPressed: () {
+                                          EditBeneficiaryPopup().showPopupMenu(context, editBeneficiaryState);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              editBeneficiaryState.value ?? 'Edit Beneficiary',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Icon(
+                                                Icons.keyboard_arrow_down_rounded,
+                                                color: Colors.black,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+
+
 
 
 

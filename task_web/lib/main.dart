@@ -82,6 +82,11 @@ class MyApp extends StatelessWidget {
             value: CategoryState(),
           ),
 
+          ChangeNotifierProvider<EditBeneficiaryState>(
+            create: (context) => EditBeneficiaryState(),
+          ),
+
+
 
 
 
