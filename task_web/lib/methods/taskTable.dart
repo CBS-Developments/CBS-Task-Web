@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/colors.dart';
 import 'package:task_web/pages/openSubTaskMain.dart';
+import 'package:task_web/pages/openTaskNew.dart';
 import 'dart:convert';
 
 import '../pages/createSubTask.dart';
@@ -244,8 +245,12 @@ class _TaskTableState extends State<TaskTable> {
                         prefs.setString('source_from', task.sourceFrom);
                         prefs.setString('company', task.company);
                         if (!mounted) return;
-                        _showTaskDetailsDialog(
-                            context, task); // Show the popup
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => OpenTaskNew(task: task)),
+                        );
+                        // _showTaskDetailsDialog(
+                        //     context, task); // Show the popup
                       },
                     ),
 
