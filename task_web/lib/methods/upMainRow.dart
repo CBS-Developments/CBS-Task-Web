@@ -109,22 +109,7 @@ class _UpMainRowState extends State<UpMainRow> {
             },
             icon: Icon(Icons.add_circle_outline_rounded, color: Colors.red,),
           ),
-
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EditMainTaskPage()),
-              );
-
-            },
-            tooltip: 'Edit Task',
-            icon: Icon(
-              Icons.edit_note_rounded,
-              color: Colors.black,
-              size: 22,
-            ),
-          ),
+          
           // IconButton(
           //   onPressed: () { showDialog(
           //     context: context,
