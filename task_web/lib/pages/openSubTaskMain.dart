@@ -61,6 +61,27 @@ class _OpenSubTaskState extends State<OpenSubTask> {
               ),
             ),
 
+            TextButton(
+              onPressed: () {showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const CreateSubTask(   );
+                },
+              );},
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Create Sub Task',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+
+
+            ),
+
           ],
         ),
       ),

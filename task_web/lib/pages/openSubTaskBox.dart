@@ -7,7 +7,7 @@ import 'openTaskBox.dart';
 class SubTaskDetailsDialog extends StatelessWidget {
   final Task task;
 
-  const SubTaskDetailsDialog(this.task);
+  const SubTaskDetailsDialog(this.task, {super.key});
 
   @override
   Widget build(BuildContext context) {
