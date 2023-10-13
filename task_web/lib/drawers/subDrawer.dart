@@ -21,7 +21,7 @@ class SubDrawer extends StatelessWidget {
           ),
         ),
       ),
-      width: 168,
+      width: 150,
       height: getPageHeight(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
