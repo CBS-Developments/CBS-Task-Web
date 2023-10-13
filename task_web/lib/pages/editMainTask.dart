@@ -8,15 +8,22 @@ import '../createAccountPopups/beneficiaryPopUp.dart';
 import '../createAccountPopups/categoryPopUp.dart';
 import '../createAccountPopups/priortyPopUp.dart';
 import '../createAccountPopups/sourcefromPopUp.dart';
-import '../editMainTaskPopUps.dart';
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
 import 'createMainTaskNew.dart';
 
 
 class EditMainTaskPage extends StatefulWidget {
-  const EditMainTaskPage(
-      {super.key,}
+  final String currentTitle;
+  final String currentDescription;
+  final String currentBeneficiary;
+  final String currentDueDate;
+  final String currentAssignTo;
+  final String currentPriority;
+  final String currentSourceFrom;
+  final String currentCategory;
+  EditMainTaskPage(
+      {super.key, required this.currentTitle, required this.currentDescription, required this.currentBeneficiary, required this.currentDueDate, required this.currentAssignTo, required this.currentPriority, required this.currentSourceFrom, required this.currentCategory,}
      );
 
   @override
@@ -96,8 +103,8 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                 maxLines: null,
                                 controller: newTitleController,
                                 decoration: InputDecoration(
-                                  labelText: 'Task Title',
-                                  hintText: '',
+                                  // labelText: 'Task Title',
+                                  hintText: widget.currentTitle,
                                 ),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -116,8 +123,8 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                 maxLines: null,
                                 controller: newDescriptionController,
                                 decoration: InputDecoration(
-                                  labelText: 'Description',
-                                  hintText: '',
+                                  // labelText: 'Description',
+                                  hintText: widget.currentDescription,
                                 ),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -271,33 +278,300 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                     height: 7,
                                   ),
 
-                                  Consumer<EditBeneficiaryState>(
-                                    builder: (context, editBeneficiaryState, child) {
-                                      return TextButton(
-                                        onPressed: () {
-                                          EditBeneficiaryPopup().showPopupMenu(context, editBeneficiaryState);
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              editBeneficiaryState.value ?? 'Edit Beneficiary',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Icon(
-                                                Icons.keyboard_arrow_down_rounded,
-                                                color: Colors.black,
-                                              ),
-                                            )
-                                          ],
+                                  Row(
+                                    children: [
+                                      Text(
+                                        widget.currentBeneficiary,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
                                         ),
-                                      );
-                                    },
+                                      ),
+                                      Consumer<BeneficiaryState>(
+                                        builder: (context, beneficiaryState, child) {
+                                          newBeneficiary = beneficiaryState.value ?? 'DefaultBeneficiary'; // Set beneficiaryValue based on state
+
+                                          return TextButton(
+                                            onPressed: () {
+                                              beneficiaryPopupMenu(context, beneficiaryState);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  newBeneficiary,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Icon(
+                                                    Icons.keyboard_arrow_down_rounded,
+                                                    color: Colors.black,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+
+                                  Row(
+                                    children: [
+
+                                      Text(
+                                        widget.currentDueDate,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+
+                                      Consumer<DueDateState>(
+                                        builder: (context, dueDateState, child) {
+                                          newDueDate = dueDateState.selectedDate != null
+                                              ? DateFormat('yyyy-MM-dd').format(dueDateState.selectedDate!)
+                                              : 'No due date selected';
+
+                                          return TextButton(
+                                            onPressed: () {
+
+                                              showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime(2023),
+                                                lastDate: DateTime(2030),
+                                              ).then((pickedDate) {
+                                                if (pickedDate != null) {
+                                                  dueDateState.selectedDate = pickedDate;
+                                                  print(dueDateState.selectedDate);
+                                                }
+                                              });
+                                              // Your logic for dueDate popup menu
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  newDueDate,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Icon(
+                                                    Icons.keyboard_arrow_down_rounded,
+                                                    color: Colors.black,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+
+
+                                  SizedBox(
+                                    height: 17,
+                                  ),
+
+                                  Row(
+                                    children: [
+                                      Text(
+                                        widget.currentAssignTo,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Consumer<AssignToState>(
+                                        builder: (context, assignToState, child) {
+                                          newAssignToValue = assignToState.value ?? 'Assign To';
+
+                                          return TextButton(
+                                            onPressed: () {
+                                              assignToPopupMenu(context, assignToState);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  newAssignToValue,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Icon(
+                                                    Icons.keyboard_arrow_down_rounded,
+                                                    color: Colors.black,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+
+                                  Row(
+                                    children: [
+                                      Text(
+                                        widget.currentPriority,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Consumer<PriorityState>(
+                                        builder: (context, priorityState, child) {
+                                          newPriorityValue = priorityState.value ?? 'Priority';
+
+                                          return TextButton(
+                                            onPressed: () {
+                                              priorityPopupMenu(context, priorityState);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  newPriorityValue,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Icon(
+                                                    Icons.keyboard_arrow_down_rounded,
+                                                    color: Colors.black,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+
+                                  SizedBox(
+                                    height: 13,
+                                  ),
+
+                                  Row(
+                                    children: [
+
+                                      Text(
+                                        widget.currentSourceFrom,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+
+                                      Consumer<SourceFromState>(
+                                        builder: (context, sourceFromState, child) {
+                                          newSourceFromValue = sourceFromState.value ?? 'Source From';
+
+                                          return TextButton(
+                                            onPressed: () {
+                                              sourceFromPopupMenu(context, sourceFromState);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  newSourceFromValue,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Icon(
+                                                    Icons.keyboard_arrow_down_rounded,
+                                                    color: Colors.black,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+
+                                  SizedBox(
+                                    height: 11,
+                                  ),
+
+                                  Row(
+                                    children: [
+
+                                      Text(
+                                        widget.currentCategory,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+
+                                      Consumer<CategoryState>(
+                                        builder: (context, categoryState, child) {
+                                          newCategoryValue = categoryState.value ?? 'Category';
+                                          newCategoryInt = categoryState.selectedIndex.toString();
+
+                                          return TextButton(
+                                            onPressed: () {
+                                              categoryPopupMenu(context, categoryState);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  newCategoryValue,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Icon(
+                                                    Icons.keyboard_arrow_down_rounded,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
                                   ),
 
 

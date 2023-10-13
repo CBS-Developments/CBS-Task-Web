@@ -85,10 +85,6 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => EditMainTaskPage()),
-                                );
 
                               },
                               tooltip: 'Edit Task',
