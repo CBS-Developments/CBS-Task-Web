@@ -101,7 +101,8 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                         currentAssignTo: widget.task.assignTo,
                                         currentPriority: widget.task.taskTypeName,
                                         currentSourceFrom: widget.task.sourceFrom,
-                                        currentCategory: widget.task.category_name,)),
+                                        currentCategory: widget.task.category_name,
+                                        taskID: widget.task.taskId, userName: userName, firstName: firstName,)),
                                     );
 
                                   },

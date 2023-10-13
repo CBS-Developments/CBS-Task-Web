@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:task_web/pages/taskPageOne.dart';
 
-
+import '../components.dart';
 import '../createAccountPopups/assigntoPopUp.dart';
 import '../createAccountPopups/beneficiaryPopUp.dart';
 import '../createAccountPopups/categoryPopUp.dart';
@@ -11,7 +15,6 @@ import '../createAccountPopups/sourcefromPopUp.dart';
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
 import 'createMainTaskNew.dart';
-
 
 class EditMainTaskPage extends StatefulWidget {
   final String currentTitle;
@@ -22,9 +25,23 @@ class EditMainTaskPage extends StatefulWidget {
   final String currentPriority;
   final String currentSourceFrom;
   final String currentCategory;
-  EditMainTaskPage(
-      {super.key, required this.currentTitle, required this.currentDescription, required this.currentBeneficiary, required this.currentDueDate, required this.currentAssignTo, required this.currentPriority, required this.currentSourceFrom, required this.currentCategory,}
-     );
+  final String taskID;
+  final String userName;
+  final String firstName;
+  EditMainTaskPage({
+    super.key,
+    required this.currentTitle,
+    required this.currentDescription,
+    required this.currentBeneficiary,
+    required this.currentDueDate,
+    required this.currentAssignTo,
+    required this.currentPriority,
+    required this.currentSourceFrom,
+    required this.currentCategory,
+    required this.taskID,
+    required this.userName,
+    required this.firstName,
+  });
 
   @override
   State<EditMainTaskPage> createState() => _EditMainTaskPageState();
@@ -38,6 +55,92 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
     final now = DateTime.now();
     final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
     return formattedDate;
+  }
+
+  String getCurrentDate() {
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd').format(now);
+    return formattedDate;
+  }
+
+  Future<bool> editMainTask(
+    String taskID,
+    String taskTitle,
+    String taskTypeName,
+    String description,
+    String userName,
+    String firstName,
+    String newCompany,
+    String dueDate,
+    String assignTo,
+    String sourceFrom,
+    String categoryName,
+    String category,
+  ) async {
+    // Prepare the data to be sent to the PHP script.
+    var data = {
+      "task_id": taskID,
+      "task_title": taskTitle,
+      "task_type_name": taskTypeName,
+      "task_description": description,
+      "task_status_name": '',
+      "action_taken_by_id": userName,
+      "action_taken_by": firstName,
+      "action_taken_date": getCurrentDate(),
+      "action_taken_timestamp": getCurrentDate(),
+      "task_edit_by": userName,
+      "task_edit_by_id": firstName,
+      "task_edit_by_date": getCurrentDate(),
+      "task_edit_by_timestamp": getCurrentDate(),
+      "company": newCompany,
+      "due_date": dueDate,
+      "assign_to": assignTo,
+      "source_from": sourceFrom,
+      "category_name": categoryName,
+      "category": category,
+    };
+
+    // URL of your PHP script.
+    const url = "http://dev.workspace.cbs.lk/editMainTask.php";
+
+    try {
+      final res = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      if (res.statusCode == 200) {
+        final responseBody = jsonDecode(res.body);
+
+        // Debugging: Print the response data.
+        print("Response from PHP script: $responseBody");
+
+        if (responseBody == "true") {
+          print('Successful');
+          snackBar(context, "Profile Edite successful!", Colors.green);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return const TaskPageOne();
+            }),
+          );
+          return true; // PHP code was successful.
+        } else {
+          print('PHP code returned "false".');
+          return false; // PHP code returned "false."
+        }
+      } else {
+        print('HTTP request failed with status code: ${res.statusCode}');
+        return false; // HTTP request failed.
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false; // An error occurred.
+    }
   }
 
   @override
@@ -277,7 +380,6 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                   SizedBox(
                                     height: 7,
                                   ),
-
                                   Row(
                                     children: [
                                       Text(
@@ -289,12 +391,16 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                         ),
                                       ),
                                       Consumer<BeneficiaryState>(
-                                        builder: (context, beneficiaryState, child) {
-                                          newBeneficiary = beneficiaryState.value ?? 'DefaultBeneficiary'; // Set beneficiaryValue based on state
+                                        builder:
+                                            (context, beneficiaryState, child) {
+                                          newBeneficiary = beneficiaryState
+                                                  .value ??
+                                              'DefaultBeneficiary'; // Set beneficiaryValue based on state
 
                                           return TextButton(
                                             onPressed: () {
-                                              beneficiaryPopupMenu(context, beneficiaryState);
+                                              beneficiaryPopupMenu(
+                                                  context, beneficiaryState);
                                             },
                                             child: Row(
                                               children: [
@@ -307,9 +413,11 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
                                                   child: Icon(
-                                                    Icons.keyboard_arrow_down_rounded,
+                                                    Icons
+                                                        .keyboard_arrow_down_rounded,
                                                     color: Colors.black,
                                                   ),
                                                 )
@@ -320,10 +428,8 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                       ),
                                     ],
                                   ),
-
                                   Row(
                                     children: [
-
                                       Text(
                                         widget.currentDueDate,
                                         style: TextStyle(
@@ -332,16 +438,18 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                           color: Colors.grey,
                                         ),
                                       ),
-
                                       Consumer<DueDateState>(
-                                        builder: (context, dueDateState, child) {
-                                          newDueDate = dueDateState.selectedDate != null
-                                              ? DateFormat('yyyy-MM-dd').format(dueDateState.selectedDate!)
+                                        builder:
+                                            (context, dueDateState, child) {
+                                          newDueDate = dueDateState
+                                                      .selectedDate !=
+                                                  null
+                                              ? DateFormat('yyyy-MM-dd').format(
+                                                  dueDateState.selectedDate!)
                                               : 'No due date selected';
 
                                           return TextButton(
                                             onPressed: () {
-
                                               showDatePicker(
                                                 context: context,
                                                 initialDate: DateTime.now(),
@@ -349,8 +457,10 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                                 lastDate: DateTime(2030),
                                               ).then((pickedDate) {
                                                 if (pickedDate != null) {
-                                                  dueDateState.selectedDate = pickedDate;
-                                                  print(dueDateState.selectedDate);
+                                                  dueDateState.selectedDate =
+                                                      pickedDate;
+                                                  print(dueDateState
+                                                      .selectedDate);
                                                 }
                                               });
                                               // Your logic for dueDate popup menu
@@ -366,9 +476,11 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
                                                   child: Icon(
-                                                    Icons.keyboard_arrow_down_rounded,
+                                                    Icons
+                                                        .keyboard_arrow_down_rounded,
                                                     color: Colors.black,
                                                   ),
                                                 )
@@ -379,12 +491,9 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                       ),
                                     ],
                                   ),
-
-
                                   SizedBox(
                                     height: 17,
                                   ),
-
                                   Row(
                                     children: [
                                       Text(
@@ -396,12 +505,16 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                         ),
                                       ),
                                       Consumer<AssignToState>(
-                                        builder: (context, assignToState, child) {
-                                          newAssignToValue = assignToState.value ?? 'Assign To';
+                                        builder:
+                                            (context, assignToState, child) {
+                                          newAssignToValue =
+                                              assignToState.value ??
+                                                  'Assign To';
 
                                           return TextButton(
                                             onPressed: () {
-                                              assignToPopupMenu(context, assignToState);
+                                              assignToPopupMenu(
+                                                  context, assignToState);
                                             },
                                             child: Row(
                                               children: [
@@ -414,9 +527,11 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
                                                   child: Icon(
-                                                    Icons.keyboard_arrow_down_rounded,
+                                                    Icons
+                                                        .keyboard_arrow_down_rounded,
                                                     color: Colors.black,
                                                   ),
                                                 )
@@ -427,11 +542,9 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                       ),
                                     ],
                                   ),
-
                                   SizedBox(
                                     height: 16,
                                   ),
-
                                   Row(
                                     children: [
                                       Text(
@@ -443,12 +556,15 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                         ),
                                       ),
                                       Consumer<PriorityState>(
-                                        builder: (context, priorityState, child) {
-                                          newPriorityValue = priorityState.value ?? 'Priority';
+                                        builder:
+                                            (context, priorityState, child) {
+                                          newPriorityValue =
+                                              priorityState.value ?? 'Priority';
 
                                           return TextButton(
                                             onPressed: () {
-                                              priorityPopupMenu(context, priorityState);
+                                              priorityPopupMenu(
+                                                  context, priorityState);
                                             },
                                             child: Row(
                                               children: [
@@ -461,9 +577,11 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
                                                   child: Icon(
-                                                    Icons.keyboard_arrow_down_rounded,
+                                                    Icons
+                                                        .keyboard_arrow_down_rounded,
                                                     color: Colors.black,
                                                   ),
                                                 )
@@ -474,14 +592,11 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                       ),
                                     ],
                                   ),
-
                                   SizedBox(
                                     height: 13,
                                   ),
-
                                   Row(
                                     children: [
-
                                       Text(
                                         widget.currentSourceFrom,
                                         style: TextStyle(
@@ -490,14 +605,17 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                           color: Colors.grey,
                                         ),
                                       ),
-
                                       Consumer<SourceFromState>(
-                                        builder: (context, sourceFromState, child) {
-                                          newSourceFromValue = sourceFromState.value ?? 'Source From';
+                                        builder:
+                                            (context, sourceFromState, child) {
+                                          newSourceFromValue =
+                                              sourceFromState.value ??
+                                                  'Source From';
 
                                           return TextButton(
                                             onPressed: () {
-                                              sourceFromPopupMenu(context, sourceFromState);
+                                              sourceFromPopupMenu(
+                                                  context, sourceFromState);
                                             },
                                             child: Row(
                                               children: [
@@ -510,9 +628,11 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
                                                   child: Icon(
-                                                    Icons.keyboard_arrow_down_rounded,
+                                                    Icons
+                                                        .keyboard_arrow_down_rounded,
                                                     color: Colors.black,
                                                   ),
                                                 )
@@ -523,14 +643,11 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                       ),
                                     ],
                                   ),
-
                                   SizedBox(
                                     height: 11,
                                   ),
-
                                   Row(
                                     children: [
-
                                       Text(
                                         widget.currentCategory,
                                         style: TextStyle(
@@ -539,15 +656,19 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                           color: Colors.grey,
                                         ),
                                       ),
-
                                       Consumer<CategoryState>(
-                                        builder: (context, categoryState, child) {
-                                          newCategoryValue = categoryState.value ?? 'Category';
-                                          newCategoryInt = categoryState.selectedIndex.toString();
+                                        builder:
+                                            (context, categoryState, child) {
+                                          newCategoryValue =
+                                              categoryState.value ?? 'Category';
+                                          newCategoryInt = categoryState
+                                              .selectedIndex
+                                              .toString();
 
                                           return TextButton(
                                             onPressed: () {
-                                              categoryPopupMenu(context, categoryState);
+                                              categoryPopupMenu(
+                                                  context, categoryState);
                                             },
                                             child: Row(
                                               children: [
@@ -560,9 +681,11 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
                                                   child: Icon(
-                                                    Icons.keyboard_arrow_down_rounded,
+                                                    Icons
+                                                        .keyboard_arrow_down_rounded,
                                                     color: Colors.black,
                                                   ),
                                                 ),
@@ -573,13 +696,6 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                       ),
                                     ],
                                   ),
-
-
-
-
-
-
-
                                 ],
                               )
                             ],
@@ -600,6 +716,19 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                     const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: ElevatedButton(
                                   onPressed: () {
+                                    editMainTask(
+                                        widget.taskID,
+                                        newTitleController.text,
+                                        newPriorityValue,
+                                        newDescriptionController.text,
+                                        widget.userName,
+                                        widget.firstName,
+                                        newBeneficiary,
+                                        newDueDate,
+                                        newAssignToValue,
+                                        newSourceFromValue,
+                                        newCategoryValue,
+                                        newCategoryInt);
                                     // createMainTask(context,
                                     //     beneficiary: beneficiary,
                                     //     priority: priorityValue,
@@ -616,7 +745,7 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
                                     ),
                                   ),
                                   child: const Text(
-                                    'Create',
+                                    'Save',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
