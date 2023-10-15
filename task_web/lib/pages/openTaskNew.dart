@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_web/pages/createSubTaskNew.dart';
 
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
@@ -10,24 +11,23 @@ import 'editMainTask.dart';
 class OpenTaskNew extends StatefulWidget {
   final MainTask task;
 
-   OpenTaskNew({Key? key, required this.task}) : super(key: key);
+  OpenTaskNew({Key? key, required this.task}) : super(key: key);
 
   @override
   State<OpenTaskNew> createState() => _OpenTaskNewState();
 }
 
 class _OpenTaskNewState extends State<OpenTaskNew> {
-  String userName ='';
-  String taskDescription ='';
+  String userName = '';
+  String taskDescription = '';
 
-  String firstName='';
-  String lastName='';
-  String userRole='';
-  String mainTaskId='';
-  String mainTaskTitle='';
-  String assign_to='';
-  String beneficiary='';
-
+  String firstName = '';
+  String lastName = '';
+  String userRole = '';
+  String mainTaskId = '';
+  String mainTaskTitle = '';
+  String assign_to = '';
+  String beneficiary = '';
 
   TextEditingController mainTaskCommentController = TextEditingController();
 
@@ -50,7 +50,6 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       lastName = (prefs.getString('last_name') ?? '').toUpperCase();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -93,18 +92,30 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                   onPressed: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => EditMainTaskPage(
-                                        currentTitle: widget.task.taskTitle,
-                                        currentDescription: widget.task.task_description,
-                                        currentBeneficiary: widget.task.company,
-                                        currentDueDate: widget.task.dueDate,
-                                        currentAssignTo: widget.task.assignTo,
-                                        currentPriority: widget.task.taskTypeName,
-                                        currentSourceFrom: widget.task.sourceFrom,
-                                        currentCategory: widget.task.category_name,
-                                        taskID: widget.task.taskId, userName: userName, firstName: firstName,)),
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditMainTaskPage(
+                                                currentTitle:
+                                                    widget.task.taskTitle,
+                                                currentDescription: widget
+                                                    .task.task_description,
+                                                currentBeneficiary:
+                                                    widget.task.company,
+                                                currentDueDate:
+                                                    widget.task.dueDate,
+                                                currentAssignTo:
+                                                    widget.task.assignTo,
+                                                currentPriority:
+                                                    widget.task.taskTypeName,
+                                                currentSourceFrom:
+                                                    widget.task.sourceFrom,
+                                                currentCategory:
+                                                    widget.task.category_name,
+                                                taskID: widget.task.taskId,
+                                                userName: userName,
+                                                firstName: firstName,
+                                              )),
                                     );
-
                                   },
                                   tooltip: 'Edit Task',
                                   icon: Icon(
@@ -157,7 +168,10 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 4, bottom: 8, top: 8, right: 4),
+                                              left: 4,
+                                              bottom: 8,
+                                              top: 8,
+                                              right: 4),
                                           child: Text(
                                             'Start',
                                             style: TextStyle(
@@ -172,7 +186,10 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 4, bottom: 8, top: 8, right: 4),
+                                              left: 4,
+                                              bottom: 8,
+                                              top: 8,
+                                              right: 4),
                                           child: Text(
                                             'Due',
                                             style: TextStyle(
@@ -251,7 +268,10 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 4, bottom: 8, top: 8, right: 4),
+                                              left: 4,
+                                              bottom: 8,
+                                              top: 8,
+                                              right: 4),
                                           child: Text(
                                             widget.task.taskCreateDate,
                                             style: TextStyle(
@@ -267,7 +287,10 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 4, bottom: 8, top: 8, right: 4),
+                                              left: 4,
+                                              bottom: 8,
+                                              top: 8,
+                                              right: 4),
                                           child: Text(
                                             widget.task.dueDate,
                                             style: TextStyle(
@@ -355,6 +378,34 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                 ),
                               ),
                             ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Mark In Progress',
+                                  style: TextStyle(
+                                      fontSize: 14, color: Colors.blueAccent),
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CreateSubTaskNew(),
+                                    ));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Add Sub Task',
+                                  style: TextStyle(
+                                      fontSize: 14, color: Colors.green),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(
@@ -409,7 +460,8 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(
                                 'Comment',
                                 style: TextStyle(
@@ -485,7 +537,6 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                           //     }
                           //   },
                           // )
-
                         ),
                         Container(
                           width: 330,
@@ -516,7 +567,6 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
           ),
         ),
       ),
-
     );
   }
 }

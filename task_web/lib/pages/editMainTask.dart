@@ -83,7 +83,7 @@ class _EditMainTaskPageState extends State<EditMainTaskPage> {
       "task_title": taskTitle,
       "task_type_name": taskTypeName,
       "task_description": description,
-      "task_status_name": '',
+      "task_status_name": 'Pending',
       "action_taken_by_id": userName,
       "action_taken_by": firstName,
       "action_taken_date": getCurrentDate(),
