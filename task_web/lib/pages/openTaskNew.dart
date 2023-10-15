@@ -19,15 +19,10 @@ class OpenTaskNew extends StatefulWidget {
 
 class _OpenTaskNewState extends State<OpenTaskNew> {
   String userName = '';
-  String taskDescription = '';
 
   String firstName = '';
   String lastName = '';
   String userRole = '';
-  String mainTaskId = '';
-  String mainTaskTitle = '';
-  String assign_to = '';
-  String beneficiary = '';
 
   TextEditingController mainTaskCommentController = TextEditingController();
 
@@ -40,11 +35,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
   void retrieverData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      mainTaskId = (prefs.getString('main_task_id') ?? '');
-      mainTaskTitle = (prefs.getString('main_task_title') ?? '');
-      taskDescription = (prefs.getString('task_description') ?? '');
       userName = (prefs.getString('user_name') ?? '');
-      beneficiary = (prefs.getString('company') ?? '');
       userRole = (prefs.getString('user_role') ?? '');
       firstName = (prefs.getString('first_name') ?? '').toUpperCase();
       lastName = (prefs.getString('last_name') ?? '').toUpperCase();
@@ -394,7 +385,9 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => CreateSubTaskNew(),
+                                      builder: (context) => CreateSubTaskNew(
+                                        username: userName,
+                                        firstName: firstName, lastName: lastName, mainTaskId: widget.task.taskId,),
                                     ));
                               },
                               child: Padding(

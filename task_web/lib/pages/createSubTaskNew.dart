@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../components.dart';
 import '../createAccountPopups/assigntoPopUp.dart';
 import '../createAccountPopups/beneficiaryPopUp.dart';
 import '../createAccountPopups/categoryPopUp.dart';
@@ -10,9 +13,15 @@ import '../createAccountPopups/sourcefromPopUp.dart';
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
 import 'createMainTaskNew.dart';
+import 'package:http/http.dart' as http;
 
 class CreateSubTaskNew extends StatefulWidget {
-  const CreateSubTaskNew({Key? key}) : super(key: key);
+  final String username;
+  final String firstName;
+  final String lastName;
+  final String mainTaskId;
+
+  const CreateSubTaskNew({Key? key, required this.username, required this.firstName, required this.lastName, required this.mainTaskId}) : super(key: key);
 
   @override
   State<CreateSubTaskNew> createState() => _CreateSubTaskNewState();
@@ -41,6 +50,110 @@ class _CreateSubTaskNewState extends State<CreateSubTaskNew> {
   TextEditingController subTaskTitleController = TextEditingController();
   TextEditingController subTaskDescriptionController = TextEditingController();
 
+  Future<void> createSubTask(
+      BuildContext context, {
+        required subTaskBeneficiary,
+        required subTaskPriority,
+        required subTaskDueDate,
+        required subTaskSourceFrom,
+        required subTaskAssignTo,
+        required subTaskCategoryName,
+        required subTaskCategory,
+      }) async {
+    // Validate input fields
+    if (subTaskTitleController.text.trim().isEmpty ||
+        subTaskDescriptionController.text.isEmpty) {
+      // Show an error message if any of the required fields are empty
+      snackBar(context, "Please fill in all required fields", Colors.red);
+      return;
+    }
+
+    // Other validation logic can be added here
+    // If all validations pass, proceed with the registration
+    var url = "http://dev.workspace.cbs.lk/subTaskCreate.php";
+
+
+    var data = {
+      "main_task_id": widget.mainTaskId,
+      "task_id": widget.username+getCurrentMonth(),
+      "task_title":  subTaskTitleController.text,
+      "task_type": '0',
+      "task_type_name": subTaskPriority,
+      "due_date": subTaskDueDate,
+      "task_description": subTaskDescriptionController.text,
+      "task_create_by_id": widget.username,
+      "task_create_by": '${widget.firstName} ${widget.lastName}',
+      "task_create_date": getCurrentDate(),
+      "task_create_month": getCurrentMonth(),
+      "task_created_timestamp": getCurrentDateTime(),
+      "task_status": "0",
+      "task_status_name": "Pending",
+      "task_reopen_by": "",
+      "task_reopen_by_id": "",
+      "task_reopen_date": "",
+      "task_reopen_timestamp": "0",
+      "task_finished_by": "",
+      "task_finished_by_id": "",
+      "task_finished_by_date": "",
+      "task_finished_by_timestamp": "0",
+      "task_edit_by": "",
+      "task_edit_by_id": "",
+      "task_edit_by_date": "",
+      "task_edit_by_timestamp": "0",
+      "task_delete_by": "",
+      "task_delete_by_id": "",
+      "task_delete_by_date": "",
+      "task_delete_by_timestamp": "0",
+      "source_from": subTaskSourceFrom,
+      "assign_to": subTaskAssignTo,
+      "company": subTaskBeneficiary,
+      "document_number": '',
+      "watch_list": '0',
+      "action_taken_by_id": "",
+      "action_taken_by": "",
+      "action_taken_date": "",
+      "action_taken_timestamp": "0",
+      "category_name": subTaskCategoryName,
+      "category": subTaskCategory,
+    };
+
+
+    http.Response res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    if (res.statusCode.toString() == "200") {
+      if (jsonDecode(res.body) == "true") {
+        if (!mounted) return;
+        showSuccessSnackBar(context);// Show the success SnackBar
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const LoginPage()),
+        // );
+      } else {
+        if (!mounted) return;
+        snackBar(context, "Error", Colors.red);
+      }
+    } else {
+      if (!mounted) return;
+      snackBar(context, "Error", Colors.yellow);
+    }
+  }
+
+  void showSuccessSnackBar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('Sub Task Created Successfully'),
+      backgroundColor: Colors.green, // You can customize the color
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     String subTaskBeneficiary = '';
@@ -64,7 +177,7 @@ class _CreateSubTaskNewState extends State<CreateSubTaskNew> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Date and Time: ${getCurrentDateTime()}',
+                    'Date and Time: ${getCurrentDateTime()+widget.mainTaskId}',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -520,6 +633,14 @@ class _CreateSubTaskNewState extends State<CreateSubTaskNew> {
                                 const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: ElevatedButton(
                                   onPressed: () {
+                                    createSubTask(context,
+                                        subTaskBeneficiary: subTaskBeneficiary,
+                                        subTaskPriority: subTaskPriorityValue,
+                                        subTaskDueDate: subTaskDueDate,
+                                        subTaskSourceFrom: subTaskSourceFromValue,
+                                        subTaskAssignTo: subTaskAssignToValue,
+                                        subTaskCategoryName: subTaskCategoryValue,
+                                        subTaskCategory: subTaskCategoryInt);
 
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -554,7 +675,7 @@ class _CreateSubTaskNewState extends State<CreateSubTaskNew> {
                                     ),
                                   ),
                                   child: const Text(
-                                    'Clear',
+                                    'Cancel',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.redAccent),
