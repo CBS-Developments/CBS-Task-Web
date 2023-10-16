@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:task_web/pages/taskPageOne.dart';
 
 import '../components.dart';
 import '../createAccountPopups/assigntoPopUp.dart';
@@ -48,12 +50,23 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
 
   String getCurrentMonth() {
     final now = DateTime.now();
-    final formattedDate = DateFormat('yyyy-MM').format(now);
+    final formattedDate = DateFormat('yy-MM').format(now);
     return formattedDate;
   }
 
+  String generatedTaskId() {
+    final random = Random();
+    int min = 1;                  // Smallest 9-digit number
+    int max = 999999999;          // Largest 9-digit number
+    int randomNumber = min + random.nextInt(max - min + 1);
+    return randomNumber.toString().padLeft(9, '0');
+  }
+
+
+
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+
 
   Future<void> createMainTask(
       BuildContext context, {
@@ -77,9 +90,13 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
     // If all validations pass, proceed with the registration
     var url = "http://dev.workspace.cbs.lk/mainTaskCreate.php";
 
+    String firstLetterFirstName = widget.firstName.isNotEmpty ? widget.firstName[0] : '';
+    String firstLetterLastName = widget.lastName.isNotEmpty ? widget.lastName[0] : '';
+    String taskID = getCurrentMonth() + firstLetterFirstName + firstLetterLastName + categoryName + generatedTaskId();
+
 
     var data = {
-      "task_id": widget.username+getCurrentDateTime(),
+      "task_id": taskID,
       "task_title":  titleController.text,
       "task_type": '0',
       "task_type_name": priority,
@@ -135,10 +152,10 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
       if (jsonDecode(res.body) == "true") {
         if (!mounted) return;
         showSuccessSnackBar(context);// Show the success SnackBar
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const LoginPage()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TaskPageOne()),
+        );
       } else {
         if (!mounted) return;
         snackBar(context, "Error", Colors.red);

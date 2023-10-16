@@ -100,33 +100,13 @@ class _TaskTableState extends State<TaskTable> {
                   return DataRow(cells: [
                     DataCell(
                         SingleChildScrollView(
-                          child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                          Text(
+                          child: Text(
                             task.taskTitle,
                             style: const TextStyle(
                               fontSize: 11,
                               color: Colors.black,
                             ),
                           ),
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                task.taskId,
-                                style: const TextStyle(
-                                  fontSize: 9,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          )
-                      ],
-                    ),
                         ),
                     onTap: ()async {
                       SharedPreferences prefs =
@@ -198,33 +178,13 @@ class _TaskTableState extends State<TaskTable> {
                   return DataRow(cells: [
                     DataCell(
                         SingleChildScrollView(
-                          child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                          Text(
+                          child: Text(
                             task.taskTitle,
                             style: const TextStyle(
                               fontSize: 11,
                               color: Colors.black,
                             ),
                           ),
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 9,
-                              ),
-                              Text(
-                                task.taskId,
-                                style: const TextStyle(
-                                  fontSize: 9,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          )
-                      ],
-                    ),
                         ),
                       onTap: ()async {
                         SharedPreferences prefs =

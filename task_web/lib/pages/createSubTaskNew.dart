@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:task_web/pages/taskPageOne.dart';
 
 import '../components.dart';
 import '../createAccountPopups/assigntoPopUp.dart';
@@ -132,10 +133,8 @@ class _CreateSubTaskNewState extends State<CreateSubTaskNew> {
       if (jsonDecode(res.body) == "true") {
         if (!mounted) return;
         showSuccessSnackBar(context);// Show the success SnackBar
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const LoginPage()),
-        // );
+        Navigator.of(context).pop();
+
       } else {
         if (!mounted) return;
         snackBar(context, "Error", Colors.red);
