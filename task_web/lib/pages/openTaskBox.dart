@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/colors.dart';
-import 'package:task_web/methods/subTaskTable.dart';
+import 'package:task_web/tables/subTaskTable.dart';
 import 'package:task_web/pages/editMainTask.dart';
 import '../components.dart';
 import '../tables/taskTable.dart';

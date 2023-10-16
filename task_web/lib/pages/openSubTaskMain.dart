@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_web/pages/createSubTask.dart';
 
-import '../methods/subTaskTable.dart';
+import '../tables/subTaskTable.dart';
 
 class OpenSubTask extends StatefulWidget {
   const OpenSubTask({Key? key}) : super(key: key);

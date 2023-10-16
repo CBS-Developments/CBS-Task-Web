@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../methods/colors.dart';
-import '../methods/subTaskTable.dart';
+import '../tables/subTaskTable.dart';
 import 'openTaskBox.dart';
 
 class SubTaskDetailsDialog extends StatelessWidget {
@@ -293,7 +293,6 @@ class SubTaskDetailsDialog extends StatelessWidget {
 
                       SizedBox(height: 5,),
 
-                      SubTaskTable( mainTaskId: '',)
 
                     ],
                   ),

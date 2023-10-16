@@ -131,7 +131,7 @@ class _TaskTableState extends State<TaskTable> {
                         //     context, task); // Show the popup
                       },
                     ),
-                    
+
 
                     DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
                     DataCell(Text(task.taskCreateDate,style: TextStyle(fontSize: 10),)), // Display Start-Date

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/pages/createSubTaskNew.dart';
 
+
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
-import '../methods/subTaskTable.dart';
+import '../tables/subTaskTable.dart';
 import '../tables/taskTable.dart';
 import 'editMainTask.dart';
 
@@ -411,7 +412,8 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                         SizedBox(
                           height: 5,
                         ),
-                        SubTaskTable( mainTaskId: widget.task.taskId,),
+                        // SubTaskTableNew(mainTaskId: widget.task.taskId)
+                        SubTaskTable(mainTaskId: widget.task.taskId)
                       ],
                     ),
                   ),
