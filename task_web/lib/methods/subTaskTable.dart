@@ -7,9 +7,10 @@ import '../pages/openSubTaskBox.dart';
 
 
 class SubTaskTable extends StatefulWidget {
-  final List<Task> subtasks; // Add this parameter
+  final String mainTaskId;
+  // Add this parameter
 
-  SubTaskTable({Key? key, required this.subtasks}) : super(key: key);
+  SubTaskTable({Key? key, required this.mainTaskId}) : super(key: key);
 
   @override
   State<SubTaskTable> createState() => _SubTaskTableState();
@@ -52,7 +53,8 @@ class _SubTaskTableState extends State<SubTaskTable> {
   @override
   void initState() {
     super.initState();
-    retrieverData();
+    // Use widget.mainTaskId here to get the main task ID.
+    getSubTaskListByMainTaskId(widget.mainTaskId);
   }
 
   void retrieverData() async {
@@ -82,40 +84,45 @@ class _SubTaskTableState extends State<SubTaskTable> {
       lastName = (prefs.getString('last_name') ?? '').toUpperCase();
       // ... Assign values from SharedPreferences ...
     });
-    await getSubTaskListByMainTaskId(mainTaskId);
   }
-
-  Future<void> getSubTaskListByMainTaskId(var taskId) async {
+  Future<void> getSubTaskListByMainTaskId(String mainTaskId) async {
     subTaskList.clear();
     var data = {
-      "main_task_id": "$taskId",
+      "main_task_id": mainTaskId,
     };
 
-    const url = "http://dev.connect.cbs.lk/subTaskListByMainTaskId.php";
-    http.Response res = await http.post(
-      Uri.parse(url),
-      body: data,
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      encoding: Encoding.getByName("utf-8"),
-    );
+    const url = "http://dev.workspace.cbs.lk/subTaskListByMainTaskId.php";
+    try {
+      http.Response res = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        encoding: Encoding.getByName("utf-8"),
+      );
 
-    if (res.statusCode == 200) {
-      final responseJson = json.decode(res.body);
-      setState(() {
-        for (Map<String, dynamic> details in responseJson.cast<Map<String, dynamic>>()) {
-          subTaskList.add(Task.fromJson(details));
-        }
+      if (res.statusCode == 200) {
+        final responseJson = json.decode(res.body);
+        setState(() {
+          for (Map<String, dynamic> details in responseJson.cast<Map<String, dynamic>>()) {
+            subTaskList.add(Task.fromJson(details));
+          }
 
-        subTaskList.sort((a, b) =>
-            b.dueDate.compareTo(a.dueDate));
-      });
-    } else {
-      throw Exception('Failed to load subtasks from API');
+          subTaskList.sort((a, b) =>
+              b.dueDate.compareTo(a.dueDate));
+        });
+      } else {
+        throw Exception('Failed to load subtasks from API');
+      }
+    } catch (e) {
+      // Handle the error here, e.g., show a snackbar, toast, or log the error.
+      print('Error: $e');
+      // You can also set a flag or message to inform the user.
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +197,9 @@ class Task {
   String assignTo;
   String company;
   String documentNumber;
+  String watchList;
+  String categoryName;
+  String category;
 
   Task(
       {required this.taskId,
@@ -228,7 +238,11 @@ class Task {
         required this.sourceFrom,
         required this.assignTo,
         required this.company,
-        required this.documentNumber});
+        required this.documentNumber,
+        required this.watchList,
+        required this.categoryName,
+        required this.category,
+      });
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
@@ -268,6 +282,9 @@ class Task {
         sourceFrom: json['source_from'],
         assignTo: json['assign_to'],
         company: json['company'],
-        documentNumber: json['document_number']);
+        documentNumber: json['document_number'],
+        watchList: json['watch_list'],
+        categoryName: json['category_name'],
+        category: json['category']);
   }
 }

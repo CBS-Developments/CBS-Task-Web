@@ -5,7 +5,7 @@ import 'package:task_web/pages/createSubTaskNew.dart';
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
 import '../methods/subTaskTable.dart';
-import '../methods/taskTable.dart';
+import '../tables/taskTable.dart';
 import 'editMainTask.dart';
 
 class OpenTaskNew extends StatefulWidget {
@@ -411,7 +411,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                         SizedBox(
                           height: 5,
                         ),
-                        SubTaskTable(subtasks: const []),
+                        SubTaskTable( mainTaskId: widget.task.taskId,),
                       ],
                     ),
                   ),

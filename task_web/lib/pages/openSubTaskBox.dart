@@ -293,7 +293,7 @@ class SubTaskDetailsDialog extends StatelessWidget {
 
                       SizedBox(height: 5,),
 
-                      SubTaskTable(subtasks: [],)
+                      SubTaskTable( mainTaskId: '',)
 
                     ],
                   ),

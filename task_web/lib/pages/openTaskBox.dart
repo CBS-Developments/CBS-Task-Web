@@ -7,7 +7,7 @@ import 'package:task_web/methods/colors.dart';
 import 'package:task_web/methods/subTaskTable.dart';
 import 'package:task_web/pages/editMainTask.dart';
 import '../components.dart';
-import '../methods/taskTable.dart';
+import '../tables/taskTable.dart';
 import 'package:http/http.dart' as http;
 
 import 'createSubTask.dart';
@@ -348,7 +348,7 @@ class _TaskDetailsDialogState extends State<TaskDetailsDialog> {
                     SizedBox(
                       height: 5,
                     ),
-                    SubTaskTable(subtasks: const []),
+                    SubTaskTable( mainTaskId: '',),
                   ],
                 ),
               ),

@@ -20,14 +20,6 @@ class _TaskTableState extends State<TaskTable> {
   List<MainTask> searchResultAsMainTaskList = [];
   TextEditingController taskListController = TextEditingController();
 
-  void _showTaskDetailsDialog(BuildContext context, MainTask task) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return TaskDetailsDialog(task);
-      },
-    );
-  }
 
   @override
   void initState() {
@@ -47,12 +39,6 @@ class _TaskTableState extends State<TaskTable> {
             DataColumn(
               label: Text(
                 'Task Title',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
-              ),
-            ),
-            DataColumn(
-              label: Text(
-                '',
                 style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
               ),
             ),
@@ -108,62 +94,12 @@ class _TaskTableState extends State<TaskTable> {
                             ),
                           ),
                         ),
-                    onTap: ()async {
-                      SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                      prefs.setString('main_task_id', task.taskId);
-                      prefs.setString('task_title', task.taskTitle);
-                      prefs.setString('task_type', task.taskType);
-                      prefs.setString(
-                          'task_type_name', task.taskTypeName);
-                      prefs.setString(
-                          'task_create_by', task.taskCreateBy);
-                      prefs.setString(
-                          'task_create_date', task.taskCreateDate);
-                      prefs.setString('task_created_timestamp',
-                          task.taskCreatedTimestamp);
-                      prefs.setString('task_status', task.taskStatus);
-                      prefs.setString(
-                          'task_status_name', task.taskStatusName);
-                      prefs.setString('due_date', task.dueDate);
-                      prefs.setString('assign_to', task.assignTo);
-                      prefs.setString('source_from', task.sourceFrom);
-                      prefs.setString('company', task.company);
-                      if (!mounted) return;
-                      _showTaskDetailsDialog(
-                          context, task); // Show the popup
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => OpenTaskNew(task: task)),); // Show the popup
                     },),
 
-                    DataCell(
-                        Icon(Icons.account_tree_rounded,size: 14,),
-                      onTap: () async { SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                      prefs.setString('main_task_id', task.taskId);
-                      prefs.setString('task_title', task.taskTitle);
-                      prefs.setString('task_description', task.task_description);
-                      prefs.setString('task_type', task.taskType);
-                      prefs.setString(
-                          'task_type_name', task.taskTypeName);
-                      prefs.setString(
-                          'task_create_by', task.taskCreateBy);
-                      prefs.setString(
-                          'task_create_date', task.taskCreateDate);
-                      prefs.setString('task_created_timestamp',
-                          task.taskCreatedTimestamp);
-                      prefs.setString('task_status', task.taskStatus);
-                      prefs.setString(
-                          'task_status_name', task.taskStatusName);
-                      prefs.setString('due_date', task.dueDate);
-                      prefs.setString('assign_to', task.assignTo);
-                      prefs.setString('source_from', task.sourceFrom);
-                      prefs.setString('company', task.company);
-                      if (!mounted) return; showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const OpenSubTask();
-                        },
-                      ); },
-                    ),
                     DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
                     DataCell(Text(task.taskCreateDate,style: TextStyle(fontSize: 10),)), // Display Start-Date
                     DataCell(Text(task.dueDate,style: TextStyle(fontSize: 10),)),
@@ -186,28 +122,7 @@ class _TaskTableState extends State<TaskTable> {
                             ),
                           ),
                         ),
-                      onTap: ()async {
-                        SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                        prefs.setString('main_task_id', task.taskId);
-                        prefs.setString('task_title', task.taskTitle);
-                        prefs.setString('task_type', task.taskType);
-                        prefs.setString(
-                            'task_type_name', task.taskTypeName);
-                        prefs.setString(
-                            'task_create_by', task.taskCreateBy);
-                        prefs.setString(
-                            'task_create_date', task.taskCreateDate);
-                        prefs.setString('task_created_timestamp',
-                            task.taskCreatedTimestamp);
-                        prefs.setString('task_status', task.taskStatus);
-                        prefs.setString(
-                            'task_status_name', task.taskStatusName);
-                        prefs.setString('due_date', task.dueDate);
-                        prefs.setString('assign_to', task.assignTo);
-                        prefs.setString('source_from', task.sourceFrom);
-                        prefs.setString('company', task.company);
-                        if (!mounted) return;
+                      onTap: (){
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => OpenTaskNew(task: task)),
@@ -216,37 +131,7 @@ class _TaskTableState extends State<TaskTable> {
                         //     context, task); // Show the popup
                       },
                     ),
-
-                    DataCell(
-                      Icon(Icons.account_tree_rounded,size: 14,),
-                      onTap: () async { SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                      prefs.setString('main_task_id', task.taskId);
-                      prefs.setString('task_title', task.taskTitle);
-                      prefs.setString('task_description', task.task_description);
-                      prefs.setString('task_type', task.taskType);
-                      prefs.setString(
-                          'task_type_name', task.taskTypeName);
-                      prefs.setString(
-                          'task_create_by', task.taskCreateBy);
-                      prefs.setString(
-                          'task_create_date', task.taskCreateDate);
-                      prefs.setString('task_created_timestamp',
-                          task.taskCreatedTimestamp);
-                      prefs.setString('task_status', task.taskStatus);
-                      prefs.setString(
-                          'task_status_name', task.taskStatusName);
-                      prefs.setString('due_date', task.dueDate);
-                      prefs.setString('assign_to', task.assignTo);
-                      prefs.setString('source_from', task.sourceFrom);
-                      prefs.setString('company', task.company);
-                      if (!mounted) return; showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const OpenSubTask();
-                        },
-                      ); },
-                    ),
+                    
 
                     DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
                     DataCell(Text(task.taskCreateDate,style: TextStyle(fontSize: 10),)), // Display Start-Date

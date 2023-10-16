@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import '../drawers/drawerTask.dart';
 import '../methods/appBar.dart';
 import '../methods/chartBox.dart';
-import '../methods/taskTable.dart';
+import '../tables/taskTable.dart';
 
 class TaskMainPage extends StatefulWidget {
   const TaskMainPage({super.key});

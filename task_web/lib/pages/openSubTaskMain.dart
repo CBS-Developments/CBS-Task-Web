@@ -38,7 +38,7 @@ class _OpenSubTaskState extends State<OpenSubTask> {
               ],
             ),
 
-            SubTaskTable(subtasks: const []),
+            SubTaskTable( mainTaskId: '',),
 
             const SizedBox(height: 20,),
 
