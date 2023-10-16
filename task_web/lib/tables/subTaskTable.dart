@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_web/pages/openTaskPageNew.dart';
 
 import '../pages/openSubTaskBox.dart';
 
@@ -19,15 +19,6 @@ class SubTaskTable extends StatefulWidget {
 class _SubTaskTableState extends State<SubTaskTable> {
 
 
-
-  void _showSubTaskDetailsDialog(BuildContext context, Task task) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SubTaskDetailsDialog(task);
-      },
-    );
-  }
 
   List<Task> subTaskList = []; // Initialize subtask list
 
@@ -84,14 +75,17 @@ class _SubTaskTableState extends State<SubTaskTable> {
             DataColumn(label: Text('Assign To')),
             // Add more DataColumn widgets as needed
           ],
+          // onPressed: () => _showSubTaskDetailsDialog(context, subtask),
           rows: subTaskList.map((subtask) {
             return DataRow(
               cells: [
                 DataCell(
-                    TextButton(
-                        child: Text(subtask.taskTitle),
-                      onPressed: () => _showSubTaskDetailsDialog(context, subtask),
-                    )
+                    Text(subtask.taskTitle),onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => OpenSubTaskNew(task: subtask))
+                  );
+                }
                 ),
                 DataCell(Text(subtask.dueDate)),
                 DataCell(Text(subtask.assignTo)),
