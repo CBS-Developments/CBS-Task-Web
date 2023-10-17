@@ -664,7 +664,9 @@ class _CreateSubTaskNewState extends State<CreateSubTaskNew> {
                                 padding:
                                 const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: AppColor.loginF,
                                     backgroundColor: Colors.lightBlue.shade50,

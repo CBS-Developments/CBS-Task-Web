@@ -6,8 +6,7 @@ import 'package:task_web/drawers/drawerTask.dart';
 import 'package:task_web/tables/taskTable.dart';
 import 'package:task_web/methods/upMainRow.dart';
 
-
-
+import '../sizes/pageSizes.dart';
 
 class TaskPageOne extends StatefulWidget {
   const TaskPageOne({super.key});
@@ -17,7 +16,6 @@ class TaskPageOne extends StatefulWidget {
 }
 
 class _TaskPageOneState extends State<TaskPageOne> {
-
   String userName = "";
   String firstName = "";
   String lastName = "";
@@ -38,7 +36,6 @@ class _TaskPageOneState extends State<TaskPageOne> {
       lastName = prefs.getString('last_name') ?? "";
       phone = prefs.getString('phone') ?? "";
       userRole = prefs.getString('user_role') ?? "";
-
     });
   }
 
@@ -46,34 +43,44 @@ class _TaskPageOneState extends State<TaskPageOne> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
-
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: MyAppBar(),
       ),
-      body:
-      Row(
+      body: Row(
         children: [
           const LeftDrawer(),
-
           const SubDrawer(),
-
           Column(
-            children:  [
+            children: [
               const UpMainRow(),
-              const SizedBox(height: 20,),
-              TaskTable(
+              SizedBox(
+                height: 10,
               ),
-
-              const SizedBox(height: 18),
-
-
-
+              Container(
+                width: getPageWidth(context) - 395,
+                height: 35,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        'Taxation',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              TaskTable(),
             ],
           )
         ],
       ),
-
     );
   }
 }

@@ -280,38 +280,41 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
                         ),
 
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                        SizedBox(
+                          width: 480,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
 
-                            TextButton(
-                              onPressed: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Mark In Progress',
-                                  style: TextStyle(
-                                      fontSize: 14, color: Colors.blueAccent),
-                                ),
-                              ),
-                            ),
-
-                            TextButton(
-                                onPressed: (){},
+                              TextButton(
+                                onPressed: () {},
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text('Mark As Complete',style:
-                                  TextStyle(fontSize: 14,color: Colors.green),),
-                                ) ),
+                                  child: Text(
+                                    'Mark In Progress',
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.blueAccent),
+                                  ),
+                                ),
+                              ),
 
-                          ],
+                              TextButton(
+                                  onPressed: (){},
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('Mark As Complete',style:
+                                    TextStyle(fontSize: 14,color: Colors.green),),
+                                  ) ),
+
+                            ],
+                          ),
                         ),
 
                         SizedBox(height: 15,),
 
                         Container(
-                          width: 330,
-                          height: 40,
+                          width: 480,
+                          height: 35,
                           color: Colors.grey.shade300,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

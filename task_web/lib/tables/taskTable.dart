@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/methods/colors.dart';
-import 'package:task_web/pages/openSubTaskMain.dart';
+
 import 'package:task_web/pages/openTaskNew.dart';
 import 'dart:convert';
 
-import '../pages/createSubTask.dart';
-import '../pages/openTaskBox.dart';
+
 import '../sizes/pageSizes.dart';
 
 class TaskTable extends StatefulWidget {
@@ -31,7 +30,7 @@ class _TaskTableState extends State<TaskTable> {
   Widget build(BuildContext context) {
     return Container(
       width: getPageWidth(context) - 395,
-      height: 500,
+      height: 490,
       color: Colors.white,
       child: SingleChildScrollView(
         child: DataTable(

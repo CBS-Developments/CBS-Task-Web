@@ -711,7 +711,9 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: AppColor.loginF,
                                     backgroundColor: Colors.lightBlue.shade50,
@@ -721,7 +723,7 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                     ),
                                   ),
                                   child: const Text(
-                                    'Clear',
+                                    'Cancel',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.redAccent),
