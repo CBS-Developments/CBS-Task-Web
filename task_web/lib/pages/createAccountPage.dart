@@ -50,8 +50,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
     var data = {
       "user_name": firstNameController.text.substring(0, 5) + mobileNumberController.text.substring(mobileNumberController.text.length - 2),
-      "first_name": firstNameController.text,
-      "last_name": lastNameController.text,
+      "first_name": firstNameController.text.toString().trim(),
+      "last_name": lastNameController.text.toString().trim(),
       "email": emailController.text,
       "password_": passwordController.text,
       "phone": mobileNumberController.text,

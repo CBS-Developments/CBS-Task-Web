@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:task_web/pages/editSubTask.dart';
 
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
@@ -13,6 +15,28 @@ class OpenSubTaskNew extends StatefulWidget {
 }
 
 class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
+  String userName = '';
+
+  String firstName = '';
+  String lastName = '';
+  String userRole = '';
+
+
+  @override
+  void initState() {
+    super.initState();
+    retrieverData();
+  }
+
+  void retrieverData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = (prefs.getString('user_name') ?? '');
+      userRole = (prefs.getString('user_role') ?? '');
+      firstName = (prefs.getString('first_name') ?? '').toUpperCase();
+      lastName = (prefs.getString('last_name') ?? '').toUpperCase();
+    });
+  }
 
 
   @override
@@ -46,45 +70,74 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
                           icon: Icon(Icons.arrow_back_rounded),
                         ),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '${task.taskTitle}',
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                IconButton(
-                                    onPressed: () {},
-                                    tooltip: 'Edit Task',
-                                    icon: Icon(
-                                      Icons.edit_note_rounded,
-                                      color: Colors.black,
-                                      size: 22,
-                                    )),
-
-                                IconButton(
-                                    onPressed: () {},
-                                    tooltip: 'Delete Task',
-                                    icon: Icon(
-                                      Icons.delete_rounded,
-                                      color: Colors.redAccent,
-                                      size: 19,
-                                    )),
-                              ],
-                            )
-                          ],
-                        ),
                         Text(
-                          '${task.taskId}',
+                          'Sub Task ID:${task.taskId}',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.black87,
                           ),
                         ),
+
+                        SizedBox(
+                          width: 480,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '${task.taskTitle}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => EditSubTaskPage(
+                                            currentTitle: task.taskTitle,
+                                            currentDescription: task.taskDescription,
+                                            currentBeneficiary: task.company,
+                                            currentDueDate: task.dueDate,
+                                            currentAssignTo:task.assignTo,
+                                            currentPriority: task.taskTypeName,
+                                            currentSourceFrom: task.sourceFrom,
+                                            currentCategory: task.categoryName,
+                                            taskID: task.taskId,
+                                            userName: userName,
+                                            firstName: firstName)));
+                                      },
+                                      tooltip: 'Edit Task',
+                                      icon: Icon(
+                                        Icons.edit_note_rounded,
+                                        color: Colors.black,
+                                        size: 22,
+                                      )),
+
+                                  IconButton(
+                                      onPressed: () {},
+                                      tooltip: 'Delete Task',
+                                      icon: Icon(
+                                        Icons.delete_rounded,
+                                        color: Colors.redAccent,
+                                        size: 19,
+                                      )),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+
+
+                        Text(
+                          '${task.taskDescription}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black87,
+                          ),
+                        ),
+
                         SizedBox(
                           height: 10,
                         ),

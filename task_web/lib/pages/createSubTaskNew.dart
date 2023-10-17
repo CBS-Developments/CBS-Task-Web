@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:task_web/pages/openTaskNew.dart';
 import 'package:task_web/pages/taskPageOne.dart';
 
 import '../components.dart';
@@ -640,6 +641,11 @@ class _CreateSubTaskNewState extends State<CreateSubTaskNew> {
                                         subTaskAssignTo: subTaskAssignToValue,
                                         subTaskCategoryName: subTaskCategoryValue,
                                         subTaskCategory: subTaskCategoryInt);
+                                    Navigator.of(context).pop();
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(builder: (context) => const DashManin()),
+                                    // );
 
                                   },
                                   style: ElevatedButton.styleFrom(
