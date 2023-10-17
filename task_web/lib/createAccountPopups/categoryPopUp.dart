@@ -33,12 +33,12 @@ void categoryPopupMenu(BuildContext context, CategoryState categoryState) {
   );
 
   final categoryItems = [
-    'Taxation',
-    'Talent Management',
-    'Finance & Accounting',
-    'Audit & Assurance',
-    'Company Secretarial',
-    'Development'
+    'Taxation - TAS',
+    'Talent Management - TMS',
+    'Finance & Accounting - AFSS',
+    'Audit & Assurance - ASS',
+    'Company Secretarial - CSS',
+    'Development - DEV'
     // Add your category items here
   ];
 

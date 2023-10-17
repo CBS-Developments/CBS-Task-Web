@@ -92,7 +92,8 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
 
     String firstLetterFirstName = widget.firstName.isNotEmpty ? widget.firstName[0] : '';
     String firstLetterLastName = widget.lastName.isNotEmpty ? widget.lastName[0] : '';
-    String taskID = getCurrentMonth() + firstLetterFirstName + firstLetterLastName + categoryName + generatedTaskId();
+    String geCategory = categoryName.substring(categoryName.length - 3);
+    String taskID = getCurrentMonth() + firstLetterFirstName + firstLetterLastName + geCategory + generatedTaskId();
 
 
     var data = {

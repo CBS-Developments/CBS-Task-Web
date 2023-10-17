@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:task_web/pages/taskPageOne.dart';
+import 'package:http/http.dart' as http;
+import '../components.dart';
 import '../createAccountPopups/assigntoPopUp.dart';
 import '../createAccountPopups/beneficiaryPopUp.dart';
 import '../createAccountPopups/categoryPopUp.dart';
@@ -56,6 +60,86 @@ class _EditSubTaskPageState extends State<EditSubTaskPage> {
     final now = DateTime.now();
     final formattedDate = DateFormat('yyyy-MM-dd').format(now);
     return formattedDate;
+  }
+
+  Future<bool> editSubTask(
+      String taskID,
+      String taskTitle,
+      String taskTypeName,
+      String description,
+      String userName,
+      String firstName,
+      String newCompany,
+      String dueDate,
+      String assignTo,
+      String sourceFrom,
+      String categoryName,
+      String category,
+      ) async {
+    // Prepare the data to be sent to the PHP script.
+    var data = {
+      "task_id": taskID,
+      "task_title": taskTitle,
+      "task_type_name": taskTypeName,
+      "task_description": description,
+      "task_status_name": 'Pending',
+      "action_taken_by_id": userName,
+      "action_taken_by": firstName,
+      "action_taken_date": getCurrentDate(),
+      "action_taken_timestamp": getCurrentDate(),
+      "task_edit_by": userName,
+      "task_edit_by_id": firstName,
+      "task_edit_by_date": getCurrentDate(),
+      "task_edit_by_timestamp": getCurrentDate(),
+      "company": newCompany,
+      "due_date": dueDate,
+      "assign_to": assignTo,
+      "source_from": sourceFrom,
+      "category_name": categoryName,
+      "category": category,
+    };
+
+    // URL of your PHP script.
+    const url = "http://dev.workspace.cbs.lk/editSubTask.php";
+
+    try {
+      final res = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      if (res.statusCode == 200) {
+        final responseBody = jsonDecode(res.body);
+
+        // Debugging: Print the response data.
+        print("Response from PHP script: $responseBody");
+
+        if (responseBody == "true") {
+          print('Successful');
+          snackBar(context, " Edit Sub Task successful!", Colors.green);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return const TaskPageOne();
+            }),
+          );
+          return true; // PHP code was successful.
+        } else {
+          print('PHP code returned "false".');
+          return false; // PHP code returned "false."
+        }
+      } else {
+        print('HTTP request failed with status code: ${res.statusCode}');
+        return false; // HTTP request failed.
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false; // An error occurred.
+    }
   }
 
 
@@ -631,7 +715,21 @@ class _EditSubTaskPageState extends State<EditSubTaskPage> {
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    editSubTask(
+                                        widget.taskID,
+                                        newSubTitleController.text,
+                                        newSubPriorityValue,
+                                        newSubDescriptionController.text,
+                                        widget.userName,
+                                        widget.firstName,
+                                        newSubBeneficiary,
+                                        newSubDueDate,
+                                        newSubAssignToValue,
+                                        newSubSourceFromValue,
+                                        newSubCategoryValue,
+                                        newSubCategoryInt);
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: AppColor.loginF,
                                     backgroundColor: Colors.lightBlue.shade50,

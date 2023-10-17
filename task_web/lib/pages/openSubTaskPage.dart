@@ -16,7 +16,6 @@ class OpenSubTaskNew extends StatefulWidget {
 
 class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
   String userName = '';
-
   String firstName = '';
   String lastName = '';
   String userRole = '';
@@ -37,6 +36,7 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
       lastName = (prefs.getString('last_name') ?? '').toUpperCase();
     });
   }
+
 
 
   @override
@@ -116,13 +116,47 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
                                       )),
 
                                   IconButton(
-                                      onPressed: () {},
-                                      tooltip: 'Delete Task',
-                                      icon: Icon(
-                                        Icons.delete_rounded,
-                                        color: Colors.redAccent,
-                                        size: 19,
-                                      )),
+                                    onPressed: () {
+                                      if (userRole == "1") {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Confirm Delete"),
+                                              content: Text("Are you sure you want to delete this task?"),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop(); // Close the dialog
+                                                  },
+                                                  child: Text("Cancel"),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+
+                                                    Navigator.of(context).pop(); // Close the dialog
+                                                  },
+                                                  child: Text("Delete"),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        // User is not an admin, show a Snackbar with a red color
+                                        final snackBar = SnackBar(
+                                          content: Text('Only Admin Can Delete', style: TextStyle(color: Colors.red)),
+                                        );
+                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                      }
+                                    },
+                                    tooltip: 'Delete Task',
+                                    icon: Icon(
+                                      Icons.delete_rounded,
+                                      color: Colors.redAccent,
+                                      size: 19,
+                                    ),
+                                  ),
                                 ],
                               )
                             ],

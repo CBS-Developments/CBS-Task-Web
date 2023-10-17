@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/pages/createSubTaskNew.dart';
+import 'package:task_web/pages/taskMainPage.dart';
+import 'package:http/http.dart' as http;
 
-
+import '../components.dart';
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
 import '../tables/subTaskTable.dart';
@@ -33,6 +38,18 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     retrieverData();
   }
 
+  String getCurrentDateTime() {
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+    return formattedDate;
+  }
+
+  String getCurrentDate() {
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd').format(now);
+    return formattedDate;
+  }
+
   void retrieverData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -41,6 +58,63 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       firstName = (prefs.getString('first_name') ?? '').toUpperCase();
       lastName = (prefs.getString('last_name') ?? '').toUpperCase();
     });
+  }
+
+  Future<bool> deleteMainTask(
+      String taskID,
+      ) async {
+    // Prepare the data to be sent to the PHP script.
+    var data = {
+      "task_id": taskID,
+      "task_status": '99',
+      "task_status_name": 'Deleted',
+      "action_taken_by_id": userName,
+      "action_taken_by": firstName,
+      "action_taken_date":getCurrentDateTime(),
+      "action_taken_timestamp": getCurrentDate(),
+    };
+
+    // URL of your PHP script.
+    const url = "http://dev.workspace.cbs.lk/deleteMainTask.php";
+
+    try {
+      final res = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      if (res.statusCode == 200) {
+        final responseBody = jsonDecode(res.body);
+
+        // Debugging: Print the response data.
+        print("Response from PHP script: $responseBody");
+
+        if (responseBody == "true") {
+          print('Successful');
+          snackBar(context, "Main Task Deleted successful!", Colors.redAccent);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return const TaskMainPage();
+            }),
+          );
+          return true; // PHP code was successful.
+        } else {
+          print('PHP code returned "false".');
+          return false; // PHP code returned "false."
+        }
+      } else {
+        print('HTTP request failed with status code: ${res.statusCode}');
+        return false; // HTTP request failed.
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false; // An error occurred.
+    }
   }
 
   @override
@@ -117,7 +191,10 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+
+                                    deleteMainTask(widget.task.taskId,);
+                                  },
                                   tooltip: 'Delete Task',
                                   icon: Icon(
                                     Icons.delete_rounded,
@@ -125,6 +202,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                     size: 19,
                                   ),
                                 ),
+
                               ],
                             )
                           ],

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -48,6 +49,13 @@ class _CreateSubTaskNewState extends State<CreateSubTaskNew> {
     final formattedDate = DateFormat('yyyy-MM').format(now);
     return formattedDate;
   }
+  String generatedSubTaskId() {
+    final random = Random();
+    int min = 1;                  // Smallest 9-digit number
+    int max = 999999999;          // Largest 9-digit number
+    int randomNumber = min + random.nextInt(max - min + 1);
+    return randomNumber.toString().padLeft(9, '0');
+  }
 
   TextEditingController subTaskTitleController = TextEditingController();
   TextEditingController subTaskDescriptionController = TextEditingController();
@@ -74,10 +82,14 @@ class _CreateSubTaskNewState extends State<CreateSubTaskNew> {
     // If all validations pass, proceed with the registration
     var url = "http://dev.workspace.cbs.lk/subTaskCreate.php";
 
+    String firstLetterFirstName = widget.firstName.isNotEmpty ? widget.firstName[0] : '';
+    String firstLetterLastName = widget.lastName.isNotEmpty ? widget.lastName[0] : '';
+    String geCategory = subTaskCategoryName.substring(subTaskCategoryName.length - 3);
+    String taskID = getCurrentMonth() + firstLetterFirstName + firstLetterLastName + geCategory + generatedSubTaskId();
 
     var data = {
       "main_task_id": widget.mainTaskId,
-      "task_id": widget.username+getCurrentMonth(),
+      "task_id": taskID,
       "task_title":  subTaskTitleController.text,
       "task_type": '0',
       "task_type_name": subTaskPriority,
