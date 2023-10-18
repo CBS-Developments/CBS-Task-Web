@@ -18,12 +18,30 @@ class _TaskTableState extends State<TaskTable> {
   List<MainTask> mainTaskList = [];
   List<MainTask> searchResultAsMainTaskList = [];
   TextEditingController taskListController = TextEditingController();
+  String userName = "";
+  String firstName = "";
+  String lastName = "";
+  String phone = "";
+  String userRole = "";
 
 
   @override
   void initState() {
     super.initState();
     getTaskList();
+    loadData();
+  }
+
+  void loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('user_name') ?? "";
+      firstName = prefs.getString('first_name') ?? "";
+      lastName = prefs.getString('last_name') ?? "";
+      phone = prefs.getString('phone') ?? "";
+      userRole = prefs.getString('user_role') ?? "";
+    });
+    print('User Role In Table: $userRole');
   }
 
   @override
@@ -96,7 +114,7 @@ class _TaskTableState extends State<TaskTable> {
                     onTap: (){
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => OpenTaskNew(task: task)),); // Show the popup
+                          MaterialPageRoute(builder: (context) => OpenTaskNew(task: task, userRoleForDelete: userRole,)),); // Show the popup
                     },),
 
                     DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
@@ -124,7 +142,7 @@ class _TaskTableState extends State<TaskTable> {
                       onTap: (){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => OpenTaskNew(task: task)),
+                          MaterialPageRoute(builder: (context) => OpenTaskNew(task: task, userRoleForDelete: userRole,)),
                         );
                         // _showTaskDetailsDialog(
                         //     context, task); // Show the popup

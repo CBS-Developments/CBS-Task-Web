@@ -15,9 +15,10 @@ import '../tables/taskTable.dart';
 import 'editMainTask.dart';
 
 class OpenTaskNew extends StatefulWidget {
+  final String userRoleForDelete;
   final MainTask task;
 
-  OpenTaskNew({Key? key, required this.task}) : super(key: key);
+  OpenTaskNew({Key? key, required this.task, required this.userRoleForDelete}) : super(key: key);
 
   @override
   State<OpenTaskNew> createState() => _OpenTaskNewState();
@@ -58,7 +59,65 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       firstName = (prefs.getString('first_name') ?? '').toUpperCase();
       lastName = (prefs.getString('last_name') ?? '').toUpperCase();
     });
+    print('User Role: $userRole');
   }
+
+  void showDeleteConfirmationDialog(
+      BuildContext context,
+      String userRole,
+      String taskId,
+
+      ) {
+    print('User Role in showDeleteConfirmationDialog: $userRole');
+    if (userRole == '1') {
+      print(userRole);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirm Delete'),
+            content: Text('Are you sure you want to delete this task?'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+              TextButton(
+                child: Text('Delete'),
+                onPressed: () {
+                  deleteMainTask(taskId); // Call the deleteMainTask method
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Display a message or take other actions for users who are not admins
+      print(userRole);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Permission Denied'),
+            content: Text('Only admins are allowed to delete tasks.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
 
   Future<bool> deleteMainTask(
       String taskID,
@@ -192,8 +251,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-
-                                    deleteMainTask(widget.task.taskId,);
+                                    showDeleteConfirmationDialog(context, widget.userRoleForDelete, widget.task.taskId);
                                   },
                                   tooltip: 'Delete Task',
                                   icon: Icon(
@@ -202,6 +260,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                     size: 19,
                                   ),
                                 ),
+
 
                               ],
                             )

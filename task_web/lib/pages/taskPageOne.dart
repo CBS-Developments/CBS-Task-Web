@@ -37,6 +37,7 @@ class _TaskPageOneState extends State<TaskPageOne> {
       phone = prefs.getString('phone') ?? "";
       userRole = prefs.getString('user_role') ?? "";
     });
+    print('User Role In Page One: $userRole');
   }
 
   @override
