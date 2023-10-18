@@ -1,14 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/pages/editSubTask.dart';
-
+import 'package:task_web/pages/taskMainPage.dart';
+import 'package:http/http.dart' as http;
+import '../components.dart';
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
 import '../tables/subTaskTable.dart';
 
 class OpenSubTaskNew extends StatefulWidget {
+  final String userRoleForDelete;
   final Task task; // Make sure Task is imported and defined
-  OpenSubTaskNew({Key? key, required this.task}) : super(key: key);
+  OpenSubTaskNew({Key? key, required this.task, required this.userRoleForDelete}) : super(key: key);
 
   @override
   State<OpenSubTaskNew> createState() => _OpenSubTaskNewState();
@@ -37,6 +43,133 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
     });
   }
 
+  String getCurrentDateTime() {
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+    return formattedDate;
+  }
+
+  String getCurrentDate() {
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd').format(now);
+    return formattedDate;
+  }
+
+  void showDeleteConfirmationDialog(
+      BuildContext context,
+      String userRole,
+      String taskId,
+
+      ) {
+    print('User Role in showDeleteConfirmationDialog Sub: $userRole');
+    if (userRole == '1') {
+      print(userRole);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirm Delete'),
+            content: Text('Are you sure you want to delete this task?'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+              TextButton(
+                child: Text('Delete'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  deleteSubTask(taskId);
+                  // Call the deleteMainTask method// Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Display a message or take other actions for users who are not admins
+      print(userRole);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Permission Denied'),
+            content: Text('Only admins are allowed to delete tasks.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+
+  Future<bool> deleteSubTask(
+      String taskID,
+      ) async {
+    // Prepare the data to be sent to the PHP script.
+    var data = {
+      "task_id": taskID,
+      "task_status": '99',
+      "task_status_name": 'Deleted',
+      "action_taken_by_id": userName,
+      "action_taken_by": firstName,
+      "action_taken_date":getCurrentDateTime(),
+      "action_taken_timestamp": getCurrentDate(),
+    };
+
+    // URL of your PHP script.
+    const url = "http://dev.workspace.cbs.lk/deleteSubTask.php";
+
+    try {
+      final res = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      if (res.statusCode == 200) {
+        final responseBody = jsonDecode(res.body);
+
+        // Debugging: Print the response data.
+        print("Response from PHP script: $responseBody");
+
+        if (responseBody == "true") {
+          print('Successful');
+          snackBar(context, "Sub Task Deleted successful!", Colors.redAccent);
+
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) {
+          //     return const TaskMainPage();
+          //   }),
+          // );
+          return true; // PHP code was successful.
+        } else {
+          print('PHP code returned "false".');
+          return false; // PHP code returned "false."
+        }
+      } else {
+        print('HTTP request failed with status code: ${res.statusCode}');
+        return false; // HTTP request failed.
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false; // An error occurred.
+    }
+  }
 
 
   @override
@@ -117,39 +250,7 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
 
                                   IconButton(
                                     onPressed: () {
-                                      print('User Role In Sub : $userRole');
-                                      if (userRole == "1") {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text("Confirm Delete"),
-                                              content: Text("Are you sure you want to delete this task?"),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop(); // Close the dialog
-                                                  },
-                                                  child: Text("Cancel"),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {
-
-                                                    Navigator.of(context).pop(); // Close the dialog
-                                                  },
-                                                  child: Text("Delete"),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      } else {
-                                        // User is not an admin, show a Snackbar with a red color
-                                        final snackBar = SnackBar(
-                                          content: Text('Only Admin Can Delete', style: TextStyle(color: Colors.red)),
-                                        );
-                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                      }
+                                      showDeleteConfirmationDialog(context, widget.userRoleForDelete, widget.task.taskId);
                                     },
                                     tooltip: 'Delete Task',
                                     icon: Icon(

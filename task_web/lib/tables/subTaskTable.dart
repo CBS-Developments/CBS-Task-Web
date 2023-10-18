@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:task_web/pages/openSubTaskPage.dart';
 
@@ -17,7 +18,11 @@ class SubTaskTable extends StatefulWidget {
 }
 
 class _SubTaskTableState extends State<SubTaskTable> {
-
+  String userName = "";
+  String firstName = "";
+  String lastName = "";
+  String phone = "";
+  String userRole = "";
 
 
   List<Task> subTaskList = []; // Initialize subtask list
@@ -26,8 +31,20 @@ class _SubTaskTableState extends State<SubTaskTable> {
   void initState() {
     super.initState();
     getSubTaskListByMainTaskId(widget.mainTaskId);
+    loadData();
   }
 
+  void loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('user_name') ?? "";
+      firstName = prefs.getString('first_name') ?? "";
+      lastName = prefs.getString('last_name') ?? "";
+      phone = prefs.getString('phone') ?? "";
+      userRole = prefs.getString('user_role') ?? "";
+    });
+    print('User Role In Sub Table: $userRole');
+  }
 
   Future<void> getSubTaskListByMainTaskId(String mainTaskId) async {
     subTaskList.clear();
@@ -83,7 +100,7 @@ class _SubTaskTableState extends State<SubTaskTable> {
                     Text(subtask.taskTitle),onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => OpenSubTaskNew(task: subtask))
+                    MaterialPageRoute(builder: (context) => OpenSubTaskNew(task: subtask, userRoleForDelete: userRole,))
                   );
                 }
                 ),
