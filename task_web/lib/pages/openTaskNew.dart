@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/pages/createSubTaskNew.dart';
 import 'package:task_web/pages/taskMainPage.dart';
 import 'package:http/http.dart' as http;
+import 'package:task_web/pages/taskPageOne.dart';
 
 import '../components.dart';
 import '../methods/appBar.dart';
@@ -175,6 +176,69 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       return false; // An error occurred.
     }
   }
+
+  Future<bool> markInProgressMainTask(
+      String taskID,
+      ) async {
+    // Prepare the data to be sent to the PHP script.
+    var data = {
+      "task_id": taskID,
+      "task_status": '1',
+      "task_status_name": 'In Progress',
+      "action_taken_by_id": userName,
+      "action_taken_by": firstName,
+      "action_taken_date":getCurrentDateTime(),
+      "action_taken_timestamp": getCurrentDate(),
+    };
+
+    // URL of your PHP script.
+    const url = "http://dev.workspace.cbs.lk/deleteMainTask.php";
+
+    try {
+      final res = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      if (res.statusCode == 200) {
+        final responseBody = jsonDecode(res.body);
+
+        // Debugging: Print the response data.
+        print("Response from PHP script: $responseBody");
+
+        if (responseBody == "true") {
+          print('Successful');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return const TaskPageOne();
+            }),
+          );
+          snackBar(context, "Main Marked as In Progress successful!", Colors.green);
+
+
+          return true; // PHP code was successful.
+        } else {
+          print('PHP code returned "false".');
+          return false; // PHP code returned "false."
+        }
+      } else {
+        print('HTTP request failed with status code: ${res.statusCode}');
+        return false; // HTTP request failed.
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false; // An error occurred.
+    }
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -495,29 +559,28 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (widget.task.taskStatus == '0') {
+                                  markInProgressMainTask(widget.task.taskId);
+                                  // Handle 'Mark In Progress' action
+                                } else if (widget.task.taskStatus == '1') {
+                                  // Handle 'Mark As Complete' action
+                                }
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Mark As Complete',
+                                  widget.task.taskStatus == '0' ? 'Mark In Progress' : 'Mark As Complete',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.redAccent,
+                                    color: widget.task.taskStatus == '0'
+                                        ? Colors.blueAccent
+                                        : Colors.redAccent,
                                   ),
                                 ),
                               ),
                             ),
-                            TextButton(
-                              onPressed: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Mark In Progress',
-                                  style: TextStyle(
-                                      fontSize: 14, color: Colors.blueAccent),
-                                ),
-                              ),
-                            ),
+
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
