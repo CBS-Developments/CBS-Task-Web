@@ -64,10 +64,10 @@ class taskLog {
 }
 
 
-class comment {
+class Comment {
   String commentId;
   String taskId;
-  String commnt;
+  String comment;
   String commentCreateById;
   String commentCreateBy;
   String commentCreateDate;
@@ -82,10 +82,10 @@ class comment {
   String commentDeleteByDate;
   String commentDeleteByTimestamp;
 
-  comment({
+  Comment({
     required this.commentId,
     required this.taskId,
-    required this.commnt,
+    required this.comment,
     required this.commentCreateById,
     required this.commentCreateBy,
     required this.commentCreateDate,
@@ -101,11 +101,11 @@ class comment {
     required this.commentDeleteByTimestamp,
   });
 
-  factory comment.fromJson(Map<String, dynamic> json) {
-    return comment(
+  factory Comment.fromJson(Map<String, dynamic> json) {
+    return Comment(
         commentId: json['comment_id'],
         taskId: json['task_id'],
-        commnt: json['comment'],
+        comment: json['comment'],
         commentCreateById: json['comment_create_by_id'],
         commentCreateBy: json['comment_create_by'],
         commentCreateDate: json['comment_create_date'],
