@@ -114,7 +114,12 @@ class _TaskTableState extends State<TaskTable> {
                     onTap: (){
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => OpenTaskNew(task: task, userRoleForDelete: userRole,)),); // Show the popup
+                          MaterialPageRoute(builder: (context) => OpenTaskNew(
+                            task: task,
+                            userRoleForDelete: userRole,
+                            userName: userName,
+                            firstName: firstName,
+                            lastName: lastName,)),); // Show the popup
                     },),
 
                     DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
@@ -142,7 +147,9 @@ class _TaskTableState extends State<TaskTable> {
                       onTap: (){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => OpenTaskNew(task: task, userRoleForDelete: userRole,)),
+                          MaterialPageRoute(builder: (context) => OpenTaskNew(task: task, userRoleForDelete: userRole, userName: userName,
+                            firstName: firstName,
+                            lastName: lastName,)),
                         );
                         // _showTaskDetailsDialog(
                         //     context, task); // Show the popup

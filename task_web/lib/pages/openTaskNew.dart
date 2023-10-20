@@ -8,6 +8,7 @@ import 'package:task_web/pages/taskMainPage.dart';
 import 'package:http/http.dart' as http;
 import 'package:task_web/pages/taskPageOne.dart';
 
+
 import '../components.dart';
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
@@ -17,9 +18,19 @@ import 'editMainTask.dart';
 
 class OpenTaskNew extends StatefulWidget {
   final String userRoleForDelete;
+  final String userName;
+  final String firstName;
+  final String lastName;
   final MainTask task;
 
-  OpenTaskNew({Key? key, required this.task, required this.userRoleForDelete}) : super(key: key);
+  OpenTaskNew(
+      {Key? key,
+      required this.task,
+      required this.userRoleForDelete,
+      required this.userName,
+      required this.firstName,
+      required this.lastName})
+      : super(key: key);
 
   @override
   State<OpenTaskNew> createState() => _OpenTaskNewState();
@@ -31,13 +42,16 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
   String firstName = '';
   String lastName = '';
   String userRole = '';
-
+  List<comment> commentList = []; // Initialize subtask list
   TextEditingController mainTaskCommentController = TextEditingController();
+
+
 
   @override
   void initState() {
     super.initState();
     retrieverData();
+    getCommentList(widget.task.taskId);
   }
 
   String getCurrentDateTime() {
@@ -52,7 +66,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     return formattedDate;
   }
 
-  void retrieverData() async {
+  Future<void> retrieverData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       userName = (prefs.getString('user_name') ?? '');
@@ -60,15 +74,14 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       firstName = (prefs.getString('first_name') ?? '').toUpperCase();
       lastName = (prefs.getString('last_name') ?? '').toUpperCase();
     });
-    print('User Role: $userRole');
+    print('User Name: $userName');
   }
 
   void showDeleteConfirmationDialog(
-      BuildContext context,
-      String userRole,
-      String taskId,
-
-      ) {
+    BuildContext context,
+    String userRole,
+    String taskId,
+  ) {
     print('User Role in showDeleteConfirmationDialog: $userRole');
     if (userRole == '1') {
       print(userRole);
@@ -119,10 +132,9 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     }
   }
 
-
   Future<bool> deleteMainTask(
-      String taskID,
-      ) async {
+    String taskID,
+  ) async {
     // Prepare the data to be sent to the PHP script.
     var data = {
       "task_id": taskID,
@@ -130,7 +142,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       "task_status_name": 'Deleted',
       "action_taken_by_id": userName,
       "action_taken_by": firstName,
-      "action_taken_date":getCurrentDateTime(),
+      "action_taken_date": getCurrentDateTime(),
       "action_taken_timestamp": getCurrentDate(),
     };
 
@@ -178,8 +190,8 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
   }
 
   Future<bool> markInProgressMainTask(
-      String taskID,
-      ) async {
+    String taskID,
+  ) async {
     // Prepare the data to be sent to the PHP script.
     var data = {
       "task_id": taskID,
@@ -187,7 +199,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       "task_status_name": 'In Progress',
       "action_taken_by_id": userName,
       "action_taken_by": firstName,
-      "action_taken_date":getCurrentDateTime(),
+      "action_taken_date": getCurrentDateTime(),
       "action_taken_timestamp": getCurrentDate(),
     };
 
@@ -218,8 +230,8 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
               return const TaskPageOne();
             }),
           );
-          snackBar(context, "Main Marked as In Progress successful!", Colors.green);
-
+          snackBar(
+              context, "Main Marked as In Progress successful!", Colors.green);
 
           return true; // PHP code was successful.
         } else {
@@ -236,10 +248,9 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     }
   }
 
-
   Future<bool> markAsCompletedMainTask(
-      String taskID,
-      ) async {
+    String taskID,
+  ) async {
     // Prepare the data to be sent to the PHP script.
     var data = {
       "task_id": taskID,
@@ -247,7 +258,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       "task_status_name": 'Completed',
       "action_taken_by_id": userName,
       "action_taken_by": firstName,
-      "action_taken_date":getCurrentDateTime(),
+      "action_taken_date": getCurrentDateTime(),
       "action_taken_timestamp": getCurrentDate(),
     };
 
@@ -280,7 +291,6 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
           );
           snackBar(context, "Main Marked Completed successful!", Colors.green);
 
-
           return true; // PHP code was successful.
         } else {
           print('PHP code returned "false".');
@@ -296,10 +306,110 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     }
   }
 
+  Future<List<comment>> getCommentList(var taskId) async {
+    var data = {
+      "task_id": "$taskId",
+    };
+
+    const url = "http://dev.workspace.cbs.lk/commentListById.php";
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        encoding: Encoding.getByName("utf-8"),
+      );
+
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        print(jsonResponse);
+
+        if (jsonResponse is List) {
+          return jsonResponse.map((sec) => comment.fromJson(sec)).toList();
+        } else {
+          throw Exception('Invalid response format');
+        }
+      } else {
+        throw Exception('Failed to load data from the API. Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle exceptions, e.g., network errors or JSON decoding errors
+      throw Exception('An error occurred: $e');
+    }
+  }
 
 
+  Future<void> createMainTaskComment(
+    BuildContext context, {
+    required userName,
+    required taskID,
+    required firstName,
+    required lastName,
+  }) async {
+    // Validate input fields
+    if (mainTaskCommentController.text.trim().isEmpty) {
+      // Show an error message if the combined fields are empty
+      snackBar(context, "Please fill in all required fields", Colors.red);
+      return;
+    }
 
+    var url = "http://dev.workspace.cbs.lk/createComment.php";
 
+    var data = {
+      "comment_id": getCurrentDateTime(),
+      "task_id": taskID,
+      "comment": mainTaskCommentController.text,
+      "comment_create_by_id": userName,
+      "comment_create_by": firstName + lastName,
+      "comment_create_date": getCurrentDate(),
+      "comment_created_timestamp": getCurrentDateTime(),
+      "comment_status": "1",
+      "comment_edit_by": "",
+      "comment_edit_by_id": '',
+      "comment_edit_by_date": "",
+      "comment_edit_by_timestamp": "",
+      "comment_delete_by": "",
+      "comment_delete_by_id": "",
+      "comment_delete_by_date": "",
+      "comment_delete_by_timestamp": "",
+      "comment_attachment": '',
+    };
+
+    http.Response res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    if (res.statusCode.toString() == "200") {
+      if (jsonDecode(res.body) == "true") {
+        if (!mounted) return;
+        mainTaskCommentController.clear();
+        showSuccessSnackBar(context); // Show the success SnackBar
+      } else {
+        if (!mounted) return;
+        snackBar(context, "Error", Colors.red);
+      }
+    } else {
+      if (!mounted) return;
+      snackBar(context, "Error", Colors.yellow);
+    }
+  }
+
+  void showSuccessSnackBar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('Comment Added Successfully'),
+      backgroundColor: Colors.green, // You can customize the color
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -376,7 +486,10 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    showDeleteConfirmationDialog(context, widget.userRoleForDelete, widget.task.taskId);
+                                    showDeleteConfirmationDialog(
+                                        context,
+                                        widget.userRoleForDelete,
+                                        widget.task.taskId);
                                   },
                                   tooltip: 'Delete Task',
                                   icon: Icon(
@@ -385,8 +498,6 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                     size: 19,
                                   ),
                                 ),
-
-
                               ],
                             )
                           ],
@@ -632,7 +743,9 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  widget.task.taskStatus == '0' ? 'Mark In Progress' : 'Mark As Complete',
+                                  widget.task.taskStatus == '0'
+                                      ? 'Mark In Progress'
+                                      : 'Mark As Complete',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: widget.task.taskStatus == '0'
@@ -642,7 +755,6 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                 ),
                               ),
                             ),
-
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
@@ -650,7 +762,10 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                     MaterialPageRoute(
                                       builder: (context) => CreateSubTaskNew(
                                         username: userName,
-                                        firstName: firstName, lastName: lastName, mainTaskId: widget.task.taskId,),
+                                        firstName: firstName,
+                                        lastName: lastName,
+                                        mainTaskId: widget.task.taskId,
+                                      ),
                                     ));
                               },
                               child: Padding(
@@ -729,86 +844,56 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                             ),
                           ),
                         ),
+
                         Container(
                           width: 330,
-                          height: 225,
+                          height: 190,
                           color: Colors.white,
-                          // FutureBuilder<List<comment>>(
-                          //   future: getMainTaskCommentList(mainTaskId),
-                          //   builder: (context, snapshot) {
-                          //     if (snapshot.connectionState == ConnectionState.waiting) {
-                          //       return CircularProgressIndicator(); // Display a loading indicator while fetching data
-                          //     } else if (snapshot.hasError) {
-                          //       return Text("Error: ${snapshot.error}");
-                          //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                          //       return Text("No comments available"); // Replace with your custom message
-                          //     } else {
-                          //       List<comment>? data = snapshot.data;
-                          //       return ListView.builder(
-                          //         itemCount: data!.length,
-                          //         itemBuilder: (context, index) {
-                          //           return Card(
-                          //             child: ListTile(
-                          //               title: SelectableText(
-                          //                 data[index].commnt,
-                          //                 style: TextStyle(
-                          //                   color: Colors.black,
-                          //                   fontSize: 12,
-                          //                 ),
-                          //               ),
-                          //               subtitle: Text(
-                          //                 "${data[index].commentCreateDate}      ${data[index].commentCreateBy}",
-                          //                 style: TextStyle(
-                          //                   color: Colors.black,
-                          //                   fontSize: 12,
-                          //                   fontWeight: FontWeight.bold,
-                          //                 ),
-                          //               ),
-                          //               trailing: IconButton(
-                          //                 icon: Icon(
-                          //                   Icons.delete,
-                          //                   size: 14,
-                          //                   color: Colors.red,
-                          //                 ),
-                          //                 onPressed: () {
-                          //                   if (data[index].commentCreateById == userName) {
-                          //                     deleteCommentInMainTask(
-                          //                       data[index].commentId,
-                          //                       "0",
-                          //                       userName,
-                          //                       "$firstName $lastName",
-                          //                     );
-                          //                   } else {
-                          //                     snackBar(
-                          //                       context,
-                          //                       "You can't delete this comment",
-                          //                       Colors.red,
-                          //                     );
-                          //                   }
-                          //                 },
-                          //               ),
-                          //             ),
-                          //           );
-                          //         },
-                          //       );
-                          //     }
-                          //   },
-                          // )
                         ),
+
                         Container(
                           width: 330,
-                          height: 40,
-                          child: TextField(
-                            textAlignVertical: TextAlignVertical.bottom,
-                            decoration: InputDecoration(
-                              fillColor: Colors.grey.shade300,
-                              hintText: 'Write a Comment...',
-                              helperStyle: TextStyle(
-                                  color: Colors.grey.shade700, fontSize: 14),
-                              filled: true,
-                            ),
+                          height: 80,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: mainTaskCommentController,
+                                  textAlignVertical: TextAlignVertical.bottom,
+                                  maxLines:
+                                      3, // Adjust the number of lines as needed
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.grey.shade300,
+                                    hintText: 'Write a Comment...',
+                                    helperStyle: TextStyle(
+                                        color: Colors.grey.shade700,
+                                        fontSize: 14),
+                                    filled: true,
+                                  ),
+                                ),
+                              ),
+                              Icon(Icons
+                                  .attach_file_outlined), // Replace 'icon1' with the first icon you want to use
+                              SizedBox(
+                                  width:
+                                      8), // Adjust the spacing between the icons
+                              IconButton(
+                                tooltip: 'Add Comment',
+                                onPressed: () {
+                                  createMainTaskComment(context,
+                                      userName: widget.userName,
+                                      taskID: widget.task.taskId,
+                                      firstName: widget.firstName,
+                                      lastName: widget.lastName);
+                                },
+                                icon: Icon(
+                                  Icons.arrow_forward_ios_outlined,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -824,6 +909,69 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
           ),
         ),
       ),
+    );
+  }
+}
+
+
+class comment {
+  final String commentId;
+  final String taskId;
+  final String commnt;
+  final String commentCreateById;
+  final String commentCreateBy;
+  final String commentCreateDate;
+  final String commentCreatedTimestamp;
+  final String commentStatus;
+  final String commentEditBy;
+  final String commentEditById;
+  final String commentEditByDate;
+  final String commentEditByTimestamp;
+  final String commentDeleteBy;
+  final String commentDeleteById;
+  final String commentDeleteByDate;
+  final String commentDeleteByTimestamp;
+  final String commentAttachment;
+
+  comment({
+    required this.commentId,
+    required this.taskId,
+    required this.commnt,
+    required this.commentCreateById,
+    required this.commentCreateBy,
+    required this.commentCreateDate,
+    required this.commentCreatedTimestamp,
+    required this.commentStatus,
+    required this.commentEditBy,
+    required this.commentEditById,
+    required this.commentEditByDate,
+    required this.commentEditByTimestamp,
+    required this.commentDeleteBy,
+    required this.commentDeleteById,
+    required this.commentDeleteByDate,
+    required this.commentDeleteByTimestamp,
+    required this.commentAttachment,
+  });
+
+  factory comment.fromJson(Map<String, dynamic> json) {
+    return comment(
+      commentId: json['comment_id'],
+      taskId: json['task_id'],
+      commnt: json['comment'],
+      commentCreateById: json['comment_create_by_id'],
+      commentCreateBy: json['comment_create_by'],
+      commentCreateDate: json['comment_create_date'],
+      commentCreatedTimestamp: json['comment_created_timestamp'],
+      commentStatus: json['comment_status'],
+      commentEditBy: json['comment_edit_by'],
+      commentEditById: json['comment_edit_by_id'],
+      commentEditByDate: json['comment_edit_by_date'],
+      commentEditByTimestamp: json['comment_edit_by_timestamp'],
+      commentDeleteBy: json['comment_delete_by'],
+      commentDeleteById: json['comment_delete_by_id'],
+      commentDeleteByDate: json['comment_delete_by_date'],
+      commentDeleteByTimestamp: json['comment_delete_by_timestamp'],
+      commentAttachment: json['comment_attachment'],
     );
   }
 }
