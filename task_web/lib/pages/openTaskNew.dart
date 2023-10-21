@@ -8,7 +8,6 @@ import 'package:task_web/pages/taskMainPage.dart';
 import 'package:http/http.dart' as http;
 import 'package:task_web/pages/taskPageOne.dart';
 
-
 import '../components.dart';
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
@@ -42,16 +41,15 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
   String firstName = '';
   String lastName = '';
   String userRole = '';
-  List<comment> commentList = []; // Initialize subtask list
+  // List<comment> commentList = []; // Initialize subtask list
   TextEditingController mainTaskCommentController = TextEditingController();
-
-
+  List<comment> comments = [];
 
   @override
   void initState() {
     super.initState();
     retrieverData();
-    getCommentList(widget.task.taskId);
+    // getCommentList(widget.task.taskId);
   }
 
   String getCurrentDateTime() {
@@ -65,6 +63,18 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     final formattedDate = DateFormat('yyyy-MM-dd').format(now);
     return formattedDate;
   }
+
+  // Future<bool> fetchComments() async {
+  //   try {
+  //     List<comment> fetchedComments = await getCommentList(widget.task.taskId);
+  //     setState(() {
+  //       comments = fetchedComments;
+  //     });
+  //   } catch (e) {
+  //     // Handle errors
+  //     print('Error fetching comments: $e');
+  //   }
+  // }
 
   Future<void> retrieverData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -306,41 +316,50 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     }
   }
 
-  Future<List<comment>> getCommentList(var taskId) async {
+  Future<List<comment>> getCommentList(String taskId) async {
+    comments
+        .clear(); // Assuming that `comments` is a List<Comment> in your class
+
     var data = {
-      "task_id": "$taskId",
+      "task_id": taskId,
     };
 
     const url = "http://dev.workspace.cbs.lk/commentListById.php";
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        body: data,
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        encoding: Encoding.getByName("utf-8"),
-      );
+    http.Response response = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      encoding: Encoding.getByName("utf-8"),
+    );
 
-      if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body);
-        print(jsonResponse);
+    if (response.statusCode == 200) {
+     // final jsonResponse = json.decode(response.body);
+      // print(jsonResponse);
+      // if (jsonResponse is List) {
+      //   setState(() {
+      //     comments = jsonResponse
+      //         .map((data) => comment.fromJson(data))
+      //         .cast<comment>()
+      //         .toList();
+      //   });
+      // } else {
+      //   throw Exception('Invalid response format');
+      // }
 
-        if (jsonResponse is List) {
-          return jsonResponse.map((sec) => comment.fromJson(sec)).toList();
-        } else {
-          throw Exception('Invalid response format');
-        }
-      } else {
-        throw Exception('Failed to load data from the API. Status Code: ${response.statusCode}');
+      List jsonResponse = json.decode(response.body);
+      if (jsonResponse != null) {
+        return jsonResponse.map((sec) => comment.fromJson(sec)).toList();
       }
-    } catch (e) {
-      // Handle exceptions, e.g., network errors or JSON decoding errors
-      throw Exception('An error occurred: $e');
+
+      return [];
+    } else {
+      throw Exception(
+          'Failed to load data from the API. Status Code: ${response.statusCode}');
     }
   }
-
 
   Future<void> createMainTaskComment(
     BuildContext context, {
@@ -844,13 +863,56 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                             ),
                           ),
                         ),
-
                         Container(
                           width: 330,
                           height: 190,
                           color: Colors.white,
-                        ),
+                          child: FutureBuilder<List<comment>>(
+                              // future: getMainTaskCommentList(mainTaskId),
+                              future: getCommentList(widget.task.taskId),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  List<comment>? data = snapshot.data;
 
+                                //  print('position : ${data![0].taskId}');
+
+                                  return SingleChildScrollView(
+                                    child: DataTable(
+                                      columns: const [
+                                        DataColumn(label: Text('Comment')),
+                                        // Add more DataColumn widgets for other attributes
+                                      ],
+                                      rows: data!.map((comment) {
+                                        return DataRow(cells: [
+                                          DataCell(Text(comment.commnt)),
+                                          // Add more DataCell widgets for other attributes
+                                        ]);
+                                      }).toList(),
+                                    ),
+                                  );
+
+
+                                } else if (snapshot.hasError) {
+                                  return const Text("-Empty-");
+                                }
+                                return const Text("Loading...");
+                              }),
+
+                          // child: SingleChildScrollView(
+                          //   child: DataTable(
+                          //     columns: [
+                          //       DataColumn(label: Text('Comment')),
+                          //       // Add more DataColumn widgets for other attributes
+                          //     ],
+                          //     rows: comments.map((comment) {
+                          //       return DataRow(cells: [
+                          //         DataCell(Text(comment.commnt)),
+                          //         // Add more DataCell widgets for other attributes
+                          //       ]);
+                          //     }).toList(),
+                          //   ),
+                          // ),
+                        ),
                         Container(
                           width: 330,
                           height: 80,
@@ -913,25 +975,24 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
   }
 }
 
-
 class comment {
-  final String commentId;
-  final String taskId;
-  final String commnt;
-  final String commentCreateById;
-  final String commentCreateBy;
-  final String commentCreateDate;
-  final String commentCreatedTimestamp;
-  final String commentStatus;
-  final String commentEditBy;
-  final String commentEditById;
-  final String commentEditByDate;
-  final String commentEditByTimestamp;
-  final String commentDeleteBy;
-  final String commentDeleteById;
-  final String commentDeleteByDate;
-  final String commentDeleteByTimestamp;
-  final String commentAttachment;
+  String commentId;
+  String taskId;
+  String commnt;
+  String commentCreateById;
+  String commentCreateBy;
+  String commentCreateDate;
+  String commentCreatedTimestamp;
+  String commentStatus;
+  String commentEditBy;
+  String commentEditById;
+  String commentEditByDate;
+  String commentEditByTimestamp;
+  String commentDeleteBy;
+  String commentDeleteById;
+  String commentDeleteByDate;
+  String commentDeleteByTimestamp;
+  String commentAttachment;
 
   comment({
     required this.commentId,
@@ -955,23 +1016,22 @@ class comment {
 
   factory comment.fromJson(Map<String, dynamic> json) {
     return comment(
-      commentId: json['comment_id'],
-      taskId: json['task_id'],
-      commnt: json['comment'],
-      commentCreateById: json['comment_create_by_id'],
-      commentCreateBy: json['comment_create_by'],
-      commentCreateDate: json['comment_create_date'],
-      commentCreatedTimestamp: json['comment_created_timestamp'],
-      commentStatus: json['comment_status'],
-      commentEditBy: json['comment_edit_by'],
-      commentEditById: json['comment_edit_by_id'],
-      commentEditByDate: json['comment_edit_by_date'],
-      commentEditByTimestamp: json['comment_edit_by_timestamp'],
-      commentDeleteBy: json['comment_delete_by'],
-      commentDeleteById: json['comment_delete_by_id'],
-      commentDeleteByDate: json['comment_delete_by_date'],
-      commentDeleteByTimestamp: json['comment_delete_by_timestamp'],
-      commentAttachment: json['comment_attachment'],
-    );
+        commentId: json['comment_id'],
+        taskId: json['task_id'],
+        commnt: json['comment'],
+        commentCreateById: json['comment_create_by_id'],
+        commentCreateBy: json['comment_create_by'],
+        commentCreateDate: json['comment_create_date'],
+        commentCreatedTimestamp: json['comment_created_timestamp'],
+        commentStatus: json['comment_status'],
+        commentEditBy: json['comment_edit_by'],
+        commentEditById: json['comment_edit_by_id'],
+        commentEditByDate: json['comment_edit_by_date'],
+        commentEditByTimestamp: json['comment_edit_by_timestamp'],
+        commentDeleteBy: json['comment_delete_by'],
+        commentDeleteById: json['comment_delete_by_id'],
+        commentDeleteByDate: json['comment_delete_by_date'],
+        commentDeleteByTimestamp: json['comment_delete_by_timestamp'],
+        commentAttachment: json['comment_attachment']);
   }
 }
