@@ -203,16 +203,32 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
                           icon: Icon(Icons.arrow_back_rounded),
                         ),
 
-                        Text(
-                          'Sub Task ID:${task.taskId}',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black87,
+                        SizedBox(
+                          width: 500,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Sub Task ID : ${task.taskId}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black87,
+                                ),
+                              ),
+
+                              Text(
+                                '${task.categoryName}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.blueAccent,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
 
                         SizedBox(
-                          width: 480,
+                          width: 500,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

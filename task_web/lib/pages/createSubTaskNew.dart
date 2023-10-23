@@ -15,16 +15,19 @@ import '../createAccountPopups/priortyPopUp.dart';
 import '../createAccountPopups/sourcefromPopUp.dart';
 import '../methods/appBar.dart';
 import '../methods/colors.dart';
+import '../tables/taskTable.dart';
 import 'createMainTaskNew.dart';
 import 'package:http/http.dart' as http;
 
 class CreateSubTaskNew extends StatefulWidget {
   final String username;
+  final String userRole;
   final String firstName;
   final String lastName;
   final String mainTaskId;
+  final MainTask task;
 
-  const CreateSubTaskNew({Key? key, required this.username, required this.firstName, required this.lastName, required this.mainTaskId}) : super(key: key);
+  const CreateSubTaskNew({Key? key, required this.username, required this.firstName, required this.lastName, required this.mainTaskId, required this.task, required this.userRole}) : super(key: key);
 
   @override
   State<CreateSubTaskNew> createState() => _CreateSubTaskNewState();
@@ -146,7 +149,12 @@ class _CreateSubTaskNewState extends State<CreateSubTaskNew> {
       if (jsonDecode(res.body) == "true") {
         if (!mounted) return;
         showSuccessSnackBar(context);// Show the success SnackBar
-        Navigator.of(context).pop();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => OpenTaskNew(task: widget.task, userRoleForDelete:  widget.userRole, userName: widget.username,
+            firstName: widget.firstName,
+            lastName:  widget.lastName,)),
+        );
 
       } else {
         if (!mounted) return;

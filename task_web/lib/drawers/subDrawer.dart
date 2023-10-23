@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task_web/pages/taskPageThree.dart';
 
 import '../methods/colors.dart';
+import '../pages/taskPageAll.dart';
 import '../pages/taskPageOne.dart';
 import '../pages/taskPageTwo.dart';
 import '../sizes/pageSizes.dart';
@@ -26,6 +27,22 @@ class SubDrawer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          TextButton(
+            onPressed:(){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TaskPageAll()),
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child: Text('All Tasks',style: TextStyle(
+                  color:AppColor.table,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
           TextButton(
             onPressed:(){
               Navigator.push(

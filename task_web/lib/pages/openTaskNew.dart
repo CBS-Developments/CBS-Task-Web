@@ -431,11 +431,11 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       body: Center(
         child: Container(
           width: 1120,
-          height: 500,
+          height: 600,
           color: Colors.white,
           child: SizedBox(
             width: 1120,
-            height: 500,
+            height: 600,
             child: SingleChildScrollView(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -443,7 +443,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                 children: [
                   SizedBox(
                     width: 700,
-                    height: 500,
+                    height: 600,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -514,6 +514,16 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                         ),
                         Text(
                           widget.task.taskId,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          widget.task.category_name,
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.black87,
@@ -771,10 +781,10 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => CreateSubTaskNew(
-                                        username: userName,
-                                        firstName: firstName,
-                                        lastName: lastName,
-                                        mainTaskId: widget.task.taskId,
+                                        username: widget.userName,
+                                        firstName: widget.firstName,
+                                        lastName: widget.lastName,
+                                        mainTaskId: widget.task.taskId, task: widget.task, userRole:  widget.userRoleForDelete,
                                       ),
                                     ));
                               },
