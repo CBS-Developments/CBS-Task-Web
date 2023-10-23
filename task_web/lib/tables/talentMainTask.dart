@@ -196,7 +196,7 @@ class _TalentMainTaskTableState extends State<TalentMainTaskTable> {
     mainTaskList.clear();
     var data = {};
 
-    const url = "http://dev.workspace.cbs.lk/mainTaskListTaxation.php";
+    const url = "http://dev.workspace.cbs.lk/mainTaskListTalent.php";
     http.Response res = await http.post(
       Uri.parse(url),
       body: data,

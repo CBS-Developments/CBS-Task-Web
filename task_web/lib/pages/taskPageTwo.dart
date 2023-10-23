@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/drawers/subDrawer.dart';
+import 'package:task_web/tables/talentMainTask.dart';
 
 import '../drawers/drawerTask.dart';
 import '../methods/appBar.dart';
 
+import '../sizes/pageSizes.dart';
 import '../tables/taskTable.dart';
 import '../methods/upMainRow.dart';
 
@@ -61,11 +63,29 @@ class _TaskPageTwoState extends State<TaskPageTwo> {
           Column(
             children:  [
               const UpMainRow(),
-              const SizedBox(height: 20,),
-              TaskTable(
+              const SizedBox(height: 10,),
+              Container(
+                width: getPageWidth(context) - 395,
+                height: 35,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        'Talent Management',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              TalentMainTaskTable(
               ),
 
-              const SizedBox(height: 18),
 
 
 
