@@ -7,6 +7,7 @@ import 'package:task_web/tables/taskTable.dart';
 import 'package:task_web/methods/upMainRow.dart';
 
 import '../sizes/pageSizes.dart';
+import '../tables/taxationMainTask.dart';
 
 class TaskPageOne extends StatefulWidget {
   const TaskPageOne({super.key});
@@ -77,7 +78,7 @@ class _TaskPageOneState extends State<TaskPageOne> {
                   ],
                 ),
               ),
-              TaskTable(),
+              TaxationMainTaskTable(),
             ],
           )
         ],
