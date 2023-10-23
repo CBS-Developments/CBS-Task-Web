@@ -14,6 +14,8 @@ import '../methods/colors.dart';
 import '../tables/subTaskTable.dart';
 import '../tables/taskTable.dart';
 import 'editMainTask.dart';
+import 'dart:html' as html;
+
 
 class OpenTaskNew extends StatefulWidget {
   final String userRoleForDelete;
@@ -45,13 +47,6 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
   TextEditingController mainTaskCommentController = TextEditingController();
   List<comment> comments = [];
 
-  @override
-  void initState() {
-    super.initState();
-    retrieverData();
-    // getCommentList(widget.task.taskId);
-  }
-
   String getCurrentDateTime() {
     final now = DateTime.now();
     final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
@@ -63,18 +58,6 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     final formattedDate = DateFormat('yyyy-MM-dd').format(now);
     return formattedDate;
   }
-
-  // Future<bool> fetchComments() async {
-  //   try {
-  //     List<comment> fetchedComments = await getCommentList(widget.task.taskId);
-  //     setState(() {
-  //       comments = fetchedComments;
-  //     });
-  //   } catch (e) {
-  //     // Handle errors
-  //     print('Error fetching comments: $e');
-  //   }
-  // }
 
   Future<void> retrieverData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -99,17 +82,17 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Confirm Delete'),
-            content: Text('Are you sure you want to delete this task?'),
+            title: const Text('Confirm Delete'),
+            content: const Text('Are you sure you want to delete this task?'),
             actions: <Widget>[
               TextButton(
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
               ),
               TextButton(
-                child: Text('Delete'),
+                child: const Text('Delete'),
                 onPressed: () {
                   deleteMainTask(taskId); // Call the deleteMainTask method
                   Navigator.of(context).pop(); // Close the dialog
@@ -126,11 +109,11 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Permission Denied'),
-            content: Text('Only admins are allowed to delete tasks.'),
+            title: const Text('Permission Denied'),
+            content: const Text('Only admins are allowed to delete tasks.'),
             actions: <Widget>[
               TextButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
@@ -336,23 +319,12 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     );
 
     if (response.statusCode == 200) {
-     // final jsonResponse = json.decode(response.body);
-      // print(jsonResponse);
-      // if (jsonResponse is List) {
-      //   setState(() {
-      //     comments = jsonResponse
-      //         .map((data) => comment.fromJson(data))
-      //         .cast<comment>()
-      //         .toList();
-      //   });
-      // } else {
-      //   throw Exception('Invalid response format');
-      // }
 
       List jsonResponse = json.decode(response.body);
       if (jsonResponse != null) {
         return jsonResponse.map((sec) => comment.fromJson(sec)).toList();
       }
+
 
       return [];
     } else {
@@ -361,7 +333,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     }
   }
 
-  Future<void> createMainTaskComment(
+  Future<bool> createMainTaskComment(
     BuildContext context, {
     required userName,
     required taskID,
@@ -372,7 +344,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     if (mainTaskCommentController.text.trim().isEmpty) {
       // Show an error message if the combined fields are empty
       snackBar(context, "Please fill in all required fields", Colors.red);
-      return;
+      return false;
     }
 
     var url = "http://dev.workspace.cbs.lk/createComment.php";
@@ -407,27 +379,46 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       encoding: Encoding.getByName("utf-8"),
     );
 
+
+
     if (res.statusCode.toString() == "200") {
       if (jsonDecode(res.body) == "true") {
-        if (!mounted) return;
+
+        if (!mounted) return true;
         mainTaskCommentController.clear();
-        showSuccessSnackBar(context); // Show the success SnackBar
-      } else {
-        if (!mounted) return;
-        snackBar(context, "Error", Colors.red);
+        snackBar(context, "Done", Colors.green);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => OpenTaskNew(task: widget.task, userRoleForDelete:  widget.userRoleForDelete, userName: widget.userName,
+            firstName: widget.firstName,
+            lastName:  widget.lastName,)),
+        );
       }
     } else {
-      if (!mounted) return;
-      snackBar(context, "Error", Colors.yellow);
+      if (!mounted) return false;
+      snackBar(context, "Error", Colors.redAccent);
     }
+    return true;
   }
 
   void showSuccessSnackBar(BuildContext context) {
-    final snackBar = SnackBar(
+    final snackBar = const SnackBar(
       content: Text('Comment Added Successfully'),
       backgroundColor: Colors.green, // You can customize the color
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    retrieverData();
+
+    setState(() {
+      print("Done ttttttt2222");
+      getCommentList(widget.task.taskId);
+    });
   }
 
   @override
@@ -461,7 +452,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                           children: [
                             Text(
                               widget.task.taskTitle,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                               ),
                             ),
@@ -497,7 +488,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                     );
                                   },
                                   tooltip: 'Edit Task',
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.edit_note_rounded,
                                     color: Colors.black,
                                     size: 22,
@@ -511,7 +502,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                         widget.task.taskId);
                                   },
                                   tooltip: 'Delete Task',
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.delete_rounded,
                                     color: Colors.redAccent,
                                     size: 19,
@@ -523,12 +514,12 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                         ),
                         Text(
                           widget.task.taskId,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.black87,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Container(
@@ -546,7 +537,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.calendar_month_rounded,
                                           size: 15,
                                         ),
@@ -636,7 +627,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                   ],
                                 ),
                               ),
-                              VerticalDivider(
+                              const VerticalDivider(
                                 thickness: 2,
                               ),
                               SizedBox(
@@ -646,7 +637,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.calendar_month_rounded,
                                           size: 15,
                                         ),
@@ -658,13 +649,13 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                               right: 4),
                                           child: Text(
                                             widget.task.taskCreateDate,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 14,
                                               color: Colors.black,
                                             ),
                                           ),
                                         ),
-                                        Icon(
+                                        const Icon(
                                           Icons.arrow_forward,
                                           color: Colors.black,
                                           size: 15,
@@ -677,7 +668,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                               right: 4),
                                           child: Text(
                                             widget.task.dueDate,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 14,
                                               color: Colors.black,
                                             ),
@@ -690,7 +681,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                           left: 18, bottom: 8),
                                       child: Text(
                                         widget.task.company,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.black,
                                         ),
@@ -701,7 +692,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                           left: 18, bottom: 8),
                                       child: Text(
                                         widget.task.assignTo,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.black,
                                         ),
@@ -712,7 +703,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                           left: 18, bottom: 8),
                                       child: Text(
                                         widget.task.taskTypeName,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.black,
                                         ),
@@ -723,7 +714,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                           left: 18, bottom: 8),
                                       child: Text(
                                         widget.task.taskStatusName,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.black,
                                         ),
@@ -734,7 +725,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                           left: 18, bottom: 8),
                                       child: Text(
                                         widget.task.taskCreateBy,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.black,
                                         ),
@@ -787,8 +778,8 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                       ),
                                     ));
                               },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: Text(
                                   'Add Sub Task',
                                   style: TextStyle(
@@ -798,14 +789,14 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
-                        Text(
+                        const Text(
                           'Subtasks',
                           style: TextStyle(fontSize: 18),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         // SubTaskTableNew(mainTaskId: widget.task.taskId)
@@ -813,7 +804,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                       ],
                     ),
                   ),
-                  VerticalDivider(),
+                  const VerticalDivider(),
                   Container(
                     width: 360,
                     height: 500,
@@ -823,9 +814,9 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                           width: 330,
                           height: 40,
                           color: Colors.grey.shade300,
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
+                            children: [
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Text(
@@ -868,50 +859,33 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                           height: 190,
                           color: Colors.white,
                           child: FutureBuilder<List<comment>>(
-                              // future: getMainTaskCommentList(mainTaskId),
-                              future: getCommentList(widget.task.taskId),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  List<comment>? data = snapshot.data;
-
-                                //  print('position : ${data![0].taskId}');
-
-                                  return SingleChildScrollView(
-                                    child: DataTable(
-                                      columns: const [
-                                        DataColumn(label: Text('Comment')),
-                                        // Add more DataColumn widgets for other attributes
-                                      ],
-                                      rows: data!.map((comment) {
-                                        return DataRow(cells: [
-                                          DataCell(Text(comment.commnt)),
-                                          // Add more DataCell widgets for other attributes
-                                        ]);
-                                      }).toList(),
-                                    ),
-                                  );
-
-
-                                } else if (snapshot.hasError) {
-                                  return const Text("-Empty-");
-                                }
-                                return const Text("Loading...");
-                              }),
-
-                          // child: SingleChildScrollView(
-                          //   child: DataTable(
-                          //     columns: [
-                          //       DataColumn(label: Text('Comment')),
-                          //       // Add more DataColumn widgets for other attributes
-                          //     ],
-                          //     rows: comments.map((comment) {
-                          //       return DataRow(cells: [
-                          //         DataCell(Text(comment.commnt)),
-                          //         // Add more DataCell widgets for other attributes
-                          //       ]);
-                          //     }).toList(),
-                          //   ),
-                          // ),
+                            future: getCommentList(widget.task.taskId),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                List<comment>? data = snapshot.data;
+                                return ListView.builder(
+                                  itemCount: data!.length,
+                                  itemBuilder: (context, index) {
+                                    return SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          ListTile(
+                                            title: Text(data[index].commnt),
+                                            // You can add more ListTile properties as needed
+                                          ),
+                                          // Add dividers or spacing as needed between ListTiles
+                                          const Divider(), // Example: Adds a divider between ListTiles
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else if (snapshot.hasError) {
+                                return const Text("-Empty-");
+                              }
+                              return const Text("Loading...");
+                            },
+                          ),
                         ),
                         Container(
                           width: 330,
@@ -934,9 +908,9 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                   ),
                                 ),
                               ),
-                              Icon(Icons
+                              const Icon(Icons
                                   .attach_file_outlined), // Replace 'icon1' with the first icon you want to use
-                              SizedBox(
+                              const SizedBox(
                                   width:
                                       8), // Adjust the spacing between the icons
                               IconButton(
@@ -947,8 +921,9 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                       taskID: widget.task.taskId,
                                       firstName: widget.firstName,
                                       lastName: widget.lastName);
+                               //   getCommentList(widget.task.taskId);
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.arrow_forward_ios_outlined,
                                   color: Colors.blue,
                                 ),
@@ -963,7 +938,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    icon: Icon(Icons.cancel_outlined, size: 20),
+                    icon: const Icon(Icons.cancel_outlined, size: 20),
                   )
                 ],
               ),
