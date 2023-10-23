@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/drawers/subDrawer.dart';
+import 'package:task_web/tables/financeMainTask.dart';
 
 
 import '../drawers/drawerTask.dart';
 import '../methods/appBar.dart';
+import '../sizes/pageSizes.dart';
 import '../tables/taskTable.dart';
 import '../methods/upMainRow.dart';
 
@@ -61,11 +63,31 @@ class _TaskPageThreeState extends State<TaskPageThree> {
           Column(
             children:  [
               const UpMainRow(),
-              const SizedBox(height: 20,),
-              TaskTable(
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: getPageWidth(context) - 395,
+                height: 35,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        'Finance & Accounting',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              FinanceMainTaskTable(
               ),
 
-              const SizedBox(height: 18),
 
 
 

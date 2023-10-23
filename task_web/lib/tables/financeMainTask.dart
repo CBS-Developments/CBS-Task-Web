@@ -195,7 +195,7 @@ class _FinanceMainTaskTableState extends State<FinanceMainTaskTable> {
     mainTaskList.clear();
     var data = {};
 
-    const url = "http://dev.workspace.cbs.lk/mainTaskListTalent.php";
+    const url = "http://dev.workspace.cbs.lk/mainTaskListFinance.php";
     http.Response res = await http.post(
       Uri.parse(url),
       body: data,
