@@ -4,9 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:task_web/pages/openSubTaskPage.dart';
 
-
-
-
 class SubTaskTable extends StatefulWidget {
   final String mainTaskId;
   // Add this parameter
@@ -24,8 +21,8 @@ class _SubTaskTableState extends State<SubTaskTable> {
   String phone = "";
   String userRole = "";
 
-
   List<Task> subTaskList = []; // Initialize subtask list
+
 
   @override
   void initState() {
@@ -66,12 +63,12 @@ class _SubTaskTableState extends State<SubTaskTable> {
     if (res.statusCode == 200) {
       final responseJson = json.decode(res.body);
       setState(() {
-        for (Map<String, dynamic> details in responseJson.cast<Map<String, dynamic>>()) {
+        for (Map<String, dynamic> details
+            in responseJson.cast<Map<String, dynamic>>()) {
           subTaskList.add(Task.fromJson(details));
         }
 
-        subTaskList.sort((a, b) =>
-            b.dueDate.compareTo(a.dueDate));
+        subTaskList.sort((a, b) => b.dueDate.compareTo(a.dueDate));
       });
     } else {
       throw Exception('Failed to load subtasks from API');
@@ -96,14 +93,18 @@ class _SubTaskTableState extends State<SubTaskTable> {
           rows: subTaskList.map((subtask) {
             return DataRow(
               cells: [
-                DataCell(
-                    Text(subtask.taskTitle),onTap: (){
+                DataCell(Text(subtask.taskTitle), onTap: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => OpenSubTaskNew(task: subtask, userRoleForDelete: userRole,))
-                  );
-                }
-                ),
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OpenSubTaskNew(
+                                task: subtask,
+                                userRoleForDelete: userRole,
+                                userName: userName,
+                                firstName: firstName,
+                                lastName: lastName,
+                              )));
+                }),
                 DataCell(Text(subtask.dueDate)),
                 DataCell(Text(subtask.assignTo)),
                 // Add more DataCell widgets as needed
@@ -158,48 +159,48 @@ class Task {
   String categoryName;
   String category;
 
-  Task(
-      {required this.taskId,
-        required this.taskTitle,
-        required this.taskType,
-        required this.dueDate,
-        required this.taskTypeName,
-        required this.taskDescription,
-        required this.taskCreateById,
-        required this.taskCreateBy,
-        required this.taskCreateDate,
-        required this.taskCreateMonth,
-        required this.taskCreatedTimestamp,
-        required this.taskStatus,
-        required this.taskStatusName,
-        required this.actionTakenById,
-        required this.actionTakenBy,
-        required this.actionTakenDate,
-        required this.actionTakenTimestamp,
-        required this.taskReopenBy,
-        required this.taskReopenById,
-        required this.taskReopenDate,
-        required this.taskReopenTimestamp,
-        required this.taskFinishedBy,
-        required this.taskFinishedById,
-        required this.taskFinishedByDate,
-        required this.taskFinishedByTimestamp,
-        required this.taskEditBy,
-        required this.taskEditById,
-        required this.taskEditByDate,
-        required this.taskEditByTimestamp,
-        required this.taskDeleteBy,
-        required this.taskDeleteById,
-        required this.taskDeleteByDate,
-        required this.taskDeleteByTimestamp,
-        required this.sourceFrom,
-        required this.assignTo,
-        required this.company,
-        required this.documentNumber,
-        required this.watchList,
-        required this.categoryName,
-        required this.category,
-      });
+  Task({
+    required this.taskId,
+    required this.taskTitle,
+    required this.taskType,
+    required this.dueDate,
+    required this.taskTypeName,
+    required this.taskDescription,
+    required this.taskCreateById,
+    required this.taskCreateBy,
+    required this.taskCreateDate,
+    required this.taskCreateMonth,
+    required this.taskCreatedTimestamp,
+    required this.taskStatus,
+    required this.taskStatusName,
+    required this.actionTakenById,
+    required this.actionTakenBy,
+    required this.actionTakenDate,
+    required this.actionTakenTimestamp,
+    required this.taskReopenBy,
+    required this.taskReopenById,
+    required this.taskReopenDate,
+    required this.taskReopenTimestamp,
+    required this.taskFinishedBy,
+    required this.taskFinishedById,
+    required this.taskFinishedByDate,
+    required this.taskFinishedByTimestamp,
+    required this.taskEditBy,
+    required this.taskEditById,
+    required this.taskEditByDate,
+    required this.taskEditByTimestamp,
+    required this.taskDeleteBy,
+    required this.taskDeleteById,
+    required this.taskDeleteByDate,
+    required this.taskDeleteByTimestamp,
+    required this.sourceFrom,
+    required this.assignTo,
+    required this.company,
+    required this.documentNumber,
+    required this.watchList,
+    required this.categoryName,
+    required this.category,
+  });
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
