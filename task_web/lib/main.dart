@@ -5,6 +5,7 @@ import 'package:task_web/pages/createMainTaskNew.dart';
 import 'package:task_web/pages/dashboard/dashMain.dart';
 import 'package:task_web/pages/taskMainPage.dart';
 import 'package:task_web/pages/loginPage.dart';
+import 'package:task_web/pages/taskPageAll.dart';
 import 'package:task_web/pages/taskPageOne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -116,7 +117,7 @@ class LandingPage extends StatelessWidget {
 
   Widget _decideMainPage() {
     if (prefs.getString('login_state') != null) {
-      return const DashManin();
+      return const TaskPageAll();
     } else {
       return const LoginPage();
     }

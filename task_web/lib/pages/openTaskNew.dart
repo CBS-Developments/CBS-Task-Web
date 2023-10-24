@@ -22,7 +22,6 @@ import '../tables/taskTable.dart';
 import 'editMainTask.dart';
 import 'dart:html' as html;
 
-
 class OpenTaskNew extends StatefulWidget {
   final String userRoleForDelete;
   final String userName;
@@ -170,7 +169,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) {
-              return const TaskMainPage();
+              return const TaskPageAll();
             }),
           );
           return true; // PHP code was successful.
@@ -325,12 +324,10 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     );
 
     if (response.statusCode == 200) {
-
       List jsonResponse = json.decode(response.body);
       if (jsonResponse != null) {
         return jsonResponse.map((sec) => comment.fromJson(sec)).toList();
       }
-
 
       return [];
     } else {
@@ -360,7 +357,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       "task_id": taskID,
       "comment": mainTaskCommentController.text,
       "comment_create_by_id": userName,
-      "comment_create_by": firstName + lastName,
+      "comment_create_by": firstName + ' ' + lastName,
       "comment_create_date": getCurrentDate(),
       "comment_created_timestamp": getCurrentDateTime(),
       "comment_status": "1",
@@ -385,20 +382,22 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       encoding: Encoding.getByName("utf-8"),
     );
 
-
-
     if (res.statusCode.toString() == "200") {
       if (jsonDecode(res.body) == "true") {
-
         if (!mounted) return true;
         mainTaskCommentController.clear();
-        snackBar(context, "Done", Colors.green);
+        snackBar(context, "Comment Added Successfully", Colors.green);
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => OpenTaskNew(task: widget.task, userRoleForDelete:  widget.userRoleForDelete, userName: widget.userName,
-            firstName: widget.firstName,
-            lastName:  widget.lastName,)),
+          MaterialPageRoute(
+              builder: (context) => OpenTaskNew(
+                    task: widget.task,
+                    userRoleForDelete: widget.userRoleForDelete,
+                    userName: widget.userName,
+                    firstName: widget.firstName,
+                    lastName: widget.lastName,
+                  )),
         );
       }
     } else {
@@ -406,6 +405,61 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       snackBar(context, "Error", Colors.redAccent);
     }
     return true;
+  }
+
+  void showDeleteCommentConfirmation(
+      BuildContext context,
+      String createBy,
+      String nameNowUser,
+      ) {
+    print('Now user: $nameNowUser');
+    if (createBy == nameNowUser) {
+      print(createBy);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Confirm Delete'),
+            content: const Text('Are you sure you want to delete this Comment?'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+              TextButton(
+                child: const Text('Delete'),
+                onPressed: () {
+                  // deleteMainTask(taskId); // Call the deleteMainTask method
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Display a message or take other actions for users who are not admins
+      print(createBy);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Permission Denied'),
+            content: const Text('Only your comments allowed to delete.'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   void showSuccessSnackBar(BuildContext context) {
@@ -436,12 +490,12 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       ),
       body: Center(
         child: Container(
-          width: 1120,
-          height: 600,
+          width: 1250,
+          height: 550,
           color: Colors.white,
           child: SizedBox(
             width: 1120,
-            height: 600,
+            height: 550,
             child: SingleChildScrollView(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -449,7 +503,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                 children: [
                   SizedBox(
                     width: 700,
-                    height: 600,
+                    height: 550,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -790,7 +844,9 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                         username: widget.userName,
                                         firstName: widget.firstName,
                                         lastName: widget.lastName,
-                                        mainTaskId: widget.task.taskId, task: widget.task, userRole:  widget.userRoleForDelete,
+                                        mainTaskId: widget.task.taskId,
+                                        task: widget.task,
+                                        userRole: widget.userRoleForDelete,
                                       ),
                                     ));
                               },
@@ -822,12 +878,12 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                   ),
                   const VerticalDivider(),
                   Container(
-                    width: 360,
-                    height: 500,
+                    width: 490,
+                    height: 550,
                     child: Column(
                       children: [
                         Container(
-                          width: 330,
+                          width: 460,
                           height: 40,
                           color: Colors.grey.shade300,
                           child: const Row(
@@ -847,12 +903,12 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                           ),
                         ),
                         Container(
-                          width: 300,
-                          height: 150,
+                          width: 460,
+                          height: 5,
                           color: Colors.white,
                         ),
                         Container(
-                          width: 330,
+                          width: 460,
                           height: 35,
                           color: Colors.grey.shade300,
                           child: Align(
@@ -861,7 +917,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(
-                                'Comment',
+                                'Comments',
                                 style: TextStyle(
                                   color: Colors.grey.shade700,
                                   fontSize: 16,
@@ -871,8 +927,8 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                           ),
                         ),
                         Container(
-                          width: 330,
-                          height: 190,
+                          width: 460,
+                          height: 350,
                           color: Colors.white,
                           child: FutureBuilder<List<comment>>(
                             future: getCommentList(widget.task.taskId),
@@ -886,11 +942,71 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                       child: Column(
                                         children: [
                                           ListTile(
-                                            title: Text(data[index].commnt),
+                                            title: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      data[index].commnt,
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors
+                                                              .blueAccent),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 2,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          data[index]
+                                                              .commentCreatedTimestamp,
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              color:
+                                                                  Colors.grey),
+                                                        ),
+                                                        Text(
+                                                          '    by: ',
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              color:
+                                                                  Colors.grey),
+                                                        ),
+                                                        Text(
+                                                          data[index]
+                                                              .commentCreateBy,
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              color:
+                                                                  Colors.grey),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {
+                                                      showDeleteCommentConfirmation(context, data[index]
+                                                          .commentCreateBy, '${widget.firstName} ${widget.lastName}');
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.delete_rounded,
+                                                      color: Colors.redAccent,
+                                                      size: 16,
+                                                    ))
+                                              ],
+                                            ),
                                             // You can add more ListTile properties as needed
                                           ),
+                                          Divider()
                                           // Add dividers or spacing as needed between ListTiles
-                                          const Divider(), // Example: Adds a divider between ListTiles
+                                          // Example: Adds a divider between ListTiles
                                         ],
                                       ),
                                     );
@@ -904,7 +1020,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                           ),
                         ),
                         Container(
-                          width: 330,
+                          width: 460,
                           height: 80,
                           child: Row(
                             children: [
@@ -937,7 +1053,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                       taskID: widget.task.taskId,
                                       firstName: widget.firstName,
                                       lastName: widget.lastName);
-                               //   getCommentList(widget.task.taskId);
+                                  //   getCommentList(widget.task.taskId);
                                 },
                                 icon: const Icon(
                                   Icons.arrow_forward_ios_outlined,
@@ -951,44 +1067,52 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                     ),
                   ),
                   IconButton(
+                    tooltip: 'Close',
                     onPressed: () {
                       // Check the category and decide the page to navigate to
                       if (widget.task.category == "0") {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TaskPageOne()),
+                          MaterialPageRoute(
+                              builder: (context) => TaskPageOne()),
                         );
                       } else if (widget.task.category == "1") {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TaskPageTwo()),
+                          MaterialPageRoute(
+                              builder: (context) => TaskPageTwo()),
                         );
                       } else if (widget.task.category == "2") {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TaskPageThree()),
+                          MaterialPageRoute(
+                              builder: (context) => TaskPageThree()),
                         );
                       } else if (widget.task.category == "3") {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TaskPageFour()),
+                          MaterialPageRoute(
+                              builder: (context) => TaskPageFour()),
                         );
                       } else if (widget.task.category == "4") {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TaskPageFive()),
+                          MaterialPageRoute(
+                              builder: (context) => TaskPageFive()),
                         );
                       } else if (widget.task.category == "5") {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TaskPageSix()),
+                          MaterialPageRoute(
+                              builder: (context) => TaskPageSix()),
                         );
                       } else {
                         // Handle other categories or provide a default navigation
                         snackBar(context, "Unknown Category", Colors.red);
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TaskPageAll()),
+                          MaterialPageRoute(
+                              builder: (context) => TaskPageAll()),
                         );
                       }
                     },

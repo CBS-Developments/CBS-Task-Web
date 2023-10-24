@@ -7,6 +7,7 @@ import 'package:task_web/methods/colors.dart';
 import 'package:task_web/methods/textFieldContainer.dart';
 import 'package:task_web/pages/createAccountPage.dart';
 import 'package:task_web/pages/taskMainPage.dart';
+import 'package:task_web/pages/taskPageAll.dart';
 import 'package:task_web/sizes/pageSizes.dart';
 import 'package:http/http.dart' as http;
 
@@ -74,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
           if (!mounted) return true;
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const DashManin()),
+            MaterialPageRoute(builder: (context) => const TaskPageAll()),
           );
         } else {
           snackBar(context, "Account Deactivated",
