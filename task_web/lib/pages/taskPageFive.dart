@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/drawers/subDrawer.dart';
 import 'package:task_web/tables/financeMainTask.dart';
+import 'package:task_web/tables/secretialMainTask.dart';
 
 
 import '../drawers/drawerTask.dart';
@@ -75,7 +76,7 @@ class _TaskPageFiveState extends State<TaskPageFive> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        'Audit & Assurance',
+                        'Company Secretarial',
                         style: TextStyle(
                             fontSize: 16,
                             color: Colors.deepPurple,
@@ -85,7 +86,7 @@ class _TaskPageFiveState extends State<TaskPageFive> {
                   ],
                 ),
               ),
-              AuditMainTaskTable(
+              SecretarialMainTaskTable(
               ),
 
 

@@ -75,7 +75,7 @@ class _TaskPageSixState extends State<TaskPageSix> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        'Audit & Assurance',
+                        'Development',
                         style: TextStyle(
                             fontSize: 16,
                             color: Colors.deepPurple,
