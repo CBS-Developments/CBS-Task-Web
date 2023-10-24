@@ -6,6 +6,7 @@ import '../pages/chatPage.dart';
 import '../pages/dashboard/dashMain.dart';
 import '../pages/dashboard/dashboadPageUser.dart';
 import '../pages/taskMainPage.dart';
+import '../pages/taskPageAll.dart';
 import '../pages/taskPageOne.dart';
 
 class LeftDrawer extends StatefulWidget {
@@ -50,7 +51,7 @@ class _LeftDrawerState extends State<LeftDrawer> {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TaskMainPage()),
+                    MaterialPageRoute(builder: (context) => TaskPageAll()),
                   );
                 },
                 child: SizedBox(

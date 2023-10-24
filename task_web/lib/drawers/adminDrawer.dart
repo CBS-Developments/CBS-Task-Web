@@ -5,6 +5,7 @@ import 'package:task_web/pages/dashboard/dashboardPageAdmin.dart';
 import '../pages/chatPage.dart';
 import '../pages/dashboard/dashMain.dart';
 import '../pages/taskMainPage.dart';
+import '../pages/taskPageAll.dart';
 import '../pages/users/currentUser.dart';
 import '../sizes/pageSizes.dart';
 
@@ -50,7 +51,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TaskMainPage()),
+                    MaterialPageRoute(builder: (context) => TaskPageAll()),
                   );
                 },
                 child: SizedBox(

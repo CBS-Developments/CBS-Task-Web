@@ -88,7 +88,7 @@ class _TaskPageSixState extends State<TaskPageSix> {
               ),
               DevelopmentMainTaskTable(
               ),
-              
+
             ],
           )
         ],

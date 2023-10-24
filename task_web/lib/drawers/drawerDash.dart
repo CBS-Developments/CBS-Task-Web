@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_web/pages/taskMainPage.dart';
+import 'package:task_web/pages/taskPageAll.dart';
 import 'package:task_web/pages/taskPageOne.dart';
 
 import '../methods/colors.dart';
@@ -50,7 +51,7 @@ class _LeftDrawerDashState extends State<LeftDrawerDash> {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TaskMainPage()),
+                    MaterialPageRoute(builder: (context) => TaskPageAll()),
                   );
                 },
                 child: SizedBox(
