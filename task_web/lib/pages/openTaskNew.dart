@@ -6,7 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_web/pages/createSubTaskNew.dart';
 import 'package:task_web/pages/taskMainPage.dart';
 import 'package:http/http.dart' as http;
+import 'package:task_web/pages/taskPageAll.dart';
+import 'package:task_web/pages/taskPageFive.dart';
+import 'package:task_web/pages/taskPageFour.dart';
 import 'package:task_web/pages/taskPageOne.dart';
+import 'package:task_web/pages/taskPageSix.dart';
+import 'package:task_web/pages/taskPageThree.dart';
+import 'package:task_web/pages/taskPageTwo.dart';
 
 import '../components.dart';
 import '../methods/appBar.dart';
@@ -416,7 +422,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     retrieverData();
 
     setState(() {
-      print("Done ttttttt2222");
+      print("Done");
       getCommentList(widget.task.taskId);
     });
   }
@@ -946,7 +952,45 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      // Check the category and decide the page to navigate to
+                      if (widget.task.category == "0") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TaskPageOne()),
+                        );
+                      } else if (widget.task.category == "1") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TaskPageTwo()),
+                        );
+                      } else if (widget.task.category == "2") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TaskPageThree()),
+                        );
+                      } else if (widget.task.category == "3") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TaskPageFour()),
+                        );
+                      } else if (widget.task.category == "4") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TaskPageFive()),
+                        );
+                      } else if (widget.task.category == "5") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TaskPageSix()),
+                        );
+                      } else {
+                        // Handle other categories or provide a default navigation
+                        snackBar(context, "Unknown Category", Colors.red);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TaskPageAll()),
+                        );
+                      }
                     },
                     icon: const Icon(Icons.cancel_outlined, size: 20),
                   )
