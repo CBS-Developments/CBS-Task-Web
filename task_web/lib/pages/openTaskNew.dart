@@ -409,6 +409,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
 
   void showDeleteCommentConfirmation(
       BuildContext context,
+      String commentID,
       String createBy,
       String nameNowUser,
       ) {
@@ -431,6 +432,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
               TextButton(
                 child: const Text('Delete'),
                 onPressed: () {
+                  deleteComment(commentID);
                   // deleteMainTask(taskId); // Call the deleteMainTask method
                   Navigator.of(context).pop(); // Close the dialog
                 },
@@ -459,6 +461,66 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
           );
         },
       );
+    }
+  }
+
+  Future<bool> deleteComment(
+      String commentId,
+      ) async {
+    // Prepare the data to be sent to the PHP script.
+    var data = {
+      "comment_id": commentId,
+      "comment_delete_by": widget.userName,
+      "comment_delete_by_id": widget.firstName,
+      "comment_delete_by_date": getCurrentDate(),
+      "comment_delete_by_timestamp": getCurrentDateTime(),
+    };
+
+    // URL of your PHP script.
+    const url = "http://dev.workspace.cbs.lk/deleteComment.php";
+
+    try {
+      final res = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      if (res.statusCode == 200) {
+        final responseBody = jsonDecode(res.body);
+
+        // Debugging: Print the response data.
+        print("Response from PHP script: $responseBody");
+
+        if (responseBody == "true") {
+          print('Successful');
+          snackBar(context, "Comment Deleted successful!", Colors.redAccent);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => OpenTaskNew(
+                  task: widget.task,
+                  userRoleForDelete: widget.userRoleForDelete,
+                  userName: widget.userName,
+                  firstName: widget.firstName,
+                  lastName: widget.lastName,
+                )),
+          );
+          return true; // PHP code was successful.
+        } else {
+          print('PHP code returned "false".');
+          return false; // PHP code returned "false."
+        }
+      } else {
+        print('HTTP request failed with status code: ${res.statusCode}');
+        return false; // HTTP request failed.
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false; // An error occurred.
     }
   }
 
@@ -992,8 +1054,11 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                                 ),
                                                 IconButton(
                                                     onPressed: () {
-                                                      showDeleteCommentConfirmation(context, data[index]
-                                                          .commentCreateBy, '${widget.firstName} ${widget.lastName}');
+                                                      // showDeleteCommentConfirmation(context, data[index]
+                                                      //     .commentCreateBy, '${widget.firstName} ${widget.lastName}',data[index]
+                                                      //     .commentId);
+
+                                                      showDeleteCommentConfirmation(context, data[index].commentId, data[index].commentCreateBy, '${widget.firstName} ${widget.lastName}');
                                                     },
                                                     icon: Icon(
                                                       Icons.delete_rounded,
