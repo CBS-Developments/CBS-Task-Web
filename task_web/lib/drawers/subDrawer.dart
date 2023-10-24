@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:task_web/pages/taskPageFive.dart';
+import 'package:task_web/pages/taskPageFour.dart';
+import 'package:task_web/pages/taskPageSix.dart';
 import 'package:task_web/pages/taskPageThree.dart';
 
 import '../methods/colors.dart';
@@ -96,7 +99,12 @@ class SubDrawer extends StatelessWidget {
           ),
 
           TextButton(
-            onPressed:(){},
+            onPressed:(){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TaskPageFour()),
+              );
+            },
             child:  Padding(
               padding: const EdgeInsets.all(5),
               child: Text('Audit & Assurance',style: TextStyle(
@@ -108,7 +116,12 @@ class SubDrawer extends StatelessWidget {
           ),
 
           TextButton(
-            onPressed:(){},
+            onPressed:(){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TaskPageFive()),
+              );
+            },
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: Text('Company Secretarial',style: TextStyle(
@@ -120,7 +133,12 @@ class SubDrawer extends StatelessWidget {
           ),
 
           TextButton(
-            onPressed:(){},
+            onPressed:(){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TaskPageSix()),
+              );
+            },
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: Text('Development',style: TextStyle(

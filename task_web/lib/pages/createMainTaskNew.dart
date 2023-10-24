@@ -4,7 +4,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:task_web/pages/taskPageAll.dart';
+import 'package:task_web/pages/taskPageFive.dart';
+import 'package:task_web/pages/taskPageFour.dart';
 import 'package:task_web/pages/taskPageOne.dart';
+import 'package:task_web/pages/taskPageSix.dart';
+import 'package:task_web/pages/taskPageThree.dart';
+import 'package:task_web/pages/taskPageTwo.dart';
 
 import '../components.dart';
 import '../createAccountPopups/assigntoPopUp.dart';
@@ -26,7 +32,10 @@ class CreateMainTaskNew extends StatefulWidget {
   final String lastName;
 
   const CreateMainTaskNew(
-      {Key? key, required this.lastName, required this.username, required this.firstName})
+      {Key? key,
+      required this.lastName,
+      required this.username,
+      required this.firstName})
       : super(key: key);
 
   @override
@@ -34,8 +43,6 @@ class CreateMainTaskNew extends StatefulWidget {
 }
 
 class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
-
-
   String getCurrentDateTime() {
     final now = DateTime.now();
     final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
@@ -56,28 +63,25 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
 
   String generatedTaskId() {
     final random = Random();
-    int min = 1;                  // Smallest 9-digit number
-    int max = 999999999;          // Largest 9-digit number
+    int min = 1; // Smallest 9-digit number
+    int max = 999999999; // Largest 9-digit number
     int randomNumber = min + random.nextInt(max - min + 1);
     return randomNumber.toString().padLeft(9, '0');
   }
 
-
-
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-
   Future<void> createMainTask(
-      BuildContext context, {
-        required beneficiary,
-        required priority,
-        required due_date,
-        required sourceFrom,
-        required assignTo,
-        required categoryName,
-        required category,
-      }) async {
+    BuildContext context, {
+    required beneficiary,
+    required priority,
+    required due_date,
+    required sourceFrom,
+    required assignTo,
+    required categoryName,
+    required category,
+  }) async {
     // Validate input fields
     if (titleController.text.trim().isEmpty ||
         descriptionController.text.isEmpty) {
@@ -90,15 +94,20 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
     // If all validations pass, proceed with the registration
     var url = "http://dev.workspace.cbs.lk/mainTaskCreate.php";
 
-    String firstLetterFirstName = widget.firstName.isNotEmpty ? widget.firstName[0] : '';
-    String firstLetterLastName = widget.lastName.isNotEmpty ? widget.lastName[0] : '';
+    String firstLetterFirstName =
+        widget.firstName.isNotEmpty ? widget.firstName[0] : '';
+    String firstLetterLastName =
+        widget.lastName.isNotEmpty ? widget.lastName[0] : '';
     String geCategory = categoryName.substring(categoryName.length - 3);
-    String taskID = getCurrentMonth() + firstLetterFirstName + firstLetterLastName + geCategory + generatedTaskId();
-
+    String taskID = getCurrentMonth() +
+        firstLetterFirstName +
+        firstLetterLastName +
+        geCategory +
+        generatedTaskId();
 
     var data = {
       "task_id": taskID,
-      "task_title":  titleController.text,
+      "task_title": titleController.text,
       "task_type": '0',
       "task_type_name": priority,
       "due_date": due_date,
@@ -138,7 +147,6 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
       "category": category,
     };
 
-
     http.Response res = await http.post(
       Uri.parse(url),
       body: data,
@@ -152,11 +160,47 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
     if (res.statusCode.toString() == "200") {
       if (jsonDecode(res.body) == "true") {
         if (!mounted) return;
-        showSuccessSnackBar(context);// Show the success SnackBar
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TaskPageOne()),
-        );
+        showSuccessSnackBar(context); // Show the success SnackBar
+
+        // Check the category and decide the page to navigate to
+        if (category == "0") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskPageOne()),
+          );
+        } else if (category == "1") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskPageTwo()),
+          );
+        } else if (category == "2") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskPageThree()),
+          );
+        } else if (category == "3") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskPageFour()),
+          );
+        } else if (category == "4") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskPageFive()),
+          );
+        } else if (category == "5") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskPageSix()),
+          );
+        } else {
+          // Handle other categories or provide a default navigation
+          snackBar(context, "Unknown Category", Colors.red);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskPageAll()),
+          );
+        }
       } else {
         if (!mounted) return;
         snackBar(context, "Error", Colors.red);
@@ -174,7 +218,6 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-
 
   void selectDate(
       BuildContext context, TextEditingController controller) async {
@@ -204,7 +247,6 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
 
   @override
   Widget build(BuildContext context) {
-
     String beneficiary = '';
     String dueDate = '';
     String assignToValue = ''; // Define assignToValue in the outer scope
@@ -440,14 +482,16 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                   SizedBox(
                                     height: 7,
                                   ),
-
                                   Consumer<BeneficiaryState>(
-                                    builder: (context, beneficiaryState, child) {
-                                      beneficiary = beneficiaryState.value ?? 'DefaultBeneficiary'; // Set beneficiaryValue based on state
+                                    builder:
+                                        (context, beneficiaryState, child) {
+                                      beneficiary = beneficiaryState.value ??
+                                          'DefaultBeneficiary'; // Set beneficiaryValue based on state
 
                                       return TextButton(
                                         onPressed: () {
-                                          beneficiaryPopupMenu(context, beneficiaryState);
+                                          beneficiaryPopupMenu(
+                                              context, beneficiaryState);
                                         },
                                         child: Row(
                                           children: [
@@ -460,9 +504,11 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Icon(
-                                                Icons.keyboard_arrow_down_rounded,
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
                                                 color: Colors.black,
                                               ),
                                             )
@@ -471,16 +517,16 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                       );
                                     },
                                   ),
-
                                   Consumer<DueDateState>(
                                     builder: (context, dueDateState, child) {
-                                      dueDate = dueDateState.selectedDate != null
-                                          ? DateFormat('yyyy-MM-dd').format(dueDateState.selectedDate!)
-                                          : 'No due date selected';
+                                      dueDate =
+                                          dueDateState.selectedDate != null
+                                              ? DateFormat('yyyy-MM-dd').format(
+                                                  dueDateState.selectedDate!)
+                                              : 'No due date selected';
 
                                       return TextButton(
                                         onPressed: () {
-
                                           showDatePicker(
                                             context: context,
                                             initialDate: DateTime.now(),
@@ -488,7 +534,8 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                             lastDate: DateTime(2030),
                                           ).then((pickedDate) {
                                             if (pickedDate != null) {
-                                              dueDateState.selectedDate = pickedDate;
+                                              dueDateState.selectedDate =
+                                                  pickedDate;
                                               print(dueDateState.selectedDate);
                                             }
                                           });
@@ -505,9 +552,11 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Icon(
-                                                Icons.keyboard_arrow_down_rounded,
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
                                                 color: Colors.black,
                                               ),
                                             )
@@ -516,19 +565,18 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                       );
                                     },
                                   ),
-
-
                                   SizedBox(
                                     height: 17,
                                   ),
-
                                   Consumer<AssignToState>(
                                     builder: (context, assignToState, child) {
-                                      assignToValue = assignToState.value ?? 'Assign To';
+                                      assignToValue =
+                                          assignToState.value ?? 'Assign To';
 
                                       return TextButton(
                                         onPressed: () {
-                                          assignToPopupMenu(context, assignToState);
+                                          assignToPopupMenu(
+                                              context, assignToState);
                                         },
                                         child: Row(
                                           children: [
@@ -541,9 +589,11 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Icon(
-                                                Icons.keyboard_arrow_down_rounded,
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
                                                 color: Colors.black,
                                               ),
                                             )
@@ -552,18 +602,18 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                       );
                                     },
                                   ),
-
                                   SizedBox(
                                     height: 16,
                                   ),
-
                                   Consumer<PriorityState>(
                                     builder: (context, priorityState, child) {
-                                      priorityValue = priorityState.value ?? 'Priority';
+                                      priorityValue =
+                                          priorityState.value ?? 'Priority';
 
                                       return TextButton(
                                         onPressed: () {
-                                          priorityPopupMenu(context, priorityState);
+                                          priorityPopupMenu(
+                                              context, priorityState);
                                         },
                                         child: Row(
                                           children: [
@@ -576,9 +626,11 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Icon(
-                                                Icons.keyboard_arrow_down_rounded,
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
                                                 color: Colors.black,
                                               ),
                                             )
@@ -587,18 +639,18 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                       );
                                     },
                                   ),
-
                                   SizedBox(
                                     height: 13,
                                   ),
-
                                   Consumer<SourceFromState>(
                                     builder: (context, sourceFromState, child) {
-                                      sourceFromValue = sourceFromState.value ?? 'Source From';
+                                      sourceFromValue = sourceFromState.value ??
+                                          'Source From';
 
                                       return TextButton(
                                         onPressed: () {
-                                          sourceFromPopupMenu(context, sourceFromState);
+                                          sourceFromPopupMenu(
+                                              context, sourceFromState);
                                         },
                                         child: Row(
                                           children: [
@@ -611,9 +663,11 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Icon(
-                                                Icons.keyboard_arrow_down_rounded,
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
                                                 color: Colors.black,
                                               ),
                                             )
@@ -622,19 +676,20 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                       );
                                     },
                                   ),
-
                                   SizedBox(
                                     height: 11,
                                   ),
-
                                   Consumer<CategoryState>(
                                     builder: (context, categoryState, child) {
-                                      categoryValue = categoryState.value ?? 'Category';
-                                      categoryInt = categoryState.selectedIndex.toString();
+                                      categoryValue =
+                                          categoryState.value ?? 'Category';
+                                      categoryInt = categoryState.selectedIndex
+                                          .toString();
 
                                       return TextButton(
                                         onPressed: () {
-                                          categoryPopupMenu(context, categoryState);
+                                          categoryPopupMenu(
+                                              context, categoryState);
                                         },
                                         child: Row(
                                           children: [
@@ -647,9 +702,11 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Icon(
-                                                Icons.keyboard_arrow_down_rounded,
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
                                                 color: Colors.black,
                                               ),
                                             ),
@@ -658,11 +715,6 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                       );
                                     },
                                   ),
-
-
-
-
-
                                 ],
                               )
                             ],
@@ -688,7 +740,9 @@ class _CreateMainTaskNewState extends State<CreateMainTaskNew> {
                                         priority: priorityValue,
                                         due_date: dueDate,
                                         sourceFrom: sourceFromValue,
-                                        assignTo: assignToValue, categoryName: categoryValue, category: categoryInt);
+                                        assignTo: assignToValue,
+                                        categoryName: categoryValue,
+                                        category: categoryInt);
                                   },
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: AppColor.loginF,
@@ -757,4 +811,3 @@ class DueDateState extends ChangeNotifier {
     notifyListeners();
   }
 }
-

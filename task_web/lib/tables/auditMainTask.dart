@@ -196,7 +196,7 @@ class _AuditMainTaskTableState extends State<AuditMainTaskTable> {
     mainTaskList.clear();
     var data = {};
 
-    const url = "http://dev.workspace.cbs.lk/mainTaskListFinance.php";
+    const url = "http://dev.workspace.cbs.lk/mainTaskListAudit.php";
     http.Response res = await http.post(
       Uri.parse(url),
       body: data,
