@@ -38,8 +38,8 @@ class _LoginPageState extends State<LoginPage> {
 
     var url = "http://dev.workspace.cbs.lk/login.php";
     var data = {
-      "email": emailController.text,
-      "password_": passwordController.text,
+      "email": emailController.text.toString().trim(),
+      "password_": passwordController.text.toString().trim(),
     };
 
     http.Response res = await http.post(
