@@ -128,6 +128,33 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
       );
     }
   }
+  void handleCategoryNavigation() {
+    switch (widget.task.category) {
+      case "0":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageOne()));
+        break;
+      case "1":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageTwo()));
+        break;
+      case "2":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageThree()));
+        break;
+      case "3":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageFour()));
+        break;
+      case "4":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageFive()));
+        break;
+      case "5":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageSix()));
+        break;
+      default:
+        snackBar(context, "Unknown Category", Colors.red);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageAll()));
+        break;
+    }
+  }
+
 
   Future<bool> deleteSubTask(
     String taskID,
@@ -165,7 +192,8 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
         if (responseBody == "true") {
           print('Successful');
           snackBar(context, "Sub Task Deleted successful!", Colors.redAccent);
-
+          // Handle success and navigation based on the category.
+          handleCategoryNavigation();
           // Navigator.push(
           //   context,
           //   MaterialPageRoute(builder: (context) {
@@ -186,6 +214,126 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
       return false; // An error occurred.
     }
   }
+
+  Future<bool> markInProgressSubTask(
+      String taskID,
+      ) async {
+    // Prepare the data to be sent to the PHP script.
+    var data = {
+      "task_id": taskID,
+      "task_status": '1',
+      "task_status_name": 'In Progress',
+      "action_taken_by_id": userName,
+      "action_taken_by": firstName,
+      "action_taken_date": getCurrentDateTime(),
+      "action_taken_timestamp": getCurrentDate(),
+    };
+
+    // URL of your PHP script.
+    const url = "http://dev.workspace.cbs.lk/deleteSubTask.php";
+
+    try {
+      final res = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      if (res.statusCode == 200) {
+        final responseBody = jsonDecode(res.body);
+
+        // Debugging: Print the response data.
+        print("Response from PHP script: $responseBody");
+
+        if (responseBody == "true") {
+          print('Successful');
+          snackBar(context, "Sub Task Marked as In Progress!", Colors.blueAccent);
+          // Handle success and navigation based on the category.
+          handleCategoryNavigation();
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) {
+          //     return const TaskMainPage();
+          //   }),
+          // );
+          return true; // PHP code was successful.
+        } else {
+          print('PHP code returned "false".');
+          return false; // PHP code returned "false."
+        }
+      } else {
+        print('HTTP request failed with status code: ${res.statusCode}');
+        return false; // HTTP request failed.
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false; // An error occurred.
+    }
+  }
+
+  Future<bool> completeSubTask(
+      String taskID,
+      ) async {
+    // Prepare the data to be sent to the PHP script.
+    var data = {
+      "task_id": taskID,
+      "task_status": '2',
+      "task_status_name": 'Completed',
+      "action_taken_by_id": userName,
+      "action_taken_by": firstName,
+      "action_taken_date": getCurrentDateTime(),
+      "action_taken_timestamp": getCurrentDate(),
+    };
+
+    // URL of your PHP script.
+    const url = "http://dev.workspace.cbs.lk/deleteSubTask.php";
+
+    try {
+      final res = await http.post(
+        Uri.parse(url),
+        body: data,
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      );
+
+      if (res.statusCode == 200) {
+        final responseBody = jsonDecode(res.body);
+
+        // Debugging: Print the response data.
+        print("Response from PHP script: $responseBody");
+
+        if (responseBody == "true") {
+          print('Successful');
+          snackBar(context, "Sub Task Marked As Complete", Colors.green);
+          // Handle success and navigation based on the category.
+          handleCategoryNavigation();
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) {
+          //     return const TaskMainPage();
+          //   }),
+          // );
+          return true; // PHP code was successful.
+        } else {
+          print('PHP code returned "false".');
+          return false; // PHP code returned "false."
+        }
+      } else {
+        print('HTTP request failed with status code: ${res.statusCode}');
+        return false; // HTTP request failed.
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false; // An error occurred.
+    }
+  }
+
+
 
   Future<bool> createMainTaskComment(
     BuildContext context, {
@@ -803,26 +951,38 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (widget.task.taskStatus == '0') {
+                                    markInProgressSubTask(widget.task.taskId);
+                                    // Handle 'Mark In Progress' action
+                                  } else if (widget.task.taskStatus == '1') {
+                                    completeSubTask(widget.task.taskId);
+                                    // Handle 'Mark As Complete' action
+                                  }
+                                  // Add a condition for 'Completed' here if needed
+                                },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    'Mark In Progress',
+                                    widget.task.taskStatus == '0'
+                                        ? 'Mark In Progress'
+                                        : widget.task.taskStatus == '1'
+                                        ? 'Mark As Complete'
+                                        : widget.task.taskStatus == '2'
+                                        ? 'Completed'
+                                        : 'Unknown Status', // Handle other status values
                                     style: TextStyle(
-                                        fontSize: 14, color: Colors.blueAccent),
+                                      fontSize: 14,
+                                      color: widget.task.taskStatus == '0'
+                                          ? Colors.blueAccent
+                                          : widget.task.taskStatus == '1'
+                                          ? Colors.redAccent
+                                          : Colors.green, // Change color for the 'Completed' status
+                                    ),
                                   ),
                                 ),
                               ),
-                              TextButton(
-                                  onPressed: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Mark As Complete',
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.green),
-                                    ),
-                                  )),
+
                             ],
                           ),
                         ),

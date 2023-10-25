@@ -52,14 +52,14 @@ class _UserCreationState extends State<UserCreation> {
 
     var data = {
       "user_name": firstNameCreateController.text.substring(0, 5) + contactCreateController.text.substring(contactCreateController.text.length - 2),
-      "first_name": firstNameCreateController.text,
-      "last_name": lastNameCreateController.text,
-      "email": emailCreateController.text,
-      "password_": passwordCreateController.text,
-      "phone": contactCreateController.text,
-      "employee_ID": employeeIDCreateController.text,
-      "designation": designationCreateController.text,
-      "company": companyCreateController.text,
+      "first_name": firstNameCreateController.text.toString().trim(),
+      "last_name": lastNameCreateController.text.toString().trim(),
+      "email": emailCreateController.text.toString().trim(),
+      "password_": passwordCreateController.text.toString().trim(),
+      "phone": contactCreateController.text.toString().trim(),
+      "employee_ID": employeeIDCreateController.text.toString().trim(),
+      "designation": designationCreateController.text.toString().trim(),
+      "company": companyCreateController.text.toString().trim(),
       "user_role": '0',
       "activate": '1',
     };

@@ -87,6 +87,7 @@ class _SubTaskTableState extends State<SubTaskTable> {
             DataColumn(label: Text('Subtask Title')),
             DataColumn(label: Text('Due Date')),
             DataColumn(label: Text('Assign To')),
+            DataColumn(label: Text('Status')),
             // Add more DataColumn widgets as needed
           ],
           // onPressed: () => _showSubTaskDetailsDialog(context, subtask),
@@ -107,6 +108,7 @@ class _SubTaskTableState extends State<SubTaskTable> {
                 }),
                 DataCell(Text(subtask.dueDate)),
                 DataCell(Text(subtask.assignTo)),
+                DataCell(Text(subtask.taskStatusName)),
                 // Add more DataCell widgets as needed
               ],
             );
