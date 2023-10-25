@@ -592,7 +592,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            SelectableText(
                               widget.task.taskTitle,
                               style: const TextStyle(
                                 fontSize: 18,
@@ -654,7 +654,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                             )
                           ],
                         ),
-                        Text(
+                        SelectableText(
                           widget.task.taskId,
                           style: const TextStyle(
                             fontSize: 14,
@@ -1033,7 +1033,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(
+                                                    SelectableText(
                                                       data[index].commnt,
                                                       style: TextStyle(
                                                           fontSize: 14,

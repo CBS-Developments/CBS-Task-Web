@@ -94,7 +94,7 @@ class _SubTaskTableState extends State<SubTaskTable> {
           rows: subTaskList.map((subtask) {
             return DataRow(
               cells: [
-                DataCell(Text(subtask.taskTitle), onTap: () {
+                DataCell(SelectableText(subtask.taskTitle), onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -4,7 +4,7 @@ class TextFieldLogin extends StatelessWidget {
   final String topic;
   final String hintText;
   final TextEditingController controller;
-  final Icon suficon;
+  final Widget suficon;
   final VoidCallback? onPressed;
   final ValueChanged<String>? onSubmitted;
   final bool obscureText; // Add the obscureText property
@@ -17,7 +17,7 @@ class TextFieldLogin extends StatelessWidget {
     required this.suficon,
     this.onPressed,
     this.onSubmitted,
-    this.obscureText = false,
+    required this.obscureText,
   }) : super(key: key);
 
   @override

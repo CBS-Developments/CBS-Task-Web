@@ -9,7 +9,6 @@ import '../sizes/pageSizes.dart';
 import 'loginPage.dart';
 import 'package:http/http.dart' as http;
 
-
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
 
@@ -26,7 +25,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   TextEditingController designationController = TextEditingController();
   TextEditingController companyController = TextEditingController();
   TextEditingController empIDController = TextEditingController();
-
 
   Future<void> createUser(BuildContext context) async {
     // Validate input fields
@@ -49,7 +47,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     var url = "http://dev.workspace.cbs.lk/createUser.php";
 
     var data = {
-      "user_name": firstNameController.text.substring(0, 5) + mobileNumberController.text.substring(mobileNumberController.text.length - 2),
+      "user_name": firstNameController.text.substring(0, 5) +
+          mobileNumberController.text
+              .substring(mobileNumberController.text.length - 2),
       "first_name": firstNameController.text.toString().trim(),
       "last_name": lastNameController.text.toString().trim(),
       "email": emailController.text.toString().trim(),
@@ -61,7 +61,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       "user_role": '0',
       "activate": '0',
     };
-
 
     http.Response res = await http.post(
       Uri.parse(url),
@@ -76,7 +75,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     if (res.statusCode.toString() == "200") {
       if (jsonDecode(res.body) == "true") {
         if (!mounted) return;
-        showSuccessSnackBar(context);// Show the success SnackBar
+        showSuccessSnackBar(context); // Show the success SnackBar
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -93,12 +92,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   void showSuccessSnackBar(BuildContext context) {
     final snackBar = SnackBar(
-      content: Text('Registration successful! Admin will Activate your account!!'),
+      content:
+          Text('Registration successful! Admin will Activate your account!!'),
       backgroundColor: Colors.blueAccent, // You can customize the color
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +117,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     const Text(
                       'Workspace',
                       style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.deepPurple
-                      ),
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepPurple),
                     ),
                     const SizedBox(height: 10),
                     const Divider(),
@@ -156,34 +154,69 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextFieldLogin(topic: 'First Name', controller: firstNameController, hintText: '', suficon: Icon(Icons.person)),
-                            TextFieldLogin(topic: 'Last Name', controller: lastNameController, hintText: '', suficon: Icon(Icons.person))
+                            TextFieldLogin(
+                              topic: 'First Name',
+                              controller: firstNameController,
+                              hintText: '',
+                              suficon: Icon(Icons.person),
+                              obscureText: false,
+                            ),
+                            TextFieldLogin(
+                              topic: 'Last Name',
+                              controller: lastNameController,
+                              hintText: '',
+                              suficon: Icon(Icons.person),
+                              obscureText: false,
+                            )
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextFieldLogin(topic: 'Work Email Address', controller: emailController, hintText: '', suficon: Icon(Icons.email)),
-                            TextFieldLogin(topic: 'Phone', controller: mobileNumberController, hintText: '', suficon: Icon(Icons.phone))
+                            TextFieldLogin(
+                                topic: 'Work Email Address',
+                                controller: emailController,
+                                hintText: '',
+                                suficon: Icon(Icons.email), obscureText: false,),
+                            TextFieldLogin(
+                                topic: 'Phone',
+                                controller: mobileNumberController,
+                                hintText: '',
+                                suficon: Icon(Icons.phone), obscureText: false,)
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextFieldLogin(topic: 'Company name', controller: companyController, hintText: '', suficon: Icon(Icons.home_work)),
-                            TextFieldLogin(topic: 'Designation', controller: designationController, hintText: '', suficon: Icon(Icons.add))
+                            TextFieldLogin(
+                                topic: 'Company name',
+                                controller: companyController,
+                                hintText: '',
+                                suficon: Icon(Icons.home_work), obscureText: false,),
+                            TextFieldLogin(
+                                topic: 'Designation',
+                                controller: designationController,
+                                hintText: '',
+                                suficon: Icon(Icons.add), obscureText: false,)
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextFieldLogin(topic: 'Employee Id', controller: empIDController, hintText: '', suficon: Icon(Icons.numbers_rounded)),
-                            TextFieldLogin(topic: 'Password', controller: passwordController, hintText: '', suficon: Icon(Icons.remove_red_eye))
+                            TextFieldLogin(
+                                topic: 'Employee Id',
+                                controller: empIDController,
+                                hintText: '',
+                                suficon: Icon(Icons.numbers_rounded), obscureText: false,),
+                            TextFieldLogin(
+                                topic: 'Password',
+                                controller: passwordController,
+                                hintText: '',
+                                suficon: Icon(Icons.remove_red_eye), obscureText: false,)
                           ],
                         )
                       ],
                     ),
-
                     const SizedBox(height: 10),
                     Container(
                       height: 50,
@@ -198,7 +231,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           backgroundColor: Colors.teal,
                           shape: RoundedRectangleBorder(
                             borderRadius:
-                            BorderRadius.circular(5), // Rounded corners
+                                BorderRadius.circular(5), // Rounded corners
                           ),
                         ),
                         child: const Text(
@@ -206,23 +239,33 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
-                              fontSize: 20
-                          ),
+                              fontSize: 20),
                         ),
                       ),
                     ),
                     const SizedBox(height: 10),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Already using workspace?',style: TextStyle(fontSize: 18),),
-                        TextButton(onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const LoginPage()),
-                          );
-                        }, child: Text('Sign In here',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,  color: AppColor.tealLog),))
+                        const Text(
+                          'Already using workspace?',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()),
+                              );
+                            },
+                            child: Text(
+                              'Sign In here',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.tealLog),
+                            ))
                       ],
                     ),
                   ],
@@ -232,7 +275,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
           ),
         ),
       ),
-
     );
   }
 }

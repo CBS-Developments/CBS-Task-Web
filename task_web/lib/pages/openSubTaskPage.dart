@@ -635,7 +635,7 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              SelectableText(
                                 'Sub Task ID : ${task.taskId}',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -657,7 +657,7 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              SelectableText(
                                 '${task.taskTitle}',
                                 style: TextStyle(
                                   fontSize: 18,
@@ -717,7 +717,7 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
                             ],
                           ),
                         ),
-                        Text(
+                        SelectableText(
                           '${task.taskDescription}',
                           style: TextStyle(
                             fontSize: 14,
@@ -1074,7 +1074,7 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
+                                                  SelectableText(
                                                     data[index].commnt,
                                                     style: TextStyle(
                                                         fontSize: 14,
