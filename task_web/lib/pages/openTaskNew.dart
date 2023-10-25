@@ -222,12 +222,8 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
 
         if (responseBody == "true") {
           print('Successful');
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return const TaskPageOne();
-            }),
-          );
+          // Handle success and navigation based on the category.
+          handleCategoryNavigation();
           snackBar(
               context, "Main Marked as In Progress successful!", Colors.green);
 
@@ -281,12 +277,8 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
 
         if (responseBody == "true") {
           print('Successful');
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return const TaskPageOne();
-            }),
-          );
+          // Handle success and navigation based on the category.
+          handleCategoryNavigation();
           snackBar(context, "Main Marked Completed successful!", Colors.green);
 
           return true; // PHP code was successful.
@@ -303,6 +295,34 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
       return false; // An error occurred.
     }
   }
+  void handleCategoryNavigation() {
+    switch (widget.task.category) {
+      case "0":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageOne()));
+        break;
+      case "1":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageTwo()));
+        break;
+      case "2":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageThree()));
+        break;
+      case "3":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageFour()));
+        break;
+      case "4":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageFive()));
+        break;
+      case "5":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageSix()));
+        break;
+      default:
+        snackBar(context, "Unknown Category", Colors.red);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TaskPageAll()));
+        break;
+    }
+  }
+
+
 
   Future<List<comment>> getCommentList(String taskId) async {
     comments
