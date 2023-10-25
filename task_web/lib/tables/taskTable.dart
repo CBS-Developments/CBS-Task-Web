@@ -6,7 +6,6 @@ import 'package:task_web/methods/colors.dart';
 import 'package:task_web/pages/openTaskNew.dart';
 import 'dart:convert';
 
-
 import '../sizes/pageSizes.dart';
 
 class TaskTable extends StatefulWidget {
@@ -23,7 +22,6 @@ class _TaskTableState extends State<TaskTable> {
   String lastName = "";
   String phone = "";
   String userRole = "";
-
 
   @override
   void initState() {
@@ -52,47 +50,68 @@ class _TaskTableState extends State<TaskTable> {
       color: Colors.white,
       child: SingleChildScrollView(
         child: DataTable(
-          columns:  [
+          columns: [
             DataColumn(
               label: Text(
                 'Task Title',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.table,
+                    fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Company',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.table,
+                    fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Start-Date',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.table,
+                    fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Due-Date',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.table,
+                    fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Assignee',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.table,
+                    fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Priority',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.table,
+                    fontSize: 11),
               ),
             ),
             DataColumn(
               label: Text(
                 'Status',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.table,fontSize: 11),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.table,
+                    fontSize: 11),
               ),
             ),
             // Add more DataColumn as needed
@@ -102,32 +121,54 @@ class _TaskTableState extends State<TaskTable> {
               ? searchResultAsMainTaskList.map((task) {
                   return DataRow(cells: [
                     DataCell(
-                        SingleChildScrollView(
-                          child: Text(
-                            task.taskTitle,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              color: Colors.black,
-                            ),
+                      SingleChildScrollView(
+                        child: Text(
+                          task.taskTitle,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: Colors.black,
                           ),
                         ),
-                    onTap: (){
-                      Navigator.push(
+                      ),
+                      onTap: () {
+                        Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => OpenTaskNew(
-                            task: task,
-                            userRoleForDelete: userRole,
-                            userName: userName,
-                            firstName: firstName,
-                            lastName: lastName,)),); // Show the popup
-                    },),
+                          MaterialPageRoute(
+                              builder: (context) => OpenTaskNew(
+                                    task: task,
+                                    userRoleForDelete: userRole,
+                                    userName: userName,
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                  )),
+                        ); // Show the popup
+                      },
+                    ),
 
-                    DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
-                    DataCell(Text(task.taskCreateDate,style: TextStyle(fontSize: 10),)), // Display Start-Date
-                    DataCell(Text(task.dueDate,style: TextStyle(fontSize: 10),)),
-                    DataCell(Text(task.assignTo,style: TextStyle(fontSize: 10),)),
-                    DataCell(Text(task.taskTypeName,style: TextStyle(fontSize: 10),)),
-                    DataCell(Text(task.taskStatusName,style: TextStyle(fontSize: 10),)),
+                    DataCell(Text(
+                      task.company,
+                      style: TextStyle(fontSize: 10),
+                    )),
+                    DataCell(Text(
+                      task.taskCreateDate,
+                      style: TextStyle(fontSize: 10),
+                    )), // Display Start-Date
+                    DataCell(Text(
+                      task.dueDate,
+                      style: TextStyle(fontSize: 10),
+                    )),
+                    DataCell(Text(
+                      task.assignTo,
+                      style: TextStyle(fontSize: 10),
+                    )),
+                    DataCell(Text(
+                      task.taskTypeName,
+                      style: TextStyle(fontSize: 10),
+                    )),
+                    DataCell(Text(
+                      task.taskStatusName,
+                      style: TextStyle(fontSize: 10),
+                    )),
 
                     // Add more DataCell with other properties
                   ]);
@@ -135,34 +176,56 @@ class _TaskTableState extends State<TaskTable> {
               : mainTaskList.map((task) {
                   return DataRow(cells: [
                     DataCell(
-                        SingleChildScrollView(
-                          child: Text(
-                            task.taskTitle,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              color: Colors.black,
-                            ),
+                      SingleChildScrollView(
+                        child: Text(
+                          task.taskTitle,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: Colors.black,
                           ),
                         ),
-                      onTap: (){
+                      ),
+                      onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => OpenTaskNew(task: task, userRoleForDelete: userRole, userName: userName,
-                            firstName: firstName,
-                            lastName: lastName,)),
+                          MaterialPageRoute(
+                              builder: (context) => OpenTaskNew(
+                                    task: task,
+                                    userRoleForDelete: userRole,
+                                    userName: userName,
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                  )),
                         );
                         // _showTaskDetailsDialog(
                         //     context, task); // Show the popup
                       },
                     ),
 
-
-                    DataCell(Text(task.company,style: TextStyle(fontSize: 10),)),
-                    DataCell(Text(task.taskCreateDate,style: TextStyle(fontSize: 10),)), // Display Start-Date
-                    DataCell(Text(task.dueDate,style: TextStyle(fontSize: 10),)),
-                    DataCell(Text(task.assignTo,style: TextStyle(fontSize: 10),)),
-                    DataCell(Text(task.taskTypeName,style: TextStyle(fontSize: 10),)),
-                    DataCell(Text(task.taskStatusName,style: TextStyle(fontSize: 10),)),
+                    DataCell(Text(
+                      task.company,
+                      style: TextStyle(fontSize: 10),
+                    )),
+                    DataCell(Text(
+                      task.taskCreateDate,
+                      style: TextStyle(fontSize: 10),
+                    )), // Display Start-Date
+                    DataCell(Text(
+                      task.dueDate,
+                      style: TextStyle(fontSize: 10),
+                    )),
+                    DataCell(Text(
+                      task.assignTo,
+                      style: TextStyle(fontSize: 10),
+                    )),
+                    DataCell(Text(
+                      task.taskTypeName,
+                      style: TextStyle(fontSize: 10),
+                    )),
+                    DataCell(Text(
+                      task.taskStatusName,
+                      style: TextStyle(fontSize: 10),
+                    )),
                     // Add more DataCell with other properties
                   ]);
                 }).toList(),
@@ -209,12 +272,14 @@ class _TaskTableState extends State<TaskTable> {
         for (Map<String, dynamic> details in responseJson) {
           mainTaskList.add(MainTask.fromJson(details));
         }
-        mainTaskList.sort((a, b) =>
-            b.taskCreatedTimestamp.compareTo(a.taskCreatedTimestamp));
+        mainTaskList.sort(
+            (a, b) => b.taskCreatedTimestamp.compareTo(a.taskCreatedTimestamp));
 
         // Count tasks with taskStatus = 0
-        int pendingTaskCount = mainTaskList.where((task) => task.taskStatus == "0").length;
-        int inProgressTaskCount = mainTaskList.where((task) => task.taskStatus == "1").length;
+        int pendingTaskCount =
+            mainTaskList.where((task) => task.taskStatus == "0").length;
+        int inProgressTaskCount =
+            mainTaskList.where((task) => task.taskStatus == "1").length;
         int allTaskCount = mainTaskList.length;
         print("Pending Task: $pendingTaskCount");
         print("All Task: $allTaskCount");
