@@ -24,7 +24,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
   Future<bool> login(BuildContext context) async {
     if (emailController.text.trim().isEmpty) {
       snackBar(context, "Email can't be empty", Colors.redAccent);
