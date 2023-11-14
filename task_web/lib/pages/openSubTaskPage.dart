@@ -451,7 +451,7 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
     required userName,
     required taskID,
     required firstName,
-    required lastName,
+    required taskName,
   }) async {
     // Validate input fields
     if (subTaskCommentController.text.trim().isEmpty) {
@@ -497,7 +497,7 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
         if (!mounted) return true;
         subTaskCommentController.clear();
         snackBar(context, "Comment Added Successfully", Colors.green);
-        addLog(context, taskId: taskID, taskName: subTaskCommentController.text, createBy: firstName + ' ' + lastName, createByID: userName);
+        addLog(context, taskId: taskID, taskName: taskName, createBy: firstName + ' ' + lastName, createByID: userName);
 
 
         Navigator.push(
@@ -1342,7 +1342,7 @@ class _OpenSubTaskNewState extends State<OpenSubTaskNew> {
                                     userName: widget.userName,
                                     taskID: widget.task.taskId,
                                     firstName: widget.firstName,
-                                    lastName: widget.lastName);
+                                    taskName: widget.task.taskTitle);
                                 //   getCommentList(widget.task.taskId);
                               },
                               icon: const Icon(
