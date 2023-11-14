@@ -63,6 +63,11 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     final formattedDate = DateFormat('yyyy-MM-dd').format(now);
     return formattedDate;
   }
+  String getCurrentMonth() {
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yy-MM').format(now);
+    return formattedDate;
+  }
 
   Future<void> retrieverData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -360,6 +365,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     BuildContext context, {
     required userName,
     required taskID,
+        required taskName,
     required firstName,
     required lastName,
   }) async {
@@ -407,6 +413,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
         if (!mounted) return true;
         mainTaskCommentController.clear();
         snackBar(context, "Comment Added Successfully", Colors.green);
+        addLog(context, taskId: taskID, taskName: taskName, createBy: firstName + ' ' + lastName, createByID: userName);
 
         Navigator.push(
           context,
@@ -426,6 +433,57 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
     }
     return true;
   }
+
+
+  Future<void> addLog(BuildContext context,{
+    required taskId,
+    required taskName,
+    required createBy,
+    required createByID,
+  }) async {
+
+    // If all validations pass, proceed with the registration
+    var url = "http://dev.workspace.cbs.lk/addLog.php";
+
+    var data = {
+      "log_id": getCurrentDateTime(),
+      "task_id": taskId,
+      "task_name": taskName,
+      "log_summary": 'Commented to Main Task',
+      "log_type": 'Commented',
+      "log_create_by": createBy,
+      "log_create_by_id": createByID,
+      "log_create_by_date": getCurrentDate(),
+      "log_create_by_month": getCurrentMonth(),
+      "log_create_by_year": '',
+      "log_created_by_timestamp": getCurrentDateTime(),
+    };
+
+
+    http.Response res = await http.post(
+      Uri.parse(url),
+      body: data,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    if (res.statusCode.toString() == "200") {
+      if (jsonDecode(res.body) == "true") {
+        if (!mounted) return;
+        print('Log added!!');
+      } else {
+        if (!mounted) return;
+        snackBar(context, "Error", Colors.red);
+      }
+    } else {
+      if (!mounted) return;
+      snackBar(context, "Error", Colors.redAccent);
+    }
+  }
+
 
   void showDeleteCommentConfirmation(
       BuildContext context,
@@ -1137,7 +1195,7 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                                       userName: widget.userName,
                                       taskID: widget.task.taskId,
                                       firstName: widget.firstName,
-                                      lastName: widget.lastName);
+                                      lastName: widget.lastName, taskName: widget.task.taskTitle);
                                   //   getCommentList(widget.task.taskId);
                                 },
                                 icon: const Icon(
