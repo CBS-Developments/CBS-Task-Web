@@ -751,376 +751,389 @@ class _OpenTaskNewState extends State<OpenTaskNew> {
                   SizedBox(
                     width: 700,
                     height: 550,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SelectableText(
-                              widget.task.taskTitle,
-                              style: const TextStyle(
-                                fontSize: 18,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SelectableText(
+                                widget.task.taskTitle,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                ),
                               ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditMainTaskPage(
+                                                  currentTitle:
+                                                      widget.task.taskTitle,
+                                                  currentDescription: widget
+                                                      .task.task_description,
+                                                  currentBeneficiary:
+                                                      widget.task.company,
+                                                  currentDueDate:
+                                                      widget.task.dueDate,
+                                                  currentAssignTo:
+                                                      widget.task.assignTo,
+                                                  currentPriority:
+                                                      widget.task.taskTypeName,
+                                                  currentSourceFrom:
+                                                      widget.task.sourceFrom,
+                                                  currentCategory:
+                                                      widget.task.category_name,
+                                                  taskID: widget.task.taskId,
+                                                  userName: userName,
+                                                  firstName: firstName,
+                                                )),
+                                      );
+                                    },
+                                    tooltip: 'Edit Task',
+                                    icon: const Icon(
+                                      Icons.edit_note_rounded,
+                                      color: Colors.black,
+                                      size: 22,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      showDeleteConfirmationDialog(
+                                          context,
+                                          widget.userRoleForDelete,
+                                          widget.task.taskId);
+                                    },
+                                    tooltip: 'Delete Task',
+                                    icon: const Icon(
+                                      Icons.delete_rounded,
+                                      color: Colors.redAccent,
+                                      size: 19,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+
+                          SelectableText(
+                            widget.task.taskId,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black87,
                             ),
-                            Row(
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          SelectableText(
+                            widget.task.task_description,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            widget.task.category_name,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: 480,
+                            height: 160,
+                            color: Colors.grey.shade100,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditMainTaskPage(
-                                                currentTitle:
-                                                    widget.task.taskTitle,
-                                                currentDescription: widget
-                                                    .task.task_description,
-                                                currentBeneficiary:
-                                                    widget.task.company,
-                                                currentDueDate:
-                                                    widget.task.dueDate,
-                                                currentAssignTo:
-                                                    widget.task.assignTo,
-                                                currentPriority:
-                                                    widget.task.taskTypeName,
-                                                currentSourceFrom:
-                                                    widget.task.sourceFrom,
-                                                currentCategory:
-                                                    widget.task.category_name,
-                                                taskID: widget.task.taskId,
-                                                userName: userName,
-                                                firstName: firstName,
-                                              )),
-                                    );
-                                  },
-                                  tooltip: 'Edit Task',
-                                  icon: const Icon(
-                                    Icons.edit_note_rounded,
-                                    color: Colors.black,
-                                    size: 22,
+                                SizedBox(
+                                  width: 120,
+                                  height: 160,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.calendar_month_rounded,
+                                            size: 15,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 4,
+                                                bottom: 8,
+                                                top: 8,
+                                                right: 4),
+                                            child: Text(
+                                              'Start',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: AppColor.drawerLight),
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            color: AppColor.drawerLight,
+                                            size: 15,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 4,
+                                                bottom: 8,
+                                                top: 8,
+                                                right: 4),
+                                            child: Text(
+                                              'Due',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: AppColor.drawerLight),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, bottom: 8),
+                                        child: Text(
+                                          'Company',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColor.drawerLight),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, bottom: 8),
+                                        child: Text(
+                                          'Assign To',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColor.drawerLight),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, bottom: 8),
+                                        child: Text(
+                                          'Priority',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColor.drawerLight),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, bottom: 8),
+                                        child: Text(
+                                          'Status',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColor.drawerLight),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, bottom: 8),
+                                        child: Text(
+                                          'Created By',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColor.drawerLight),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                IconButton(
-                                  onPressed: () {
-                                    showDeleteConfirmationDialog(
-                                        context,
-                                        widget.userRoleForDelete,
-                                        widget.task.taskId);
-                                  },
-                                  tooltip: 'Delete Task',
-                                  icon: const Icon(
-                                    Icons.delete_rounded,
-                                    color: Colors.redAccent,
-                                    size: 19,
+                                const VerticalDivider(
+                                  thickness: 2,
+                                ),
+                                SizedBox(
+                                  height: 160,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.calendar_month_rounded,
+                                            size: 15,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 4,
+                                                bottom: 8,
+                                                top: 8,
+                                                right: 4),
+                                            child: Text(
+                                              widget.task.taskCreateDate,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          const Icon(
+                                            Icons.arrow_forward,
+                                            color: Colors.black,
+                                            size: 15,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 4,
+                                                bottom: 8,
+                                                top: 8,
+                                                right: 4),
+                                            child: Text(
+                                              widget.task.dueDate,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, bottom: 8),
+                                        child: Text(
+                                          widget.task.company,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, bottom: 8),
+                                        child: Text(
+                                          widget.task.assignTo,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, bottom: 8),
+                                        child: Text(
+                                          widget.task.taskTypeName,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, bottom: 8),
+                                        child: Text(
+                                          widget.task.taskStatusName,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, bottom: 8),
+                                        child: Text(
+                                          widget.task.taskCreateBy,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
-                            )
-                          ],
-                        ),
-                        SelectableText(
-                          widget.task.taskId,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black87,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          widget.task.category_name,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 480,
-                          height: 160,
-                          color: Colors.grey.shade100,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SizedBox(
-                                width: 120,
-                                height: 160,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.calendar_month_rounded,
-                                          size: 15,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 4,
-                                              bottom: 8,
-                                              top: 8,
-                                              right: 4),
-                                          child: Text(
-                                            'Start',
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: AppColor.drawerLight),
-                                          ),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward,
-                                          color: AppColor.drawerLight,
-                                          size: 15,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 4,
-                                              bottom: 8,
-                                              top: 8,
-                                              right: 4),
-                                          child: Text(
-                                            'Due',
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: AppColor.drawerLight),
-                                          ),
-                                        ),
-                                      ],
+                              TextButton(
+                                onPressed: () {
+                                  if (widget.task.taskStatus == '0') {
+                                   markInProgressMainTask(widget.task.taskTitle,widget.userName,widget.firstName, widget.task.taskId);
+                                    // Handle 'Mark In Progress' action
+                                  } else if (widget.task.taskStatus == '1') {
+                                    markAsCompletedMainTask(widget.task.taskTitle,widget.userName,widget.firstName, widget.task.taskId);
+                                    // Handle 'Mark As Complete' action
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    widget.task.taskStatus == '0'
+                                        ? 'Mark In Progress'
+                                        : 'Mark As Complete',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: widget.task.taskStatus == '0'
+                                          ? Colors.blueAccent
+                                          : Colors.redAccent,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, bottom: 8),
-                                      child: Text(
-                                        'Company',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: AppColor.drawerLight),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, bottom: 8),
-                                      child: Text(
-                                        'Assign To',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: AppColor.drawerLight),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, bottom: 8),
-                                      child: Text(
-                                        'Priority',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: AppColor.drawerLight),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, bottom: 8),
-                                      child: Text(
-                                        'Status',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: AppColor.drawerLight),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, bottom: 8),
-                                      child: Text(
-                                        'Created By',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: AppColor.drawerLight),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                              const VerticalDivider(
-                                thickness: 2,
-                              ),
-                              SizedBox(
-                                height: 160,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.calendar_month_rounded,
-                                          size: 15,
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => CreateSubTaskNew(
+                                          username: widget.userName,
+                                          firstName: widget.firstName,
+                                          lastName: widget.lastName,
+                                          mainTaskId: widget.task.taskId,
+                                          task: widget.task,
+                                          userRole: widget.userRoleForDelete,
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 4,
-                                              bottom: 8,
-                                              top: 8,
-                                              right: 4),
-                                          child: Text(
-                                            widget.task.taskCreateDate,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                        const Icon(
-                                          Icons.arrow_forward,
-                                          color: Colors.black,
-                                          size: 15,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 4,
-                                              bottom: 8,
-                                              top: 8,
-                                              right: 4),
-                                          child: Text(
-                                            widget.task.dueDate,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, bottom: 8),
-                                      child: Text(
-                                        widget.task.company,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, bottom: 8),
-                                      child: Text(
-                                        widget.task.assignTo,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, bottom: 8),
-                                      child: Text(
-                                        widget.task.taskTypeName,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, bottom: 8),
-                                      child: Text(
-                                        widget.task.taskStatusName,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, bottom: 8),
-                                      child: Text(
-                                        widget.task.taskCreateBy,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                      ));
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Add Sub Task',
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.green),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                if (widget.task.taskStatus == '0') {
-                                 markInProgressMainTask(widget.task.taskTitle,widget.userName,widget.firstName, widget.task.taskId);
-                                  // Handle 'Mark In Progress' action
-                                } else if (widget.task.taskStatus == '1') {
-                                  markAsCompletedMainTask(widget.task.taskTitle,widget.userName,widget.firstName, widget.task.taskId);
-                                  // Handle 'Mark As Complete' action
-                                }
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  widget.task.taskStatus == '0'
-                                      ? 'Mark In Progress'
-                                      : 'Mark As Complete',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: widget.task.taskStatus == '0'
-                                        ? Colors.blueAccent
-                                        : Colors.redAccent,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CreateSubTaskNew(
-                                        username: widget.userName,
-                                        firstName: widget.firstName,
-                                        lastName: widget.lastName,
-                                        mainTaskId: widget.task.taskId,
-                                        task: widget.task,
-                                        userRole: widget.userRoleForDelete,
-                                      ),
-                                    ));
-                              },
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Add Sub Task',
-                                  style: TextStyle(
-                                      fontSize: 14, color: Colors.green),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Text(
-                          'Subtasks',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        // SubTaskTableNew(mainTaskId: widget.task.taskId)
-                        SubTaskTable(mainTaskId: widget.task.taskId)
-                      ],
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          const Text(
+                            'Subtasks',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          // SubTaskTableNew(mainTaskId: widget.task.taskId)
+                          SubTaskTable(mainTaskId: widget.task.taskId)
+                        ],
+                      ),
                     ),
                   ),
                   const VerticalDivider(),
